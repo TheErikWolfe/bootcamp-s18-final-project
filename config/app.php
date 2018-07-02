@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'DoodleOn'),
 
     /*
     |--------------------------------------------------------------------------
@@ -154,11 +154,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        DoodleOn\Providers\AppServiceProvider::class,
+        DoodleOn\Providers\AuthServiceProvider::class,
+        // DoodleOn\Providers\BroadcastServiceProvider::class,
+        DoodleOn\Providers\EventServiceProvider::class,
+        DoodleOn\Providers\RouteServiceProvider::class,
 
     ],
 

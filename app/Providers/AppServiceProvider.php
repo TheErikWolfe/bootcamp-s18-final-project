@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace DoodleOn\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
