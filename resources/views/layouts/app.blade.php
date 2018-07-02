@@ -30,23 +30,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sort</a>
                     </li>
-                    
-                </ul>
-
-                <a class="navbar-brand text-center" href="{{ url('/') }}">
-                    <strong>{{ config('app.name', 'DoodleOn') }}</strong>
-                </a>
-
-                <ul class="navbar-nav mr-auto">
-                    @guest
                     <li class="nav-item">
+                        <a class="navbar-brand text-center" href="{{ url('/') }}">
+                            <strong>{{ config('app.name', 'DoodleOn') }}</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @guest
                         <a class="nav-link mr-2" href="{{ route('login') }}">+</a>
-                    </li>
-                    @else
-                    <li class="nav-item">
+                        @else
                         <a class="nav-link mr-2" href="{{ route('drawingapp') }}">+</a>
-                    </li>
-                    @endguest
+                        @endguest
+                    </li>                    
                 </ul>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
