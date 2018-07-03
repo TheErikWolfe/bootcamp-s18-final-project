@@ -4,21 +4,33 @@
 
 <div class="container">
     <div class="row">
-        <div class="card mx-3 p-0 rounded-0 col">
-            <div class="p-0 card-body">
-                <img class="imgprops" src="{{ asset('img/1.jpg') }}" />
-                <div class="arrow text-right m-3 fa fa-arrow-up text-success"></div>
-                <div class="arrow text-right m-3 fa fa-arrow-up text-danger"></div>
+
+
+        <div class="imgframe">
+            <div class="p-0">
+                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
+                <div class="arrowcontainer">
+                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
+                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
+                </div>
             </div>
         </div>
-        <div class="card mx-3 p-0 rounded-0 col">
-            <div class="p-0 card-body">
-                <img class="imgprops" src="{{ asset('img/2.jpg') }}" />
+
+
+
+        <div class="imgframe">
+            <div class="p-0">
+                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
             </div>
         </div>
-        <div class="card mx-3 p-0 rounded-0 col">
-            <div class="p-0 card-body">
-                <img class="imgprops" src="{{ asset('img/3.jpg') }}" />
+        <div class="imgframe">
+            <div class="p-0">
+                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
+            </div>
+        </div>
+        <div class="imgframe">
+            <div class="p-0">
+                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
             </div>
         </div>
     </div>
