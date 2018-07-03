@@ -8523,7 +8523,8 @@ button.bg-dark:focus {
   max-height: 100% !important;
 }
 
-.m-0 {
+.m-0,
+.imgprops {
   margin: 0 !important;
 }
 
@@ -8667,7 +8668,8 @@ button.bg-dark:focus {
   margin-left: 3rem !important;
 }
 
-.p-0 {
+.p-0,
+.imgprops {
   padding: 0 !important;
 }
 
@@ -10423,5 +10425,10 @@ body {
 .logo {
   width: 25%;
   float: none;
+}
+
+.imgprops {
+  width: 100%;
+  height: 100%;
 }
 
