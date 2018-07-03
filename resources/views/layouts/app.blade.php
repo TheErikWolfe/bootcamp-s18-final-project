@@ -25,17 +25,18 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 
-
+                <div class="mx-auto">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <img class="logo" src="{{ asset('img/temp_logo.png') }}" />
+                        <!-- <strong>{{ config('app.name', 'DoodleOn') }}</strong> -->
+                    </a>
+                </div>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sort</a>
                     </li>
                 </ul>
-                <div class="mx-auto">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <strong>{{ config('app.name', 'DoodleOn') }}</strong>
-                    </a>
-                </div>
+                
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         @guest
