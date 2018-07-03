@@ -8,7 +8,25 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// 3855B0
+// A0C6EC
+// 1983AB
+// E3CCA9
+// 76FFA9
+
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  background-color: #1983AB;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  @extend .shadow;
+}
+
+body {
+  background-color: #E3CCA9; 
+}
+
+.logo {
+  //background-image: url("/../img/temp_logo.png");
+  width: 25%;
+
+  float: none;
 }
