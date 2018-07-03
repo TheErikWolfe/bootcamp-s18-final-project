@@ -30,3 +30,56 @@ body {
 
   float: none;
 }
+
+.imgframe {
+  @extend .col; 
+  // @extend .col-sm-12;
+  // width: 18em;
+  // height: 32em;
+  
+  
+  @extend .m-3;
+  @extend .p-0;
+  @extend .rounded-0;
+}
+
+// .imgframebody {
+//   background-image: url("/../img/1.jpg");
+//   @extend .img-fluid; 
+// }
+
+.imgprops {
+  @extend .img-fluid;
+  width: 100%;
+  @extend .m-0;
+  @extend .p-0;
+  position: relative;
+}
+
+.arrowcontainer {
+  position: absolute;
+
+  right: 0;
+  bottom: 3%;
+}
+
+.arrow {
+  position: relative;
+  @extend .btn;
+
+}
+
+.arrow:hover {
+  
+  
+  @extend .bg-light;
+}
+
+.upvotearrow {
+  @extend .text-success;
+}
+
+.downvotearrow {
+  @extend .text-danger;
+  @extend .mr-1;
+}
