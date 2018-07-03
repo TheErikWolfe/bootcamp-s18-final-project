@@ -26,22 +26,24 @@
             <div class="container">
                 
 
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sort</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="navbar-brand text-center" href="{{ url('/') }}">
-                            <strong>{{ config('app.name', 'DoodleOn') }}</strong>
-                        </a>
-                    </li>
+                </ul>
+                <div class="mx-auto">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <strong>{{ config('app.name', 'DoodleOn') }}</strong>
+                    </a>
+                </div>
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         @guest
                         <a class="nav-link mr-2" href="{{ route('login') }}">+</a>
                         @else
                         <a class="nav-link mr-2" href="{{ route('drawingapp') }}">+</a>
                         @endguest
-                    </li>                    
+                    </li>
                 </ul>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
