@@ -8629,7 +8629,8 @@ button.bg-dark:focus {
 }
 
 .mt-0,
-.my-0 {
+.my-0,
+.logo {
   margin-top: 0 !important;
 }
 
@@ -8639,7 +8640,8 @@ button.bg-dark:focus {
 }
 
 .mb-0,
-.my-0 {
+.my-0,
+.logo {
   margin-bottom: 0 !important;
 }
 
@@ -10532,8 +10534,14 @@ body {
 }
 
 .logo {
-  width: 25%;
-  float: none;
+  width: auto;
+  height: 100%;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .imgprops {

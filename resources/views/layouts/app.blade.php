@@ -23,30 +23,15 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
+
+
                 
-                <div class="mx-auto">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                    <img class="logo" src="{{ asset('img/temp_logo.png') }}" />
-                        <!-- <strong>{{ config('app.name', 'DoodleOn') }}</strong> -->
-                    </a>
-                </div>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sort</a>
-                    </li>
-                </ul>
+
                 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        @guest
-                        <a class="nav-link mr-2" href="{{ route('login') }}">+</a>
-                        @else
-                        <a class="nav-link mr-2" href="{{ route('drawingapp') }}">+</a>
-                        @endguest
-                    </li>
-                </ul>
+                
+
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -57,11 +42,41 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    
-                    
-                    
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre> 
+                                Sort By <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="">{{ __('Newest First') }}</a>
+                                <a class="dropdown-item" href="">{{ __('Popularity') }}</a>
+                            </div>
+                        </li>
+                    </ul>          
+                </div>
+
+                    <!-- Middle content. Can't make image into an anchor because it messes up the margin. -->
+
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/>
+                </a>
+                        
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link mr-2" 
+
+                            @guest
+                                href="{{ route('login') }}">
+                            @else
+                                href="{{ route('drawingapp') }}">
+                            @endguest
+
+                            New Doodle</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
 
@@ -103,7 +118,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>

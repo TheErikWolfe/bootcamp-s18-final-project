@@ -8,11 +8,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-// 3855B0
-// A0C6EC
-// 1983AB
-// E3CCA9
-// 76FFA9
+// #3855B0
+// #A0C6EC
+// #1983AB
+// #E3CCA9
+// #76FFA9
 
 .navbar-laravel {
   background-color: #1983AB;
@@ -25,10 +25,15 @@ body {
 }
 
 .logo {
-  //background-image: url("/../img/temp_logo.png");
-  width: 25%;
-
-  float: none;
+  width: auto;
+  height: 100%;
+  @extend .my-0;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top:0;
 }
 
 .imgframe {
@@ -42,11 +47,6 @@ body {
   @extend .p-0;
   @extend .rounded-0;
 }
-
-// .imgframebody {
-//   background-image: url("/../img/1.jpg");
-//   @extend .img-fluid; 
-// }
 
 .imgprops {
   @extend .img-fluid;
