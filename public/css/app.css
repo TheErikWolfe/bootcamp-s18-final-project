@@ -8560,12 +8560,15 @@ button.bg-dark:focus {
 }
 
 .shadow,
+.settings-menu-card,
+.settings-card,
 .navbar-laravel {
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
-.shadow-lg {
+.shadow-lg,
+.imgframe {
   -webkit-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
           box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
 }
@@ -10523,6 +10526,16 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+.settings-menu-card {
+  background-color: #A0C6EC;
+  border-color: #3855B0;
+}
+
+.settings-card {
+  background-color: #A0C6EC;
+  border-color: #3855B0;
 }
 
 .navbar-laravel {

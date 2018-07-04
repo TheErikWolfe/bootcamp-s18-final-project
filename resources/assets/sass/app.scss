@@ -14,6 +14,18 @@
 // #E3CCA9
 // #76FFA9
 
+.settings-menu-card {
+  background-color: #A0C6EC;
+  @extend .shadow;
+  border-color: #3855B0;
+}
+
+.settings-card {
+  background-color: #A0C6EC;
+  @extend .shadow;
+  border-color: #3855B0;
+}
+
 .navbar-laravel {
   background-color: #1983AB;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -38,17 +50,15 @@ body {
 
 .imgframe {
   @extend .col; 
-  // @extend .col-sm-12;
-  // width: 18em;
-  // height: 32em;
-  
-  
   @extend .m-3;
   @extend .p-0;
   @extend .rounded-0;
+  @extend .shadow-lg;
+  
 }
 
 .imgprops {
+  
   @extend .img-fluid;
   width: 100%;
   @extend .m-0;
