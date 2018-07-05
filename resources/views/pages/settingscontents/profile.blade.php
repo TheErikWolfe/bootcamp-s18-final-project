@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="email" class="form-control" id="username-input" aria-describedby="emailHelp" placeholder="">
+            <input type="email" style="background-color: #FFEFCB" class="form-control" id="username-input" aria-describedby="emailHelp" placeholder="">
         </div>
         <button type="submit" class="btn btn-primary">Save Profile Settings</button>
     </form>
