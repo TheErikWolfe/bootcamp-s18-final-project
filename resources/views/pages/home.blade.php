@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="">
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <!-- The Close Button -->
@@ -12,273 +12,21 @@
         <img class="modal-content" id="img01">
     </div>
 
-    <div class="row">
-
-
+    @for ($i = 0; $i < 10; $i++)
+    <div class="row imgrow">
+        @for ($j = 0; $j < 6; $j++)
         <div class="imgframe">
             <div class="p-0">
-                <img id="myImg" class="imgprops" src="{{ asset('img/4.jpg') }}" style="width:100%;max-width:300px"/>
+                <img id="myImg" class="imgprops" src="{{ asset('img/4.jpg') }}"/>
                 <div class="arrowcontainer">
                     <div class="arrow fa fa-arrow-up upvotearrow"></div>
                     <div class="arrow fa fa-arrow-down downvotearrow"></div>
                 </div>
             </div>
         </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        
-
-
-
-        
+        @endfor
     </div>
-    <div class="row">
-
-
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        <div class="imgframe">
-            <div class="p-0">
-                <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-                <div class="arrowcontainer">
-                    <div class="arrow fa fa-arrow-up upvotearrow"></div>
-                    <div class="arrow fa fa-arrow-down downvotearrow"></div>
-                </div>
-            </div>
-        </div>
-        
-
-
-
-        
-    </div><div class="row">
-
-
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-</div><div class="row">
-
-
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-</div><div class="row">
-
-
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-</div><div class="row">
-
-
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-<div class="imgframe">
-    <div class="p-0">
-        <img class="imgprops" src="{{ asset('img/4.jpg') }}" />
-        <div class="arrowcontainer">
-            <div class="arrow fa fa-arrow-up upvotearrow"></div>
-            <div class="arrow fa fa-arrow-down downvotearrow"></div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-</div>
-
-</div>
+    @endfor
+</div
 
 @endsection
