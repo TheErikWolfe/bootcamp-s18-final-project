@@ -15,25 +15,29 @@
 // #76FFA9
 
 .settings-menu-card {
-  background-color: #A0C6EC;
+  background-color: #AEC6FA;
   @extend .shadow;
-  border-color: #3855B0;
+  border: none;
+  @extend .rounded-0;
 }
 
 .settings-card {
-  background-color: #A0C6EC;
+  background-color: #AEC6FA;
   @extend .shadow;
-  border-color: #3855B0;
+  border: none;
+  @extend .rounded-0;
 }
 
 .navbar-laravel {
-  background-color: #1983AB;
+  background-color: #5672AD;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   @extend .shadow;
+  color: #fff;
+  font-weight:bold;
 }
 
 body {
-  background-color: #E3CCA9; 
+  background-color: #FAE3AE; 
 }
 
 .logo {
@@ -92,4 +96,14 @@ body {
 .downvotearrow {
   @extend .text-danger;
   @extend .mr-1;
+}
+
+.signature {
+  width: 100%;
+}
+
+#edit-button {
+  position: absolute;
+  right: 10%;
+  margin-right: 0;
 }

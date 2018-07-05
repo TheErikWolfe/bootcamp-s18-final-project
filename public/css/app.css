@@ -7158,6 +7158,8 @@ button.bg-dark:focus {
 }
 
 .rounded-0,
+.settings-menu-card,
+.settings-card,
 .imgframe {
   border-radius: 0 !important;
 }
@@ -10529,21 +10531,23 @@ a.text-dark:focus {
 }
 
 .settings-menu-card {
-  background-color: #A0C6EC;
-  border-color: #3855B0;
+  background-color: #AEC6FA;
+  border: none;
 }
 
 .settings-card {
-  background-color: #A0C6EC;
-  border-color: #3855B0;
+  background-color: #AEC6FA;
+  border: none;
 }
 
 .navbar-laravel {
-  background-color: #1983AB;
+  background-color: #5672AD;
+  color: #fff;
+  font-weight: bold;
 }
 
 body {
-  background-color: #E3CCA9;
+  background-color: #FAE3AE;
 }
 
 .logo {
@@ -10570,5 +10574,15 @@ body {
 
 .arrow {
   position: relative;
+}
+
+.signature {
+  width: 100%;
+}
+
+#edit-button {
+  position: absolute;
+  right: 10%;
+  margin-right: 0;
 }
 
