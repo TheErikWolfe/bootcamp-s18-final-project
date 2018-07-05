@@ -10544,8 +10544,9 @@ a.text-dark:focus {
   background-color: #5672AD;
 }
 
-.nav-link {
-  color: #FFEFCB !important;
+.nav-link,
+label {
+  color: #263960 !important;
   font-weight: bold;
 }
 
@@ -10583,6 +10584,16 @@ body {
   position: relative;
 }
 
+.btn,
+.arrow {
+  background-color: #263960;
+}
+
+.btn:hover,
+.arrow:hover {
+  background-color: #C8E5FB;
+}
+
 .signature {
   width: 100%;
 }
@@ -10614,9 +10625,8 @@ body {
   /* Stay in place */
   z-index: 1;
   /* Sit on top */
-  padding-top: 5%;
+  padding-top: 3%;
   /* Location of the box */
-  padding-bottom: 5%;
   left: 0;
   top: 0;
   width: 100%;
@@ -10634,7 +10644,7 @@ body {
 .modal-content {
   margin: auto;
   display: block;
-  height: 90%;
+  height: 94%;
   width: auto;
 }
 

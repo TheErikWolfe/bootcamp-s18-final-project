@@ -30,12 +30,11 @@
 
 .navbar-laravel {
   background-color: #5672AD;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   @extend .shadow;
 }
 
-.nav-link {
-  color: #FFEFCB !important;
+.nav-link, label{
+  color: #263960 !important;
   font-weight: bold;
 }
 
@@ -90,6 +89,14 @@ body {
 
 }
 
+.btn {
+  background-color: #263960;
+}
+
+.btn:hover {
+  background-color: #C8E5FB;
+}
+
 .arrow:hover {
   
   
@@ -125,28 +132,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Style the Image Used to Trigger the Modal */
 #myImg {
     //border-radius: 5px;
@@ -161,8 +146,7 @@ body {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 5%; /* Location of the box */
-    padding-bottom: 5%;
+    padding-top: 3%; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -175,7 +159,7 @@ body {
 .modal-content {
     margin: auto;
     display: block;
-    height: 90%;
+    height: 94%;
     width: auto;
 }
 
