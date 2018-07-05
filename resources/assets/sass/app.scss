@@ -14,9 +14,8 @@
 // #E3CCA9
 // #76FFA9
 
-.settings-menu-card {
+.settings-menu-navbar {
   background-color: #5672AD;
-  @extend .shadow;
   border: none;
   @extend .rounded-0;
 }
@@ -36,6 +35,10 @@
 .nav-link, label{
   color: #263960 !important;
   font-weight: bold;
+}
+
+.sticky-sidebar {
+  position: sticky;
 }
 
 body {
@@ -58,9 +61,13 @@ body {
   top:0;
 }
 
+.imgrow {
+  @extend .mx-3;
+}
+
 .imgframe {
   @extend .col; 
-  @extend .m-3;
+  @extend .m-2;
   @extend .p-0;
   @extend .rounded-0;
   @extend .shadow-lg;

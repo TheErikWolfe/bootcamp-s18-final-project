@@ -7158,7 +7158,7 @@ button.bg-dark:focus {
 }
 
 .rounded-0,
-.settings-menu-card,
+.settings-menu-navbar,
 .settings-card,
 .imgframe {
   border-radius: 0 !important;
@@ -8562,7 +8562,6 @@ button.bg-dark:focus {
 }
 
 .shadow,
-.settings-menu-card,
 .settings-card,
 .navbar-laravel {
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -8680,7 +8679,8 @@ button.bg-dark:focus {
   margin-left: 0.25rem !important;
 }
 
-.m-2 {
+.m-2,
+.imgframe {
   margin: 0.5rem !important;
 }
 
@@ -8704,8 +8704,7 @@ button.bg-dark:focus {
   margin-left: 0.5rem !important;
 }
 
-.m-3,
-.imgframe {
+.m-3 {
   margin: 1rem !important;
 }
 
@@ -8715,7 +8714,8 @@ button.bg-dark:focus {
 }
 
 .mr-3,
-.mx-3 {
+.mx-3,
+.imgrow {
   margin-right: 1rem !important;
 }
 
@@ -8725,7 +8725,8 @@ button.bg-dark:focus {
 }
 
 .ml-3,
-.mx-3 {
+.mx-3,
+.imgrow {
   margin-left: 1rem !important;
 }
 
@@ -10530,7 +10531,7 @@ a.text-dark:focus {
   }
 }
 
-.settings-menu-card {
+.settings-menu-navbar {
   background-color: #5672AD;
   border: none;
 }
@@ -10548,6 +10549,11 @@ a.text-dark:focus {
 label {
   color: #263960 !important;
   font-weight: bold;
+}
+
+.sticky-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 body {
