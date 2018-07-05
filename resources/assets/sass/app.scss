@@ -32,12 +32,19 @@
   background-color: #5672AD;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   @extend .shadow;
-  color: #fff;
-  font-weight:bold;
+}
+
+.nav-link {
+  color: #FFEFCB !important;
+  font-weight: bold;
 }
 
 body {
   background-color: #FAE3AE; 
+}
+
+.form-control {
+  background-color: #FFEFCB;
 }
 
 .logo {

@@ -10542,12 +10542,19 @@ a.text-dark:focus {
 
 .navbar-laravel {
   background-color: #5672AD;
-  color: #fff;
+}
+
+.nav-link {
+  color: #FFEFCB !important;
   font-weight: bold;
 }
 
 body {
   background-color: #FAE3AE;
+}
+
+.form-control {
+  background-color: #FFEFCB;
 }
 
 .logo {
