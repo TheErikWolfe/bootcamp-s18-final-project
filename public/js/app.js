@@ -13893,30 +13893,98 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('example-component', __webpack_require__(39));
 
-var app = new Vue({
-  el: '#app'
+Vue.component('drawing-board', {
+    template: '\n    <div class="container">\n    <div class="card settings-card p-0">\n    <div class="card-body mt-0">\n    <canvas id="canvas" \n        style="padding-left: 0;\n        padding-right: 0;\n        margin-top: 0px;\n        margin-left: auto;\n        margin-right: auto;\n        display: block;" \n        v-on:mousedown="handleMouseDown" \n        v-on:mouseup="handleMouseUp" \n        v-on:mousemove="handleMouseMove" \n        width="400%" \n        height="600%">\n    </canvas>\n    </div>\n    </div>\n    </div>',
+    data: function data() {
+        return {
+            mouse: {
+                current: {
+                    x: 0,
+                    y: 0
+                },
+                previous: {
+                    x: 0,
+                    y: 0
+                },
+                down: false
+            }
+        };
+    },
+    computed: {
+        currentMouse: function currentMouse() {
+            var c = document.getElementById("canvas");
+            var rect = c.getBoundingClientRect();
+
+            return {
+                x: this.mouse.current.x - rect.left,
+                y: this.mouse.current.y - rect.top
+            };
+        }
+    },
+    created: function created() {
+        this.$parent.$on('stateChange', function ($event) {
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+
+            ctx.rect(0, 0, ctx.width, ctx.height);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        });
+    },
+
+    methods: {
+        draw: function draw(event) {
+            // requestAnimationFrame(this.draw);
+            if (this.mouse.down) {
+                var c = document.getElementById("canvas");
+
+                var ctx = c.getContext("2d");
+
+                ctx.clearRect(0, 0, ctx.width, ctx.height);
+
+                ctx.lineTo(this.currentMouse.x, this.currentMouse.y);
+                ctx.strokeStyle = "#F63E02";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        },
+        handleMouseDown: function handleMouseDown(event) {
+            this.mouse.down = true;
+            this.mouse.current = {
+                x: event.pageX,
+                y: event.pageY
+            };
+
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+
+            ctx.moveTo(this.currentMouse.x, this.currentMouse.y);
+        },
+        handleMouseUp: function handleMouseUp() {
+            this.mouse.down = false;
+        },
+        handleMouseMove: function handleMouseMove(event) {
+
+            this.mouse.current = {
+                x: event.pageX,
+                y: event.pageY
+            };
+
+            this.draw(event);
+        }
+    },
+    ready: function ready() {
+
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        ctx.translate(0.5, 0.5);
+        ctx.imageSmoothingEnabled = false;
+    }
 });
 
-// // Get the modal
-// var modal = document.getElementById('myModal');
-
-// // Get the image and insert it inside the modal - use its "alt" text as a caption
-// var img = document.getElementById('myImg');
-// var modalImg = document.getElementById("img01");
-// var captionText = document.getElementById("caption");
-// img.onclick = function(){
-//     modal.style.display = "block";
-//     modalImg.src = this.src;
-//     captionText.innerHTML = this.alt;
-// }
-
-// // Get the <span> element that closes the modal
-// var span = document.getElementsByClassName("close")[0];
-
-// // When the user clicks on <span> (x), close the modal
-// span.onclick = function() { 
-//   modal.style.display = "none";
-// }
+var app = new Vue({
+    el: '#app'
+});
 
 /***/ }),
 /* 13 */
