@@ -33,7 +33,7 @@
         @for ($j = 0; $j < 6; $j++)
         <div class="imgframe">
             <div class="p-0">
-            <img type="button" data-toggle="modal" data-target="#exampleModal" id="myImg" class="imgprops" src="{{ asset('img/4.jpg') }}"/>
+            <img type="button" data-toggle="modal" data-target="#exampleModal" class="imgprops" src="{{ asset('img/4.jpg') }}"/>
                 <div class="arrowcontainer">
                     <div class="arrow bg-transparent fa fa-arrow-up upvotearrow"></div>
                     <div class="arrow bg-transparent fa fa-arrow-down downvotearrow"></div>
