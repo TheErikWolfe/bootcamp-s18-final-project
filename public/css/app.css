@@ -8679,8 +8679,7 @@ button.bg-dark:focus {
   margin-left: 0.25rem !important;
 }
 
-.m-2,
-.imgframe {
+.m-2 {
   margin: 0.5rem !important;
 }
 
@@ -8704,7 +8703,8 @@ button.bg-dark:focus {
   margin-left: 0.5rem !important;
 }
 
-.m-3 {
+.m-3,
+.imgframe {
   margin: 1rem !important;
 }
 
@@ -8714,8 +8714,7 @@ button.bg-dark:focus {
 }
 
 .mr-3,
-.mx-3,
-.imgrow {
+.mx-3 {
   margin-right: 1rem !important;
 }
 
@@ -8725,8 +8724,7 @@ button.bg-dark:focus {
 }
 
 .ml-3,
-.mx-3,
-.imgrow {
+.mx-3 {
   margin-left: 1rem !important;
 }
 
@@ -8735,6 +8733,8 @@ button.bg-dark:focus {
 }
 
 .mt-4,
+.settings-menu-navbar,
+.settings-card,
 .my-4 {
   margin-top: 1.5rem !important;
 }
@@ -8764,7 +8764,8 @@ button.bg-dark:focus {
 }
 
 .mr-5,
-.mx-5 {
+.mx-5,
+.imgrow {
   margin-right: 3rem !important;
 }
 
@@ -8774,7 +8775,8 @@ button.bg-dark:focus {
 }
 
 .ml-5,
-.mx-5 {
+.mx-5,
+.imgrow {
   margin-left: 3rem !important;
 }
 
