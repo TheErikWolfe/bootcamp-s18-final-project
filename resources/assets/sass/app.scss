@@ -18,6 +18,7 @@
   background-color: #5672AD;
   border: none;
   @extend .rounded-0;
+  @extend .mt-4;
 }
 
 .settings-card {
@@ -25,6 +26,7 @@
   @extend .shadow;
   border: none;
   @extend .rounded-0;
+  @extend .mt-4;
 }
 
 .navbar-laravel {
@@ -62,12 +64,12 @@ body {
 }
 
 .imgrow {
-  @extend .mx-3;
+  @extend .mx-5;
 }
 
 .imgframe {
   @extend .col; 
-  @extend .m-2;
+  @extend .m-3;
   @extend .p-0;
   @extend .rounded-0;
   @extend .shadow-lg;

@@ -21,7 +21,7 @@ Route::get('/drawingapp', function () {
 })->name('drawingapp');
 
 Route::get('/settings', function () {
-    return view('pages.settings');
+    return view('pages.settingscontents.account');
 })->name('settings');
 
 Route::get('/userdrawings', function () {
