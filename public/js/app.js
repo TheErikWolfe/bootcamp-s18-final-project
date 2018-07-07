@@ -13894,7 +13894,8 @@ window.Vue = __webpack_require__(36);
 Vue.component('example-component', __webpack_require__(39));
 
 Vue.component('drawing-board', {
-    template: '\n    <div class="container">\n    <div class="card settings-card p-0">\n    <div class="card-body mt-0">\n    <canvas id="canvas" \n        style="padding-left: 0;\n        padding-right: 0;\n        margin-top: 0px;\n        margin-left: auto;\n        margin-right: auto;\n        display: block;" \n        v-on:mousedown="handleMouseDown" \n        v-on:mouseup="handleMouseUp" \n        v-on:mousemove="handleMouseMove" \n        width="400%" \n        height="600%">\n    </canvas>\n    </div>\n    </div>\n    </div>',
+    template: '\n\n\n    <div style="\n    background: black;\n    position: relative;\n    width: 70%;\n    top: 10%;\n    right: 0;\n    left: 0;\n    margin-right: auto;\n    margin-left: auto;">\n        <!--<ul style="display:inline-block;">\n            <li><a href="#home">Home</a></li>\n            <li><a href="#news">News</a></li>\n            <li><a href="#contact">Contact</a></li>\n            <li><a href="#about">About</a></li>\n        </ul>-->\n        <div style="\n        position: absolute;\n        left:0;\n        margin-left:auto;">\n            <canvas id="canvas" \n                style="display:inline-block;" \n                v-on:mousedown="handleMouseDown" \n                v-on:mouseup="handleMouseUp" \n                v-on:mousemove="handleMouseMove" \n                width="400%"\n                height="600%">\n            </canvas>\n        </div>\n    </div>',
+
     data: function data() {
         return {
             mouse: {

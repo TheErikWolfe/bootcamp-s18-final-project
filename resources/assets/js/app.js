@@ -19,25 +19,40 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 
 Vue.component('drawing-board', {
     template: `
-    <div class="container">
-    <div class="card settings-card p-0">
-    <div class="card-body mt-0">
-    <canvas id="canvas" 
-        style="padding-left: 0;
-        padding-right: 0;
-        margin-top: 0px;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;" 
-        v-on:mousedown="handleMouseDown" 
-        v-on:mouseup="handleMouseUp" 
-        v-on:mousemove="handleMouseMove" 
-        width="400%" 
-        height="600%">
-    </canvas>
-    </div>
-    </div>
+
+
+    <div style="
+    background: black;
+    position: relative;
+    width: 70%;
+    top: 10%;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;">
+        <!--<ul style="display:inline-block;">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>-->
+        <div style="
+        position: absolute;
+        left:0;
+        margin-left:auto;">
+            <canvas id="canvas" 
+                style="display:inline-block;" 
+                v-on:mousedown="handleMouseDown" 
+                v-on:mouseup="handleMouseUp" 
+                v-on:mousemove="handleMouseMove" 
+                width="400%"
+                height="600%">
+            </canvas>
+        </div>
     </div>`,
+
+
+
     data: function () {
         return {
             mouse: {
