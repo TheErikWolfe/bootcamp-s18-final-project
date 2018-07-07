@@ -2,8 +2,6 @@
 
 @section('content')
 
-<div class="container">
-    <h1>Hello from drawing app page</h1>
-</div>
+<drawing-board></drawing-board>
 
 @endsection
