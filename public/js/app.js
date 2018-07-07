@@ -13894,7 +13894,7 @@ window.Vue = __webpack_require__(36);
 Vue.component('example-component', __webpack_require__(39));
 
 Vue.component('drawing-board', {
-    template: '\n\n\n    <div style="\n    background: black;\n    position: relative;\n    width: 70%;\n    top: 10%;\n    right: 0;\n    left: 0;\n    margin-right: auto;\n    margin-left: auto;">\n        <!--<ul style="display:inline-block;">\n            <li><a href="#home">Home</a></li>\n            <li><a href="#news">News</a></li>\n            <li><a href="#contact">Contact</a></li>\n            <li><a href="#about">About</a></li>\n        </ul>-->\n        <div style="\n        position: absolute;\n        left:0;\n        margin-left:auto;">\n            <canvas id="canvas" \n                style="display:inline-block;" \n                v-on:mousedown="handleMouseDown" \n                v-on:mouseup="handleMouseUp" \n                v-on:mousemove="handleMouseMove" \n                width="400%"\n                height="600%">\n            </canvas>\n        </div>\n    </div>',
+    template: '\n    <div class="drawing-app-wrapper">\n        <div class="drawing-app-button-navbar">\n            <div class="button-wrapper">\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/paint-brush.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/fill-color.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/erase-filled.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/pencil.png"></div>\n            </div>\n        </div>\n        <div style="display:inline-block;">\n            <canvas id="drawing-app-canvas"\n                v-on:mousedown="handleMouseDown" \n                v-on:mouseup="handleMouseUp" \n                v-on:mousemove="handleMouseMove" \n                width="400px"\n                height="600px"> \n            </canvas>\n        </div>\n    </div>',
 
     data: function data() {
         return {
@@ -13913,7 +13913,7 @@ Vue.component('drawing-board', {
     },
     computed: {
         currentMouse: function currentMouse() {
-            var c = document.getElementById("canvas");
+            var c = document.getElementById("drawing-app-canvas");
             var rect = c.getBoundingClientRect();
 
             return {
@@ -13924,7 +13924,7 @@ Vue.component('drawing-board', {
     },
     created: function created() {
         this.$parent.$on('stateChange', function ($event) {
-            var c = document.getElementById("canvas");
+            var c = document.getElementById("drawing-app-canvas");
             var ctx = c.getContext("2d");
 
             ctx.rect(0, 0, ctx.width, ctx.height);
@@ -13937,7 +13937,7 @@ Vue.component('drawing-board', {
         draw: function draw(event) {
             // requestAnimationFrame(this.draw);
             if (this.mouse.down) {
-                var c = document.getElementById("canvas");
+                var c = document.getElementById("drawing-app-canvas");
 
                 var ctx = c.getContext("2d");
 
@@ -13956,7 +13956,7 @@ Vue.component('drawing-board', {
                 y: event.pageY
             };
 
-            var c = document.getElementById("canvas");
+            var c = document.getElementById("drawing-app-canvas");
             var ctx = c.getContext("2d");
 
             ctx.moveTo(this.currentMouse.x, this.currentMouse.y);
@@ -13976,7 +13976,7 @@ Vue.component('drawing-board', {
     },
     ready: function ready() {
 
-        var c = document.getElementById("canvas");
+        var c = document.getElementById("drawing-app-canvas");
         var ctx = c.getContext("2d");
         ctx.translate(0.5, 0.5);
         ctx.imageSmoothingEnabled = false;
