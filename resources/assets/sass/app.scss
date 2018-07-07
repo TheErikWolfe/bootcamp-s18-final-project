@@ -32,6 +32,9 @@
 .navbar-laravel {
   background-color: #5672AD;
   @extend .shadow;
+  width: 100%;
+  // position: fixed;
+  // z-index: 999999;
 }
 
 .nav-link, label{
@@ -44,6 +47,7 @@
 }
 
 body {
+  padding-top: 50px;
   background-color: #FAE3AE; 
 }
 
@@ -146,13 +150,72 @@ body {
   width: 100%;
 }
 
+.drawing-app-wrapper {
+  background: #263960;
+  position: relative;
+  width: 511.1px;
+  height: 604px;
+  margin-right: 0%;
+  top: 10%;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  @extend .shadow-lg;
+}
+
+.drawing-app-button-navbar {
+  display:inline-block;
+  width: 107px;
+  height:605px;
+  vertical-align: top;
+  border-style: solid;
+  border-color: #263960;
+  border-width: thick;
+}
+
+.button-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 50px;
+  grid-gap: 2px;
+}
+
+.canvas-button {
+  width: 50px;
+  height: 50px;
+  border-style: solid;
+  border-color: lightgrey;
+  background: darkgrey;
+  justify-self: center;
+  position: relative;
+}
+
+.button-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-height: 12px;
+}
+
+.canvas-button:hover {
+  opacity: .7;
+}
+
+#drawing-app-canvas {
+  margin-left: -5px;
+  border-style: solid;
+  border-color: #263960;
+  border-width: thick;
+  background: white;
+}
+
 #edit-button {
   position: absolute;
   right: 10%;
   margin-right: 0;
 }
 
-canvas {
-  background: white;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-}
