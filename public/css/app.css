@@ -513,7 +513,7 @@ mark,
 }
 
 .img-fluid,
-.imgprops {
+.img-props {
   max-width: 100%;
   height: auto;
 }
@@ -670,7 +670,7 @@ pre code {
 .col-sm-11,
 .col-sm-12,
 .col-sm,
-.imgframe,
+.img-frame,
 .col-sm-auto,
 .col-md-1,
 .col-md-2,
@@ -958,7 +958,7 @@ pre code {
 
 @media (min-width: 576px) {
   .col-sm,
-  .imgframe {
+  .img-frame {
     -ms-flex-preferred-size: 0;
         flex-basis: 0;
     -webkit-box-flex: 1;
@@ -7160,7 +7160,7 @@ button.bg-dark:focus {
 .rounded-0,
 .settings-menu-navbar,
 .settings-card,
-.imgframe {
+.img-frame {
   border-radius: 0 !important;
 }
 
@@ -8569,7 +8569,7 @@ button.bg-dark:focus {
 }
 
 .shadow-lg,
-.imgframe,
+.img-frame,
 .drawing-app-wrapper {
   -webkit-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
           box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
@@ -8629,7 +8629,7 @@ button.bg-dark:focus {
 }
 
 .m-0,
-.imgprops {
+.img-props {
   margin: 0 !important;
 }
 
@@ -8665,7 +8665,7 @@ button.bg-dark:focus {
 }
 
 .mr-1,
-.downvotearrow,
+.downvote-arrow,
 .mx-1 {
   margin-right: 0.25rem !important;
 }
@@ -8705,7 +8705,7 @@ button.bg-dark:focus {
 }
 
 .m-3,
-.imgframe {
+.img-frame {
   margin: 1rem !important;
 }
 
@@ -8766,7 +8766,7 @@ button.bg-dark:focus {
 
 .mr-5,
 .mx-5,
-.imgrow {
+.img-row {
   margin-right: 3rem !important;
 }
 
@@ -8777,13 +8777,13 @@ button.bg-dark:focus {
 
 .ml-5,
 .mx-5,
-.imgrow {
+.img-row {
   margin-left: 3rem !important;
 }
 
 .p-0,
-.imgframe,
-.imgprops {
+.img-frame,
+.img-props {
   padding: 0 !important;
 }
 
@@ -10344,14 +10344,14 @@ a.text-secondary:focus {
 }
 
 .text-success,
-.upvotearrow {
+.upvote-arrow {
   color: #28a745 !important;
 }
 
 a.text-success:hover,
-a.upvotearrow:hover,
+a.upvote-arrow:hover,
 a.text-success:focus,
-a.upvotearrow:focus {
+a.upvote-arrow:focus {
   color: #1e7e34 !important;
 }
 
@@ -10374,14 +10374,14 @@ a.text-warning:focus {
 }
 
 .text-danger,
-.downvotearrow {
+.downvote-arrow {
   color: #dc3545 !important;
 }
 
 a.text-danger:hover,
-a.downvotearrow:hover,
+a.downvote-arrow:hover,
 a.text-danger:focus,
-a.downvotearrow:focus {
+a.downvote-arrow:focus {
   color: #bd2130 !important;
 }
 
@@ -10580,11 +10580,11 @@ body {
   top: 0;
 }
 
-.imgframe {
+.img-frame {
   background: black;
 }
 
-.imgprops {
+.img-props {
   opacity: 1;
   -webkit-transition: .5s ease;
   transition: .5s ease;
@@ -10593,15 +10593,15 @@ body {
   position: relative;
 }
 
-.imgframe:hover .imgprops {
+.img-frame:hover .img-props {
   opacity: 0.7;
 }
 
-.imgframe:hover .arrowcontainer {
+.img-frame:hover .arrow-container {
   opacity: 1;
 }
 
-.arrowcontainer {
+.arrow-container {
   -webkit-transition: .5s ease;
   transition: .5s ease;
   opacity: 0;
