@@ -14003,119 +14003,98 @@ window.Vue = __webpack_require__(37);
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('test', __webpack_require__(43));
 
-// Vue.component('drawing-board', {
-//     template: `
-//     <div class="drawing-app-wrapper">
-//         <div class="drawing-app-button-navbar">
-//             <div class="button-wrapper">
-//                 <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/paint-brush.png"></div>
-//                 <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/fill-color.png"></div>
-//                 <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/erase-filled.png"></div>
-//                 <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/pencil.png"></div>
-//             </div>
-//         </div>
-//         <div style="display:inline-block;">
-//             <canvas id="drawing-app-canvas"
-//                 v-on:mousedown="handleMouseDown" 
-//                 v-on:mouseup="handleMouseUp" 
-//                 v-on:mousemove="handleMouseMove" 
-//                 width="400px"
-//                 height="600px"> 
-//             </canvas>
-//         </div>
-//     </div>`,
+Vue.component('drawing-board', {
+    template: '\n    <div class="drawing-app-wrapper">\n        <div class="drawing-app-button-navbar">\n            <div class="button-wrapper">\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/paint-brush.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/fill-color.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/erase-filled.png"></div>\n                <div class="canvas-button"><img class="button-image" height="35px" width="35px" src="https://png.icons8.com/ios/40/000000/pencil.png"></div>\n            </div>\n        </div>\n        <div style="display:inline-block;">\n            <canvas id="drawing-app-canvas"\n                v-on:mousedown="handleMouseDown" \n                v-on:mouseup="handleMouseUp" \n                v-on:mousemove="handleMouseMove" \n                width="400px"\n                height="600px"> \n            </canvas>\n        </div>\n    </div>',
 
-//     data: function () {
-//         return {
-//             mouse: {
-//                 current: {
-//                     x: 0,
-//                     y: 0
-//                 },
-//                 previous: {
-//                     x: 0,
-//                     y: 0
-//                 },
-//                 down: false
-//             }
-//         }
-//     },
-//     computed: {
-//         currentMouse: function () {
-//             var c = document.getElementById("drawing-app-canvas");
-//             var rect = c.getBoundingClientRect();
+    data: function data() {
+        return {
+            mouse: {
+                current: {
+                    x: 0,
+                    y: 0
+                },
+                previous: {
+                    x: 0,
+                    y: 0
+                },
+                down: false
+            }
+        };
+    },
+    computed: {
+        currentMouse: function currentMouse() {
+            var c = document.getElementById("drawing-app-canvas");
+            var rect = c.getBoundingClientRect();
 
-//             return {
-//                 x: this.mouse.current.x - rect.left,
-//                 y: this.mouse.current.y - rect.top
-//             }
-//         }
-//     },
-//     created() {
-//         this.$parent.$on('stateChange', function($event) {
-//             var c = document.getElementById("drawing-app-canvas");
-//             var ctx = c.getContext("2d");
+            return {
+                x: this.mouse.current.x - rect.left,
+                y: this.mouse.current.y - rect.top
+            };
+        }
+    },
+    created: function created() {
+        this.$parent.$on('stateChange', function ($event) {
+            var c = document.getElementById("drawing-app-canvas");
+            var ctx = c.getContext("2d");
 
-//             ctx.rect(0, 0, ctx.width, ctx.height);
-//             ctx.fillStyle = "red";
-//             ctx.fill();
-//         });
-//     },
-//     methods: {
-//         draw: function (event) {       
-//             // requestAnimationFrame(this.draw);
-//             if (this.mouse.down ) {
-//                 var c = document.getElementById("drawing-app-canvas");
+            ctx.rect(0, 0, ctx.width, ctx.height);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        });
+    },
 
-//                 var ctx = c.getContext("2d");
+    methods: {
+        draw: function draw(event) {
+            // requestAnimationFrame(this.draw);
+            if (this.mouse.down) {
+                var c = document.getElementById("drawing-app-canvas");
 
-//                 ctx.clearRect(0,0,ctx.width,ctx.height);
+                var ctx = c.getContext("2d");
 
+                ctx.clearRect(0, 0, ctx.width, ctx.height);
 
-//                 ctx.lineTo(this.currentMouse.x, this.currentMouse.y);
-//                 ctx.strokeStyle ="#F63E02";
-//                 ctx.lineWidth = 2;
-//                 ctx.stroke()
-//             }
+                ctx.lineTo(this.currentMouse.x, this.currentMouse.y);
+                ctx.strokeStyle = "#F63E02";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        },
+        handleMouseDown: function handleMouseDown(event) {
+            this.mouse.down = true;
+            this.mouse.current = {
+                x: event.pageX,
+                y: event.pageY
+            };
 
-//         },
-//         handleMouseDown: function (event) {
-//             this.mouse.down = true;
-//             this.mouse.current = {
-//                 x: event.pageX,
-//                 y: event.pageY
-//             }
+            var c = document.getElementById("drawing-app-canvas");
+            var ctx = c.getContext("2d");
 
-//             var c = document.getElementById("drawing-app-canvas");
-//             var ctx = c.getContext("2d");
+            ctx.moveTo(this.currentMouse.x, this.currentMouse.y);
+        },
+        handleMouseUp: function handleMouseUp() {
+            this.mouse.down = false;
+        },
+        handleMouseMove: function handleMouseMove(event) {
 
-//             ctx.moveTo(this.currentMouse.x, this.currentMouse.y)
-//         },
-//         handleMouseUp: function () {
-//             this.mouse.down = false;
-//         },
-//         handleMouseMove: function (event) {
+            this.mouse.current = {
+                x: event.pageX,
+                y: event.pageY
+            };
 
-//             this.mouse.current = {
-//                 x: event.pageX,
-//                 y: event.pageY
-//             }
+            this.draw(event);
+        }
+    },
+    ready: function ready() {
 
-//             this.draw(event)
-
-//             }
-//         },
-//         ready: function () {
-
-//         var c = document.getElementById("drawing-app-canvas");
-//         var ctx = c.getContext("2d");
-//         ctx.translate(0.5, 0.5);
-//         ctx.imageSmoothingEnabled= false;
-//     }
-// });
+        var c = document.getElementById("drawing-app-canvas");
+        var ctx = c.getContext("2d");
+        ctx.translate(0.5, 0.5);
+        ctx.imageSmoothingEnabled = false;
+    }
+});
 
 var app = new Vue({
-            el: '#app'
+    el: '#app'
 });
 
 /***/ }),

@@ -10618,6 +10618,28 @@ body {
   background-color: #C8E5FB;
 }
 
+.report-container {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+  opacity: 0;
+}
+
+.report-btn {
+  text-decoration: underline;
+  color: #263960;
+}
+
+.report-container:hover {
+  color: #5672AD;
+}
+
+.img-frame:hover .report-container {
+  opacity: 1;
+}
+
 .user-img-wrapper {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
