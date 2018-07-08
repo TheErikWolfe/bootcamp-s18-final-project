@@ -173,7 +173,7 @@ body {
 .user-img-wrapper {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 2px;
+  row-gap: 30px;
   
 }
 
