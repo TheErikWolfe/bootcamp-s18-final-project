@@ -7158,9 +7158,9 @@ button.bg-dark:focus {
 }
 
 .rounded-0,
+.img-frame,
 .settings-menu-navbar,
-.settings-card,
-.img-frame {
+.settings-card {
   border-radius: 0 !important;
 }
 
@@ -8562,8 +8562,8 @@ button.bg-dark:focus {
 }
 
 .shadow,
-.settings-card,
-.navbar-laravel {
+.navbar-laravel,
+.settings-card {
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
@@ -10534,16 +10534,6 @@ a.text-dark:focus {
   }
 }
 
-.settings-menu-navbar {
-  background-color: #5672AD;
-  border: none;
-}
-
-.settings-card {
-  background-color: #5672AD;
-  border: none;
-}
-
 .navbar-laravel {
   background-color: #5672AD;
   width: 100%;
@@ -10581,7 +10571,8 @@ body {
 }
 
 .img-frame {
-  background: black;
+  background: -webkit-gradient(linear, left top, left bottom, from(darkgrey), to(black));
+  background: linear-gradient(to bottom, darkgrey, black);
 }
 
 .img-props {
@@ -10594,7 +10585,7 @@ body {
 }
 
 .img-frame:hover .img-props {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .img-frame:hover .arrow-container {
@@ -10627,8 +10618,48 @@ body {
   background-color: #C8E5FB;
 }
 
+.user-img-wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 2px;
+}
+
+.user-img-thumbnail {
+  width: 150px;
+  height: 150px;
+  background: -webkit-gradient(linear, left top, left bottom, from(lightgrey), to(black));
+  background: linear-gradient(to bottom, lightgrey, black);
+  overflow: hidden;
+  position: relative;
+}
+
+.user-img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.user-img-thumbnail:hover .user-img {
+  opacity: .6;
+}
+
 .signature {
   width: 100%;
+}
+
+.settings-menu-navbar {
+  background-color: #5672AD;
+  border: none;
+}
+
+.settings-card {
+  background-color: #5672AD;
+  border: none;
 }
 
 .drawing-app-wrapper {
