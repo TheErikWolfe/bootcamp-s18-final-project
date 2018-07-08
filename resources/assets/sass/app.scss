@@ -14,20 +14,17 @@
 // #E3CCA9
 // #76FFA9
 
-.settings-menu-navbar {
-  background-color: #5672AD;
-  border: none;
-  @extend .rounded-0;
-  @extend .mt-4;
-}
 
-.settings-card {
-  background-color: #5672AD;
-  @extend .shadow;
-  border: none;
-  @extend .rounded-0;
-  @extend .mt-4;
-}
+
+
+
+
+
+
+
+
+
+// app.blade styling
 
 .navbar-laravel {
   background-color: #5672AD;
@@ -67,22 +64,37 @@ body {
   top:0;
 }
 
-.imgrow {
+
+
+
+
+
+
+
+
+
+
+
+
+
+// home page styling
+
+.img-row {
   @extend .mx-5;
 }
 
-.imgframe {
+.img-frame {
 
   @extend .col-sm;
   @extend .m-3;
   @extend .p-0;
   @extend .rounded-0;
   @extend .shadow-lg;
-  background: black;
+  background: linear-gradient(to bottom, darkgrey, black);
   
 }
 
-.imgprops {
+.img-props {
   opacity: 1;
   transition: .5s ease;
   //backface-visibility: hidden;
@@ -97,16 +109,16 @@ body {
 
 
 
-.imgframe:hover .imgprops {
-  opacity: 0.7;
+.img-frame:hover .img-props {
+  opacity: 0.5;
 }
 
-.imgframe:hover .arrowcontainer {
+.img-frame:hover .arrow-container {
   opacity: 1;
 }
 
 
-.arrowcontainer {
+.arrow-container {
   transition: .5s ease;
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -137,18 +149,110 @@ body {
   @extend .bg-light;
 }
 
-.upvotearrow {
+.upvote-arrow {
   @extend .text-success;
 }
 
-.downvotearrow {
+.downvote-arrow {
   @extend .text-danger;
   @extend .mr-1;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+// user drawings styling
+.user-img-wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  row-gap: 30px;
+  
+}
+
+.user-img-thumbnail {
+  width: 150px; 
+  height: 150px;
+
+  background: linear-gradient(to bottom, lightgrey, black);
+  
+  overflow: hidden;
+  position: relative;
+}
+
+.user-img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.user-img-thumbnail:hover .user-img {
+  opacity: .6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Settings pages styling
+
 .signature {
   width: 100%;
 }
+
+.settings-menu-navbar {
+  background-color: #5672AD;
+  border: none;
+  @extend .rounded-0;
+  @extend .mt-4;
+}
+
+.settings-card {
+  background-color: #5672AD;
+  @extend .shadow;
+  border: none;
+  @extend .rounded-0;
+  @extend .mt-4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Drawing app styling
 
 .drawing-app-wrapper {
   background: #263960;
