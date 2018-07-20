@@ -1,13 +1,16 @@
 <template>
     <!-- Temporary div for centering of the canvas. -->
     <div style="text-align: center">
-    <canvas id="drawing-app-canvas"
-        v-on:mousedown="handleMouseDown" 
-        v-on:mouseup="handleMouseUp" 
-        v-on:mousemove="handleMouseMove"
-        width="400px"
-        height="600px"> 
-    </canvas>
+        <canvas id="drawing-app-canvas"
+            v-on:mousedown="handleMouseDown" 
+            v-on:mouseup="handleMouseUp" 
+            v-on:mousemove="handleMouseMove"
+            width="400px"
+            height="600px"> 
+        </canvas>
+        <form method="post" v-on:click="submit()" :action="'/doodles'">
+            <button class="btn btn-secondary"  type="submit">Save</button>
+        </form>
     </div>
 </template>
 
@@ -17,6 +20,7 @@
         data () 
         {
             return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 context: null,
                 canvas: null,
                 mouseDown: false,
@@ -43,6 +47,7 @@
             //         y: (event.clientY - rect.top)
             //     }
             // }
+            
         },
 
         mounted () 
@@ -111,7 +116,14 @@
             clearCanvas: function ()
             {
 
-            }
+            },
+            submit: function(event) {
+                // this.$http.post('/doodles', {
+                //     '_method': 'post',
+                //     '_token': this.csrf, // You must pass this token on post requests
+                //     'base64Doodle': canvas.toDataURL()
+                // })
+            },
         }
     }
 </script>

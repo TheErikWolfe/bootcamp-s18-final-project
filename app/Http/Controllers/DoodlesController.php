@@ -35,7 +35,7 @@ class DoodlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
