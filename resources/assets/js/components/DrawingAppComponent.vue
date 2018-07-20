@@ -105,8 +105,10 @@ import axios from 'axios';
             saveDoodle: function(event) {
                 // const fd = new FormData(event.target);
                 // fd.append('doodle', this.canvas.toDataURL());
-                this.$http.post('/doodles', {
+                axios.post('/doodles', {
                     doodle: this.canvas.toDataURL()
+                }).then(function (response) {
+                    window.location = response.data.redirect;
                 });
                     
                 // var formData = new FormData(event.target);

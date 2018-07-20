@@ -47672,8 +47672,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveDoodle: function saveDoodle(event) {
             // const fd = new FormData(event.target);
             // fd.append('doodle', this.canvas.toDataURL());
-            this.$http.post('/doodles', {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
                 doodle: this.canvas.toDataURL()
+            }).then(function (response) {
+                window.location = response.data.redirect;
             });
 
             // var formData = new FormData(event.target);

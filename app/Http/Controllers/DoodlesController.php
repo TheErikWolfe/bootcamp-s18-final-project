@@ -39,8 +39,9 @@ class DoodlesController extends Controller
         $doodle = new \App\Doodle;
         $doodle->creator_id = \Auth::user()->id;
         $doodle->source = $request->input('doodle');
+        $doodle->save();
 
-        return redirect()->route('home');
+        return ['redirect' => route('home')];
         
     }
 
