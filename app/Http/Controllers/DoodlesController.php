@@ -35,7 +35,13 @@ class DoodlesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $request->input('doodle');
+        $doodle = new \App\Doodle;
+        $doodle->creator_id = \Auth::user()->id;
+        $doodle->source = $request->input('doodle');
+
+        return redirect()->route('home');
+        
     }
 
     /**
