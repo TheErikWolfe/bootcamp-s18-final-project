@@ -47469,13 +47469,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            isUpvoted: false,
+            isDownvoted: false
         };
     },
     mounted: function mounted() {},
 
 
-    computed: {}
+    computed: {},
+
+    methods: {
+        upvoteImg: function upvoteImg() {
+            this.isUpvoted = !this.isUpvoted;
+            this.isDownvoted = false;
+            saveVote();
+        },
+        downvoteImg: function downvoteImg() {
+            this.isUpvoted = false;
+            this.isDownvoted = !this.isDownvoted;
+            saveVote();
+        }
+    }
 });
 
 /***/ }),
@@ -47494,29 +47509,40 @@ var render = function() {
           _c("img", { attrs: { src: doodle.source, alt: "" } })
         ]),
         _vm._v(" "),
-        _vm._m(0, true)
+        _c("div", { staticClass: "arrow-container" }, [
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: { click: _vm.upvoteImg }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": _vm.isUpvoted }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: { click: _vm.downvoteImg }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": _vm.isDownvoted }
+              })
+            ]
+          )
+        ])
       ])
     })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "arrow-container" }, [
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-up upvote-arrow"
-      }),
-      _vm._v(" "),
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-down downvote-arrow"
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

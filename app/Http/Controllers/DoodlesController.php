@@ -89,4 +89,9 @@ class DoodlesController extends Controller
     {
         //
     }
+
+    public function updateVote($id)
+    {
+            
+    }
 }

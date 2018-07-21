@@ -7215,14 +7215,14 @@ button.bg-dark:focus {
   display: table-cell !important;
 }
 
-.d-flex,
-.img-frame {
+.d-flex {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
 }
 
-.d-inline-flex {
+.d-inline-flex,
+.img-frame {
   display: -webkit-inline-box !important;
   display: -ms-inline-flexbox !important;
   display: inline-flex !important;
@@ -7565,8 +7565,7 @@ button.bg-dark:focus {
           justify-content: flex-end !important;
 }
 
-.justify-content-center,
-.arrow-container {
+.justify-content-center {
   -webkit-box-pack: center !important;
       -ms-flex-pack: center !important;
           justify-content: center !important;
@@ -8687,7 +8686,6 @@ button.bg-dark:focus {
 }
 
 .mr-1,
-.downvote-arrow,
 .mx-1 {
   margin-right: 0.25rem !important;
 }
@@ -8704,7 +8702,8 @@ button.bg-dark:focus {
 
 .m-2,
 .settings-menu-navbar,
-.settings-card {
+.settings-card,
+.arrow {
   margin: 0.5rem !important;
 }
 
@@ -10644,13 +10643,17 @@ label {
 .arrow {
   position: relative;
   bottom: 0;
+  font-size: 35px;
+  display: inline-block;
 }
 
-.upvote-arrow:hover {
+.upvote-arrow:hover,
+.upvote-arrow-active {
   color: lightgreen !important;
 }
 
-.downvote-arrow:hover {
+.downvote-arrow:hover,
+.downvote-arrow-active {
   color: pink !important;
 }
 

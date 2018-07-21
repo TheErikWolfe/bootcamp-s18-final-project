@@ -102,12 +102,13 @@ import axios from 'axios';
             {
 
             },
-            saveDoodle: function(event) {
+            saveDoodle: function (event) {
                 // const fd = new FormData(event.target);
                 // fd.append('doodle', this.canvas.toDataURL());
                 axios.post('/doodles', {
                     doodle: this.canvas.toDataURL()
-                }).then(function (response) {
+                })
+                .then(function (response) {
                     window.location = response.data.redirect;
                 });
                     
