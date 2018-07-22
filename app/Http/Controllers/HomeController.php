@@ -25,6 +25,6 @@ class HomeController extends Controller
     {
         $doodles = \App\Doodle::orderBy('id')->get();
 
-        return view('home', compact('doodles'));
+        return view('main.home', compact('doodles'));
     }
 }

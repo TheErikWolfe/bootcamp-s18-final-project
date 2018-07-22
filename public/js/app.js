@@ -14008,6 +14008,7 @@ window.Vue = __webpack_require__(37);
 
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('display-doodles', __webpack_require__(43));
+Vue.component('display-single-doodle', __webpack_require__(54));
 Vue.component('drawing-pad', __webpack_require__(46));
 
 var app = new Vue({
@@ -47471,24 +47472,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             isUpvoted: false,
-            isDownvoted: false
+            isDownvoted: false,
+            changeUpvotes: 0,
+            changeDownvotes: 0
         };
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.doodlesData);
+    },
 
 
     computed: {},
 
     methods: {
-        upvoteImg: function upvoteImg() {
+        upvoteImg: function upvoteImg(id) {
+            if (this.isDownvote == true) {
+                this.changeDownvotes = -1;
+            }
+
             this.isUpvoted = !this.isUpvoted;
             this.isDownvoted = false;
-            saveVote();
+
+            if (this.isUpvoted == true) {
+                this.changeUpvotes = 1;
+            } else {
+                this.changeUpvotes = -1;
+            }
+
+            this.saveVote(id);
         },
-        downvoteImg: function downvoteImg() {
+        downvoteImg: function downvoteImg(id) {
+            if (this.isUpvote == true) {
+                this.changeUpvotes = -1;
+            }
+
             this.isUpvoted = false;
             this.isDownvoted = !this.isDownvoted;
-            saveVote();
+
+            if (this.isDownvoted == true) {
+                this.changeDownvotes = 1;
+            } else {
+                this.changeDownvotes = -1;
+            }
+
+            this.saveVote(id);
+        },
+        saveVote: function saveVote(id) {
+            axios.post('/doodles/vote/' + id, {
+                upvote: this.changeUpvotes,
+                downvote: this.changeDownvotes
+            });
+        },
+        showSingleDoodle: function showSingleDoodle(id) {
+            console.log("Showing Doodle of " + id);
         }
     }
 });
@@ -47505,16 +47541,30 @@ var render = function() {
     "div",
     _vm._l(_vm.doodlesData, function(doodle) {
       return _c("div", { staticClass: "img-frame" }, [
-        _c("div", { staticClass: "img-props" }, [
-          _c("img", { attrs: { src: doodle.source, alt: "" } })
-        ]),
+        _c(
+          "div",
+          {
+            staticClass: "img-props",
+            attrs: { type: "submit" },
+            on: {
+              click: function($event) {
+                _vm.showSingleDoodle(doodle.id)
+              }
+            }
+          },
+          [_c("img", { attrs: { src: doodle.source, alt: "" } })]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "arrow-container" }, [
           _c(
             "div",
             {
               staticClass: "arrow bg-transparent",
-              on: { click: _vm.upvoteImg }
+              on: {
+                click: function($event) {
+                  _vm.upvoteImg(doodle.id)
+                }
+              }
             },
             [
               _c("i", {
@@ -47528,7 +47578,11 @@ var render = function() {
             "div",
             {
               staticClass: "arrow bg-transparent",
-              on: { click: _vm.downvoteImg }
+              on: {
+                click: function($event) {
+                  _vm.downvoteImg(doodle.id)
+                }
+              }
             },
             [
               _c("i", {
@@ -47770,6 +47824,93 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DisplaySingleDoodle.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-09e2b67c", Component.options)
+  } else {
+    hotAPI.reload("data-v-09e2b67c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {}
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-09e2b67c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

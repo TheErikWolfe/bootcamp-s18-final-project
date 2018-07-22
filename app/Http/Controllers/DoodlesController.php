@@ -35,7 +35,6 @@ class DoodlesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->input('doodle');
         $doodle = new \App\Doodle;
         $doodle->creator_id = \Auth::user()->id;
         $doodle->source = $request->input('doodle');
@@ -53,7 +52,9 @@ class DoodlesController extends Controller
      */
     public static function show($id)
     {
-        
+        $userDoodles = \App\Doodle::orderBy('created_at')->get();
+        dd(compact('userDoodles', $id));
+        return view('users.index', compact('userDoodles', $id));
     }
 
     /**
@@ -90,8 +91,11 @@ class DoodlesController extends Controller
         //
     }
 
-    public function updateVote($id)
+    public function updateVote(Request $request, $id)
     {
-            
+        $doodle = \App\Doodle::find($id);
+        $doodle->upvotes = $doodle->upvotes + $request->input('upvote');
+        $doodle->downvotes = $doodle->downvotes + $request->input('downvote');
+        $doodle->save();
     }
 }
