@@ -1,8 +1,10 @@
 <template>
     <div>
         <div v-for="doodle in dData" class="img-frame">
-            <div class="img-props" v-on:click="showSingleDoodle(doodle.id)" type="submit">
-                <img :src=doodle.source alt="">
+            <div class="img-props">
+                <a :href="'/doodles/' + doodle.id">
+                    <img :src=doodle.source alt="">
+                </a>
             </div>
             <div class="arrow-container">
                 <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
@@ -74,6 +76,14 @@
             showSingleDoodle: function (id)
             {
                 console.log("Showing Doodle of " + id);
+            },
+            doodleOnClick: function () {
+                console.log("Made it to onClick");
+                axios.get('/doodles/' + id.toString(), {
+                    
+                }).then(function (response) {
+                    window.location = response.data.redirect;
+                });
             }
         }
     }

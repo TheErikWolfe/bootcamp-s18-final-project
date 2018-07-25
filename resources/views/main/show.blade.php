@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <display-single-doodles :doodles-data='{{ $doodles->toJSON() }}'></display-single-doodles>
+    <display-single-doodle :doodles-data='{{ $doodle->toJSON() }}'></display-single-doodle>
 @endsection

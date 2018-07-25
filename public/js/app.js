@@ -47464,6 +47464,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47516,6 +47518,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         showSingleDoodle: function showSingleDoodle(id) {
             console.log("Showing Doodle of " + id);
+        },
+        doodleOnClick: function doodleOnClick() {
+            console.log("Made it to onClick");
+            axios.get('/doodles/' + id.toString(), {}).then(function (response) {
+                window.location = response.data.redirect;
+            });
         }
     }
 });
@@ -47532,19 +47540,11 @@ var render = function() {
     "div",
     _vm._l(_vm.dData, function(doodle) {
       return _c("div", { staticClass: "img-frame" }, [
-        _c(
-          "div",
-          {
-            staticClass: "img-props",
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                _vm.showSingleDoodle(doodle.id)
-              }
-            }
-          },
-          [_c("img", { attrs: { src: doodle.source, alt: "" } })]
-        ),
+        _c("div", { staticClass: "img-props" }, [
+          _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+            _c("img", { attrs: { src: doodle.source, alt: "" } })
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "arrow-container" }, [
           _c(
@@ -47655,6 +47655,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {}
@@ -47668,9 +47669,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-5" }, [
+      _c("h1", [_vm._v("Made it to single doodle component")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

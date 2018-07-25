@@ -52,9 +52,11 @@ class DoodlesController extends Controller
      */
     public static function show($id)
     {
-        $userDoodles = \App\Doodle::orderBy('created_at')->get();
-        dd(compact('userDoodles', $id));
-        return view('users.index', compact('userDoodles', $id));
+        $doodle = \App\Doodle::find($id);
+        $doodle->previous = \App\Doodle::where('id', '<', $doodle->id)->max('id');
+        $doodle->next = \App\Doodle::where('id', '>', $doodle->id)->min('id');
+        
+        return view('main.show', compact('doodle'));
     }
 
     /**
