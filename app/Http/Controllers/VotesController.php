@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Votes;
 use Illuminate\Http\Request;
 
-class DoodlesController extends Controller
+class VotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,7 @@ class DoodlesController extends Controller
      */
     public function index()
     {
-        $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
-        return view('users.index', compact('doodles'));
+        //
     }
 
     /**
@@ -24,7 +24,7 @@ class DoodlesController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        //
     }
 
     /**
@@ -35,35 +35,36 @@ class DoodlesController extends Controller
      */
     public function store(Request $request)
     {
-        $doodle = new \App\Doodle;
-        $doodle->creator_id = \Auth::user()->id;
-        $doodle->source = $request->input('doodle');
-        $doodle->save();
-
-        return ['redirect' => route('home')];
         
+        $userVote = new \App\Votes;
+        $userVote->voter_id = \Auth::user()->id;
+        
+        $userVote->doodle_id = $request->input('doodle_id');
+        
+        $userVote->vote = $request->input('vote');
+        
+        $userVote->save();
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Votes  $votes
      * @return \Illuminate\Http\Response
      */
-    public static function show($id)
+    public function show(Votes $votes)
     {
-        $userDoodles = \App\Doodle::orderBy('created_at')->get();
-        dd(compact('userDoodles', $id));
-        return view('users.index', compact('userDoodles', $id));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Votes  $votes
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Votes $votes)
     {
         //
     }
@@ -72,22 +73,26 @@ class DoodlesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Votes  $votes
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->input('vote'));
+        $userVote = \App\Votes::where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $id)->get()[0];
+        $userVote->vote = $request->input('vote');
+        // dd($userVote);
+        $userVote->save();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Votes  $votes
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        \App\Votes::destroy($id);
     }
 }

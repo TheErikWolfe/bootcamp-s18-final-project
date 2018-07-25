@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div v-for="doodle in doodlesData" class="img-frame">
+        <div v-for="doodle in dData" class="img-frame">
             <div class="img-props" v-on:click="showSingleDoodle(doodle.id)" type="submit">
                 <img :src=doodle.source alt="">
             </div>
             <div class="arrow-container">
-                <div v-on:click="upvoteImg(doodle.id)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : isUpvoted }"></i></div>
-                <div v-on:click="downvoteImg(doodle.id)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : isDownvoted }"></i></div>
+                <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
+                <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
             </div>
         </div>
     </div>
@@ -19,15 +19,16 @@
         data () {
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                isUpvoted: false,
-                isDownvoted: false,
-                changeUpvotes: 0,
-                changeDownvotes: 0
+                dData: null,
+                upvote: 1,
+                downvote: -1,
+                novote: 0
             }
         },
 
         mounted() {
-            console.log(this.doodlesData)
+            console.log(this.doodlesData);
+            this.dData = this.doodlesData;
         },
 
         computed: {
@@ -35,54 +36,40 @@
         },
 
         methods: {
-            upvoteImg: function (id) 
+            onVote:function (doodle, userVote) 
             {
-                if(this.isDownvote == true)
+                console.log(doodle.userVote, userVote);
+                if(doodle.userVote == null)
                 {
-                    this.changeDownvotes = -1;
+                    this.createVote(doodle.id, userVote);
+                    doodle.userVote = userVote;
                 }
-
-                this.isUpvoted = !this.isUpvoted;
-                this.isDownvoted = false;
-
-                if(this.isUpvoted == true)
+                else if(doodle.userVote == userVote)
                 {
-                    this.changeUpvotes = 1;
+                    this.saveVote(doodle.id, this.novote);
+                    // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                    doodle.userVote = 0;
                 }
-                else 
-                {
-                    this.changeUpvotes = -1;
+                else {
+                    this.saveVote(doodle.id, userVote);
+                    doodle.userVote = userVote;
                 }
-
-                this.saveVote(id);
+                console.log(doodle.userVote);
             },
-            downvoteImg: function (id) 
+            createVote: function (doodleId, userVote)
             {
-                if(this.isUpvote == true)
-                {
-                    this.changeUpvotes = -1;
-                }
-
-                this.isUpvoted = false;
-                this.isDownvoted = !this.isDownvoted;
-
-                if(this.isDownvoted == true)
-                {
-                    this.changeDownvotes = 1;
-                }
-                else 
-                {
-                    this.changeDownvotes = -1;
-                }
-
-                this.saveVote(id);
+                console.log("Made it to createVote");
+                axios.post('/votes', {
+                    doodle_id: doodleId,
+                    vote: userVote
+                });
             },
-            saveVote: function (id)
+            saveVote: function (id, userVote)
             {
-                axios.post('/doodles/vote/' + id, {
-                    upvote : this.changeUpvotes,
-                    downvote : this.changeDownvotes
-                })
+                console.log("Made it to saveVote");
+                axios.patch('/votes/' + id.toString(), {
+                    vote: userVote
+                });
             },
             showSingleDoodle: function (id)
             {

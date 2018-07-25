@@ -10,4 +10,8 @@ class Doodle extends Model
     {
         return $this->belongsTo('App\User', 'creator_id');
     }
+    public function votes ()
+    {
+        return $this->hasMany('App\Votes');
+    }
 }
