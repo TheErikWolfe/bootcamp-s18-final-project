@@ -3,7 +3,7 @@
         <div v-for="doodle in dData" class="img-frame">
             <div class="img-props">
                 <a :href="'/doodles/' + doodle.id">
-                    <img :src=doodle.source alt="">
+                    <img :src=doodle.source>
                 </a>
             </div>
             <div class="arrow-container">

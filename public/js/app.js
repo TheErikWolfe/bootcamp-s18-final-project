@@ -47542,7 +47542,7 @@ var render = function() {
       return _c("div", { staticClass: "img-frame" }, [
         _c("div", { staticClass: "img-props" }, [
           _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
-            _c("img", { attrs: { src: doodle.source, alt: "" } })
+            _c("img", { attrs: { src: doodle.source } })
           ])
         ]),
         _vm._v(" "),
@@ -47656,9 +47656,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {}
+    props: ['doodleData'],
+
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            doodle: null,
+            imgSource: '',
+            userVote: 0,
+            upVotes: 0,
+            downVotes: 0
+        };
+    },
+    mounted: function mounted() {
+        console.log(this.doodleData);
+        this.doodle = this.doodleData;
+        this.imgSource = this.doodle.source;
+        this.upVotes = this.doodle.numberOfUpvotes;
+        this.downVotes = this.doodle.numberOfDownvotes;
+        this.userVote = this.doodle.userVote;
+    },
+
+    methods: {
+        goBack: function goBack() {},
+        goForward: function goForward() {},
+        onVote: function onVote(newVote) {
+            if (this.userVote == null) {
+                this.createVote(newVote);
+                this.userVote = userVote;
+            } else if (this.userVote == newVote) {
+                this.saveVote(this.novote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                this.userVote = 0;
+            } else {
+                this.saveVote(newVote);
+                this.userVote = newVote;
+            }
+            console.log(this.userVote);
+        },
+        createVote: function createVote(userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: this.doodle.id,
+                vote: userVote
+            });
+        },
+        saveVote: function saveVote(userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + this.doodle.id.toString(), {
+                vote: userVote
+            });
+        }
+    }
+
 });
 
 /***/ }),
@@ -47669,18 +47745,89 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-5" }, [
-      _c("h1", [_vm._v("Made it to single doodle component")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "d-flex justify-content-center" }, [
+      _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-dark",
+                  class: { hidden: _vm.doodleData.previous === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.previous }
+                },
+                [_vm._v("<")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-secondary shadow",
+                  class: { hidden: _vm.doodleData.next === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.next }
+                },
+                [_vm._v("Next >")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body p-0" }, [
+          _c("div", { staticClass: "img-props m-0" }, [
+            _c("img", { attrs: { src: _vm.imgSource } })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": _vm.userVote === 1 }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-success" }, [
+            _vm._v(_vm._s(_vm.doodleData.numberOfUpvotes))
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(-1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": _vm.userVote === -1 }
+              })
+            ]
+          )
+        ])
+      ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

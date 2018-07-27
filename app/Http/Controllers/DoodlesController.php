@@ -13,7 +13,7 @@ class DoodlesController extends Controller
      */
     public function index()
     {
-        $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
+        $doodles = \App\Doodle::where('creator_id', '=', \Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('users.index', compact('doodles'));
     }
 
@@ -53,8 +53,19 @@ class DoodlesController extends Controller
     public static function show($id)
     {
         $doodle = \App\Doodle::find($id);
-        $doodle->previous = \App\Doodle::where('id', '<', $doodle->id)->max('id');
-        $doodle->next = \App\Doodle::where('id', '>', $doodle->id)->min('id');
+        $doodle->next = \App\Doodle::where('id', '<', $doodle->id)->max('id');
+        $doodle->previous = \App\Doodle::where('id', '>', $doodle->id)->min('id');
+        $doodle->numberOfUpvotes = $doodle->votes()->where('vote', '=', 1)->count();
+        $doodle->numberOfDownvotes = $doodle->votes()->where('vote', '=', -1)->count();
+
+        if($doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
+        {
+            $doodle->userVote = $doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->get()[0]->vote;
+        }
+        else
+        {
+            $doodle->userVote = null;
+        }
         
         return view('main.show', compact('doodle'));
     }

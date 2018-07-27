@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $doodles = \App\Doodle::orderBy('id')->get();
+        $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
         foreach ($doodles as $doodle)
         {
             $doodle->numberOfUpvotes = $doodle->votes()->where('vote', '=', 1)->count();

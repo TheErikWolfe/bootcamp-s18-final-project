@@ -1,13 +1,97 @@
 <template>
-    <div class="mt-5">
-        <h1>Made it to single doodle component</h1>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="single-doodle-bkgd text-center mt-4">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn btn-dark"><</a>
+                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn btn-secondary shadow">Next ></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="img-props m-0">
+                        <img :src=imgSource>
+                    </div>
+                </div>
+                <div class="card-footer d-flex bg-info text-left">
+                    <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                    <div class="text-success">{{ doodleData.numberOfUpvotes }}</div>
+                    <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        mounted() {
+        props: ['doodleData'],
 
+        data () {
+            return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                doodle: null,
+                imgSource: '',
+                userVote: 0,
+                upVotes: 0,
+                downVotes: 0
+            }
+        },
+        mounted() {
+            console.log(this.doodleData);
+            this.doodle = this.doodleData;
+            this.imgSource = this.doodle.source;
+            this.upVotes = this.doodle.numberOfUpvotes;
+            this.downVotes = this.doodle.numberOfDownvotes;
+            this.userVote = this.doodle.userVote;
+        },
+        methods: {
+            goBack: function() {
+
+            },
+            goForward: function() {
+
+            },
+            onVote:function (newVote) 
+            {
+                if(this.userVote == null)
+                {
+                    this.createVote(newVote);
+                    this.userVote = userVote;
+                }
+                else if(this.userVote == newVote)
+                {
+                    this.saveVote(this.novote);
+                    // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                    this.userVote = 0;
+                }
+                else {
+                    this.saveVote(newVote);
+                    this.userVote = newVote;
+                }
+                console.log(this.userVote);
+            },
+            createVote: function (userVote)
+            {
+                console.log("Made it to createVote");
+                axios.post('/votes', {
+                    doodle_id: this.doodle.id,
+                    vote: userVote
+                });
+            },
+            saveVote: function (userVote)
+            {
+                console.log("Made it to saveVote");
+                axios.patch('/votes/' + this.doodle.id.toString(), {
+                    vote: userVote
+                });
+            },
         }
+
     }
 </script>
