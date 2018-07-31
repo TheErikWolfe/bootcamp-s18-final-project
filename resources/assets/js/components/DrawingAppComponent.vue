@@ -89,6 +89,7 @@ import axios from 'axios';
             },
             handleMouseDown: function (event)
             {
+                var rect = this.canvas.getBoundingClientRect();
                 this.context.beginPath();
                 this.mouseDown = true;
                 this.current = {

@@ -47970,6 +47970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.mouseDown = false;
         },
         handleMouseDown: function handleMouseDown(event) {
+            var rect = this.canvas.getBoundingClientRect();
             this.context.beginPath();
             this.mouseDown = true;
             this.current = {
