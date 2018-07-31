@@ -8,13 +8,15 @@
             width="400px"
             height="600px"> 
         </canvas>
-        <form method="post" v-on:click="submit()" :action="'/doodles'">
+        <form v-on:submit.prevent="saveDoodle">
+            <input type="hidden" name="_token" :value="csrf">
             <button class="btn btn-secondary"  type="submit">Save</button>
         </form>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
     export default 
     {
         data () 
@@ -38,15 +40,6 @@
 
         computed:
         {
-            // currentMouse: function (event) {
-            //     var c = this.canvas;
-            //     var rect = c.getBoundingClientRect();
-
-            //     return {
-            //         x: (event.clientX - rect.left),
-            //         y: (event.clientY - rect.top)
-            //     }
-            // }
             
         },
 
@@ -87,14 +80,6 @@
                     y: event.clientY - rect.top
                 };
 
-                // var mousePos = {x: event.clientX - rect.left,
-                // y: event.clientY - rect.top };
-                // var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-                // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                // this.context.font = '18pt Calibri';
-                // this.context.fillStyle = 'black';
-                // this.context.fillText(message, 10, 25);
-
                 this.draw(event);
             },
             handleMouseUp: function () 
@@ -104,6 +89,7 @@
             },
             handleMouseDown: function (event)
             {
+                var rect = this.canvas.getBoundingClientRect();
                 this.context.beginPath();
                 this.mouseDown = true;
                 this.current = {
@@ -117,12 +103,20 @@
             {
 
             },
-            submit: function(event) {
-                // this.$http.post('/doodles', {
-                //     '_method': 'post',
-                //     '_token': this.csrf, // You must pass this token on post requests
-                //     'base64Doodle': canvas.toDataURL()
-                // })
+            saveDoodle: function (event) {
+                // const fd = new FormData(event.target);
+                // fd.append('doodle', this.canvas.toDataURL());
+                axios.post('/doodles', {
+                    doodle: this.canvas.toDataURL()
+                })
+                .then(function (response) {
+                    window.location = response.data.redirect;
+                });
+                    
+                // var formData = new FormData(event.target);
+                // console.log("made it to saveDoodle");
+                // formData.append('base64Doodle', this.canvas.toDataURL());
+                // this.$http.post('/doodles', formData);
             },
         }
     }

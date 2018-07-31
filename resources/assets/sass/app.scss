@@ -90,7 +90,7 @@ body {
   @extend .rounded-0;
   @extend .shadow-lg;
   background: linear-gradient(to bottom, darkgrey, black 90%);
-  @extend .d-flex;
+  @extend .d-inline-flex;
   @extend .m-3;
   width: 400px;
   height: 600px;
@@ -127,23 +127,24 @@ body {
   position: absolute;
   left: 200px;
   right: 0;
-  @extend .text-center;
-  @extend .justify-content-center;
-  // top: 0;
   bottom: 0;
+  @extend .text-center;
 }
 
 .arrow {
   position: relative;
   bottom: 0;
+  font-size: 35px;
+  display: inline-block;
+  @extend .m-2;
 }
 
-.upvote-arrow:hover {
+.upvote-arrow:hover, .upvote-arrow-active {
   // @extend .bg-light;
   color: lightgreen !important;
 }
 
-.downvote-arrow:hover {
+.downvote-arrow:hover, .downvote-arrow-active {
   // @extend .bg-light;
   color: pink !important;
 }
@@ -154,5 +155,16 @@ body {
 
 .downvote-arrow {
   @extend .text-danger;
-  @extend .mr-1;
+}
+
+.single-doodle-bkgd {
+  background-color: $secondary;
+  width: 600px;
+  @extend .p-0;
+  @extend .card;
+  @extend .shadow;
+}
+
+.hidden {
+  visibility: hidden;
 }

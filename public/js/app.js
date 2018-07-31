@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(20);
 
 /*global toString:true*/
@@ -402,110 +402,6 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(22);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(8);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(8);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -612,6 +508,110 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(22);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(9);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(9);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 4 */
@@ -13517,6 +13517,12 @@ return jQuery;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(19);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -13532,7 +13538,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -13722,7 +13728,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13733,7 +13739,7 @@ var settle = __webpack_require__(23);
 var buildURL = __webpack_require__(25);
 var parseHeaders = __webpack_require__(26);
 var isURLSameOrigin = __webpack_require__(27);
-var createError = __webpack_require__(9);
+var createError = __webpack_require__(10);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(28);
 
 module.exports = function xhrAdapter(config) {
@@ -13909,7 +13915,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13934,7 +13940,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13946,7 +13952,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13972,15 +13978,15 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
-module.exports = __webpack_require__(49);
+__webpack_require__(14);
+module.exports = __webpack_require__(52);
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -13990,7 +13996,7 @@ module.exports = __webpack_require__(49);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(14);
+__webpack_require__(15);
 
 window.Vue = __webpack_require__(37);
 
@@ -14002,18 +14008,19 @@ window.Vue = __webpack_require__(37);
 
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('display-doodles', __webpack_require__(43));
-Vue.component('drawing-pad', __webpack_require__(46));
+Vue.component('display-single-doodle', __webpack_require__(46));
+Vue.component('drawing-pad', __webpack_require__(49));
 
 var app = new Vue({
   el: '#app'
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(15);
+window._ = __webpack_require__(16);
 window.Popper = __webpack_require__(4).default;
 
 /**
@@ -14025,7 +14032,7 @@ window.Popper = __webpack_require__(4).default;
 try {
   window.$ = window.jQuery = __webpack_require__(5);
 
-  __webpack_require__(17);
+  __webpack_require__(18);
 } catch (e) {}
 
 /**
@@ -14034,7 +14041,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(18);
+window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -14070,7 +14077,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -31180,10 +31187,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -31211,7 +31218,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -35161,12 +35168,6 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(19);
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35174,9 +35175,9 @@ module.exports = __webpack_require__(19);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(21);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -35209,9 +35210,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(11);
+axios.Cancel = __webpack_require__(12);
 axios.CancelToken = __webpack_require__(35);
-axios.isCancel = __webpack_require__(10);
+axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -35259,7 +35260,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(30);
 var dispatchRequest = __webpack_require__(31);
@@ -35364,7 +35365,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(9);
+var createError = __webpack_require__(10);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -35797,8 +35798,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(32);
-var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(2);
+var isCancel = __webpack_require__(11);
+var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(33);
 var combineURLs = __webpack_require__(34);
 
@@ -35957,7 +35958,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(11);
+var Cancel = __webpack_require__(12);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -47275,14 +47276,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(41)
 /* template */
@@ -47401,7 +47402,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(44)
 /* template */
@@ -47463,19 +47464,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
 
     data: function data() {
         return {
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            dData: null,
+            upvote: 1,
+            downvote: -1,
+            novote: 0
         };
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.doodlesData);
+        this.dData = this.doodlesData;
+    },
 
 
-    computed: {}
+    computed: {},
+
+    methods: {
+        onVote: function onVote(doodle, userVote) {
+            console.log(doodle.userVote, userVote);
+            if (doodle.userVote == null) {
+                this.createVote(doodle.id, userVote);
+                doodle.userVote = userVote;
+            } else if (doodle.userVote == userVote) {
+                this.saveVote(doodle.id, this.novote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                doodle.userVote = 0;
+            } else {
+                this.saveVote(doodle.id, userVote);
+                doodle.userVote = userVote;
+            }
+            console.log(doodle.userVote);
+        },
+        createVote: function createVote(doodleId, userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: doodleId,
+                vote: userVote
+            });
+        },
+        saveVote: function saveVote(id, userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + id.toString(), {
+                vote: userVote
+            });
+        },
+        showSingleDoodle: function showSingleDoodle(id) {
+            console.log("Showing Doodle of " + id);
+        },
+        doodleOnClick: function doodleOnClick() {
+            console.log("Made it to onClick");
+            axios.get('/doodles/' + id.toString(), {}).then(function (response) {
+                window.location = response.data.redirect;
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -47488,35 +47538,56 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.doodlesData, function(doodle) {
+    _vm._l(_vm.dData, function(doodle) {
       return _c("div", { staticClass: "img-frame" }, [
         _c("div", { staticClass: "img-props" }, [
-          _c("img", { attrs: { src: doodle.source, alt: "" } })
+          _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+            _c("img", { attrs: { src: doodle.source } })
+          ])
         ]),
         _vm._v(" "),
-        _vm._m(0, true)
+        _c("div", { staticClass: "arrow-container" }, [
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(doodle, 1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": doodle.userVote === 1 }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(doodle, -1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": doodle.userVote === -1 }
+              })
+            ]
+          )
+        ])
       ])
     })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "arrow-container" }, [
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-up upvote-arrow"
-      }),
-      _vm._v(" "),
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-down downvote-arrow"
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -47531,11 +47602,251 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(47)
 /* template */
 var __vue_template__ = __webpack_require__(48)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DisplaySingleDoodle.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-09e2b67c", Component.options)
+  } else {
+    hotAPI.reload("data-v-09e2b67c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['doodleData'],
+
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            doodle: null,
+            imgSource: '',
+            userVote: 0,
+            upVotes: 0,
+            downVotes: 0
+        };
+    },
+    mounted: function mounted() {
+        console.log(this.doodleData);
+        this.doodle = this.doodleData;
+        this.imgSource = this.doodle.source;
+        this.upVotes = this.doodle.numberOfUpvotes;
+        this.downVotes = this.doodle.numberOfDownvotes;
+        this.userVote = this.doodle.userVote;
+    },
+
+    methods: {
+        goBack: function goBack() {},
+        goForward: function goForward() {},
+        onVote: function onVote(newVote) {
+            if (this.userVote == null) {
+                this.createVote(newVote);
+                this.userVote = userVote;
+            } else if (this.userVote == newVote) {
+                this.saveVote(this.novote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                this.userVote = 0;
+            } else {
+                this.saveVote(newVote);
+                this.userVote = newVote;
+            }
+            console.log(this.userVote);
+        },
+        createVote: function createVote(userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: this.doodle.id,
+                vote: userVote
+            });
+        },
+        saveVote: function saveVote(userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + this.doodle.id.toString(), {
+                vote: userVote
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "d-flex justify-content-center" }, [
+      _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-dark",
+                  class: { hidden: _vm.doodleData.previous === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.previous }
+                },
+                [_vm._v("<")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-secondary shadow",
+                  class: { hidden: _vm.doodleData.next === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.next }
+                },
+                [_vm._v("Next >")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body p-0" }, [
+          _c("div", { staticClass: "img-props m-0" }, [
+            _c("img", { attrs: { src: _vm.imgSource } })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": _vm.userVote === 1 }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-success" }, [
+            _vm._v(_vm._s(_vm.doodleData.numberOfUpvotes))
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(-1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": _vm.userVote === -1 }
+              })
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-09e2b67c", module.exports)
+  }
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(50)
+/* template */
+var __vue_template__ = __webpack_require__(51)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47574,11 +47885,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -47595,6 +47908,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47616,18 +47931,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    computed: {
-        // currentMouse: function (event) {
-        //     var c = this.canvas;
-        //     var rect = c.getBoundingClientRect();
-
-        //     return {
-        //         x: (event.clientX - rect.left),
-        //         y: (event.clientY - rect.top)
-        //     }
-        // }
-
-    },
+    computed: {},
 
     mounted: function mounted() {
         this.canvas = document.getElementById('drawing-app-canvas');
@@ -47660,20 +47964,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 y: event.clientY - rect.top
             };
 
-            // var mousePos = {x: event.clientX - rect.left,
-            // y: event.clientY - rect.top };
-            // var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-            // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            // this.context.font = '18pt Calibri';
-            // this.context.fillStyle = 'black';
-            // this.context.fillText(message, 10, 25);
-
             this.draw(event);
         },
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
         },
         handleMouseDown: function handleMouseDown(event) {
+            var rect = this.canvas.getBoundingClientRect();
             this.context.beginPath();
             this.mouseDown = true;
             this.current = {
@@ -47684,18 +47981,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //this.context.moveTo(this.currentMouse.x, this.currentMouse.y)
         },
         clearCanvas: function clearCanvas() {},
-        submit: function submit(event) {
-            // this.$http.post('/doodles', {
-            //     '_method': 'post',
-            //     '_token': this.csrf, // You must pass this token on post requests
-            //     'base64Doodle': canvas.toDataURL()
-            // })
+        saveDoodle: function saveDoodle(event) {
+            // const fd = new FormData(event.target);
+            // fd.append('doodle', this.canvas.toDataURL());
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
+                doodle: this.canvas.toDataURL()
+            }).then(function (response) {
+                window.location = response.data.redirect;
+            });
+
+            // var formData = new FormData(event.target);
+            // console.log("made it to saveDoodle");
+            // formData.append('base64Doodle', this.canvas.toDataURL());
+            // this.$http.post('/doodles', formData);
         }
     }
 });
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47715,14 +48019,19 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: { method: "post", action: "/doodles" },
         on: {
-          click: function($event) {
-            _vm.submit()
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.saveDoodle($event)
           }
         }
       },
       [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
         _c(
           "button",
           { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
@@ -47743,7 +48052,7 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

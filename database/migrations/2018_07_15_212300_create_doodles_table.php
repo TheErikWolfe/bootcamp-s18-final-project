@@ -18,8 +18,6 @@ class CreateDoodlesTable extends Migration
             $table->unsignedInteger('creator_id');
             $table->text('source');
             $table->boolean('mature')->default(0);
-            $table->smallInteger('upvotes');
-            $table->smallInteger('downvotes');
             $table->timestamps();
             $table->foreign('creator_id')->references('id')->on('users');
         });
