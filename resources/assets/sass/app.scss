@@ -8,6 +8,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
 
 body {
   // background-color: $primary;
@@ -90,10 +96,8 @@ body {
   @extend .rounded-0;
   @extend .shadow-lg;
   background: linear-gradient(to bottom, darkgrey, black 90%);
-  @extend .d-inline-flex;
-  @extend .m-3;
-  width: 400px;
-  height: 600px;
+  // width: 400px;
+  // height: 600px;
   position: relative;
 }
 
@@ -102,10 +106,6 @@ body {
   opacity: 1;
   transition: .5s ease;
   //backface-visibility: hidden;
-
-  @extend .img-fluid;
-  width: 100%;
-  height: 100%;
   @extend .m-0;
   @extend .p-0;
   position: relative;
@@ -125,7 +125,7 @@ body {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   position: absolute;
-  left: 200px;
+  left: 50%;
   right: 0;
   bottom: 0;
   @extend .text-center;
@@ -134,7 +134,7 @@ body {
 .arrow {
   position: relative;
   bottom: 0;
-  font-size: 35px;
+  font-size: 300%;
   display: inline-block;
   @extend .m-2;
 }
@@ -160,6 +160,7 @@ body {
 .single-doodle-bkgd {
   background-color: $secondary;
   width: 600px;
+  min-width: 400px;
   @extend .p-0;
   @extend .card;
   @extend .shadow;
@@ -167,4 +168,55 @@ body {
 
 .hidden {
   visibility: hidden;
+}
+
+//User images page styling
+
+.user-img-thumbnail {
+  width: 175px; 
+  height: 175px;
+
+  background: linear-gradient(to bottom, lightgrey, black);
+  
+  overflow: hidden;
+  position: relative;
+}
+
+.user-img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.user-img-thumbnail:hover .user-img {
+  opacity: .6;
+}
+
+#doodle-points {
+  font-size: 150%;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
+  display: inline-block;
+  margin-left: 10px;
+  // background-color: cyan;
+  
+}
+
+.swatch.active {
+  border: 2px solid white;
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,.5);
+}
+
+.drawing-app-width {
+  width: 400px;
 }

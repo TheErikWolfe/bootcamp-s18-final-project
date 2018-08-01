@@ -1,16 +1,20 @@
 <template>
-    <div>
-        <div v-for="doodle in dData" class="img-frame">
+    <div class="p-1">
+    <div class="row justify-content-center">
+        <div v-for="doodle in dData">
+            <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
             <div class="img-props">
                 <a :href="'/doodles/' + doodle.id">
-                    <img :src=doodle.source>
+                    <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
                 </a>
             </div>
             <div class="arrow-container">
                 <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
                 <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
             </div>
+            </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -24,7 +28,11 @@
                 dData: null,
                 upvote: 1,
                 downvote: -1,
-                novote: 0
+                novote: 0,
+                startHeight: 60,
+                startWidth: 90,
+                dWidth: 0,
+                dHeight: 0,
             }
         },
 
@@ -35,12 +43,36 @@
 
         computed: {
             
+            
         },
 
         methods: {
+            changeDoodleSize(doodle)
+            {
+                let downVotes = -(doodle.numberOfDownvotes);
+                let upVotes = doodle.numberOfUpvotes;
+                let overallVote = downVotes + upVotes;
+
+                this.dWidth = 2/3 * (this.startHeight + overallVote);
+                this.dHeight = 2/3 * (this.startWidth + overallVote);
+
+                if(this.dHeight > 80)
+                {
+                    this.dHeight = 80;
+                    this.dWidth = 2 / 3 * dHeight;
+                }
+                else if(this.dHeight < 30)
+                {
+                    this.dHeight = 30;
+                    this.dWidth = 2 / 3 * dHeight;
+                }
+
+                // console.log(this.dWidth + ', ' + this.dHeight);
+
+                return {width: 'auto', height: this.dHeight + 'vh'};
+            },
             onVote:function (doodle, userVote) 
             {
-                console.log(doodle.userVote, userVote);
                 if(doodle.userVote == null)
                 {
                     this.createVote(doodle.id, userVote);

@@ -19,8 +19,10 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex bg-info text-left">
-                    <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
-                    <div class="text-success">{{ doodleData.numberOfUpvotes }}</div>
+                    <div>
+                        <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                        <div id="doodle-points" class="ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div>
+                    </div>    
                     <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
                 </div>
             </div>
@@ -39,34 +41,44 @@
                 imgSource: '',
                 userVote: 0,
                 upVotes: 0,
-                downVotes: 0
+                downVotes: 0,
+                noVote: 0,
+                whichColor: ''
             }
         },
         mounted() {
             console.log(this.doodleData);
             this.doodle = this.doodleData;
+            this.userVote = this.doodle.userVote;
             this.imgSource = this.doodle.source;
             this.upVotes = this.doodle.numberOfUpvotes;
             this.downVotes = this.doodle.numberOfDownvotes;
             this.userVote = this.doodle.userVote;
         },
+        computed: {
+            votesColor: function () {
+                if(this.upVotes - this.downVotes > 0)
+                {
+                    this.whichColor = 'text-success';
+                }
+                else
+                {
+                    this.whichColor = 'text-danger';
+                }
+                
+            },
+        },
         methods: {
-            goBack: function() {
-
-            },
-            goForward: function() {
-
-            },
-            onVote:function (newVote) 
+            onVote: function (newVote) 
             {
                 if(this.userVote == null)
                 {
                     this.createVote(newVote);
-                    this.userVote = userVote;
+                    this.userVote = newVote;
                 }
                 else if(this.userVote == newVote)
                 {
-                    this.saveVote(this.novote);
+                    this.saveVote(this.noVote);
                     // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
                     this.userVote = 0;
                 }
