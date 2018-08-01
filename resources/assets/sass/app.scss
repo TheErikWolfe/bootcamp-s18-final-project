@@ -33,11 +33,11 @@ body {
   @extend .fixed-top;
   @extend .navbar;
   @extend .navbar-expand-md; 
-  
+  min-height: 55px;
   background-color: $secondary;
 }
 
-.navbar-toggler-icon {
+.toggle-icon {
   color: $tertiary !important;
 }
 

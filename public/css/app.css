@@ -10618,10 +10618,11 @@ body {
 }
 
 .navbar-laravel {
+  min-height: 55px;
   background-color: #5672AD;
 }
 
-.navbar-toggler-icon {
+.toggle-icon {
   color: #263960 !important;
 }
 
