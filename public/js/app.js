@@ -47470,6 +47470,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47484,7 +47514,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             startHeight: 60,
             startWidth: 90,
             dWidth: 0,
-            dHeight: 0
+            dHeight: 0,
+            reportString: ''
         };
     },
     mounted: function mounted() {
@@ -47544,8 +47575,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vote: userVote
             });
         },
-        showSingleDoodle: function showSingleDoodle(id) {
-            console.log("Showing Doodle of " + id);
+        createReport: function createReport(doodle) {
+            doodle.show = false;
+            console.log(doodle);
+            axios.post('/reports', {
+                doodle_id: doodle.id,
+                report: this.reportString
+            });
+            this.reportString = '';
+            return doodle;
         },
         doodleOnClick: function doodleOnClick() {
             console.log("Made it to onClick");
@@ -47569,7 +47607,7 @@ var render = function() {
       "div",
       { staticClass: "row justify-content-center" },
       _vm._l(_vm.dData, function(doodle) {
-        return _c("div", [
+        return _c("div", { class: { "hide-doodle": doodle.show === false } }, [
           _c(
             "div",
             { staticClass: "img-frame", style: _vm.changeDoodleSize(doodle) },
@@ -47582,6 +47620,105 @@ var render = function() {
                   })
                 ])
               ]),
+              _vm._v(" "),
+              _vm._m(0, true),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "modal fade",
+                  attrs: {
+                    id: "reportModal",
+                    tabindex: "-1",
+                    role: "dialog",
+                    "aria-labelledby": "reportModalLabel",
+                    "aria-hidden": "true"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-dialog",
+                      attrs: { role: "document" }
+                    },
+                    [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _c("form", [
+                          _c("div", { staticClass: "modal-body" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.reportString,
+                                    expression: "reportString"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "reportInput",
+                                  placeholder: ""
+                                },
+                                domProps: { value: _vm.reportString },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.reportString = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("small", [
+                                _vm._v(
+                                  "After reporting, you won't see this doodle anymore."
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-footer" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                }
+                              },
+                              [_vm._v("Close")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.createReport(doodle)
+                                  }
+                                }
+                              },
+                              [_vm._v("Save changes")]
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "arrow-container" }, [
                 _c(
@@ -47627,7 +47764,51 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "report-container" }, [
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "",
+            "data-toggle": "modal",
+            "data-target": "#reportModal"
+          }
+        },
+        [_vm._v("\n                Report\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "reportModalLabel" } },
+        [_vm._v("Please describe why you are reporting this image.")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

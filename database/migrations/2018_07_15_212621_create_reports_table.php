@@ -16,9 +16,11 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->unsignedInteger('image_id');
-            $table->string('report_description');
-            $table->foreign('image_id')->references('id')->on('doodles');
+            $table->unsignedInteger('reporter_id');
+            $table->foreign('reporter_id')->references('id')->on('users');
+            $table->unsignedInteger('doodle_id');
+            $table->string('report_description')->nullable();
+            $table->foreign('doodle_id')->references('id')->on('doodles');
         });
     }
 
