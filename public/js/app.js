@@ -48440,6 +48440,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -48490,9 +48498,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vote: userVote
             });
         },
-        showSingleDoodle: function showSingleDoodle(id) {
-            console.log("Showing Doodle of " + id);
-        },
         doodleOnClick: function doodleOnClick() {
             console.log("Made it to onClick");
             axios.get('/doodles/' + id.toString(), {}).then(function (response) {
@@ -48511,21 +48516,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h3", { staticClass: "text-center mt-3" }, [
-      _c("strong", [
-        _vm._v(
-          "You have " +
-            _vm._s(_vm.doodlesData.length) +
-            " images, keep up the great doodling!"
-        )
-      ])
+    _c("div", { staticClass: "bg-secondary rounded pt-1 pb-2" }, [
+      _vm.doodlesData.length > 0
+        ? _c("h3", { staticClass: "text-center mt-3" }, [
+            _c("strong", [
+              _vm._v(
+                "You have " +
+                  _vm._s(_vm.doodlesData.length) +
+                  " images, keep up the great doodling!"
+              )
+            ])
+          ])
+        : _c("h3", { staticClass: "text-center mt-3" }, [
+            _c("strong", [_vm._v("You have no doodles :(")])
+          ])
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row justify-content-center" },
       _vm._l(_vm.dData, function(doodle) {
-        return _c("div", { staticClass: "user-img-wrapper m-4" }, [
+        return _c("div", { staticClass: "text-center user-img-wrapper m-4" }, [
           _c(
             "div",
             {
@@ -48539,13 +48550,44 @@ var render = function() {
                 })
               ])
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "form",
+            { attrs: { method: "post", action: "/doodles/" + doodle.id } },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_method", value: "DELETE" }
+              }),
+              _vm._v(" "),
+              _vm._m(0, true)
+            ]
           )
         ])
       })
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm bg-transparent border-0",
+        attrs: { type: "submit" }
+      },
+      [_c("i", { staticClass: "text-danger fas fa-trash-alt" })]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

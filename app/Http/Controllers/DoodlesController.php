@@ -101,6 +101,11 @@ class DoodlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $doodle = \App\Doodle::find($id);
+        $doodle->reports()->delete();
+        $doodle->votes()->delete();
+        $doodle->delete();
+
+        return redirect()->route('doodles.index');
     }
 }
