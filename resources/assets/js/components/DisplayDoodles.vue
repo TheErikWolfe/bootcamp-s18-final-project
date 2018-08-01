@@ -1,12 +1,42 @@
 <template>
     <div class="p-1">
     <div class="row justify-content-center">
-        <div v-for="doodle in dData">
+        <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
             <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
             <div class="img-props">
                 <a :href="'/doodles/' + doodle.id">
                     <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
                 </a>
+            </div>
+            <div class="report-container">
+                <a href="" data-toggle="modal" data-target="#reportModal">
+                    Report
+                </a>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reportModalLabel">Please describe why you are reporting this image.</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="reportInput" v-model="reportString" placeholder="">
+                                    <small>After reporting, you won't see this doodle anymore.</small>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" v-on:click="createReport(doodle)" data-dismiss="modal">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="arrow-container">
                 <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
@@ -33,6 +63,7 @@
                 startWidth: 90,
                 dWidth: 0,
                 dHeight: 0,
+                reportString: ''
             }
         },
 
@@ -105,9 +136,16 @@
                     vote: userVote
                 });
             },
-            showSingleDoodle: function (id)
+            createReport: function (doodle)
             {
-                console.log("Showing Doodle of " + id);
+                doodle.show = false;
+                console.log(doodle);
+                axios.post('/reports', {
+                    doodle_id: doodle.id,
+                    report: this.reportString
+                });
+                this.reportString = '';
+                return doodle;
             },
             doodleOnClick: function () {
                 console.log("Made it to onClick");

@@ -36,6 +36,15 @@ class HomeController extends Controller
             {
                 $doodle->userVote = null;
             }
+            if($doodle->reports()->where('reporter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
+            {
+                $doodle->show = false;
+            }
+            else
+            {
+                $doodle->show = true;
+            }
+            
             // dd($doodle->userVote);
         }
         

@@ -34,17 +34,12 @@ class VotesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {        
         $userVote = new \App\Votes;
-        $userVote->voter_id = \Auth::user()->id;
-        
-        $userVote->doodle_id = $request->input('doodle_id');
-        
-        $userVote->vote = $request->input('vote');
-        
+        $userVote->voter_id = \Auth::user()->id;        
+        $userVote->doodle_id = $request->input('doodle_id');        
+        $userVote->vote = $request->input('vote');        
         $userVote->save();
-
     }
 
     /**

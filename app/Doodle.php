@@ -14,4 +14,8 @@ class Doodle extends Model
     {
         return $this->hasMany('App\Votes');
     }
+    public function reports ()
+    {
+        return $this->hasMany('App\Reports');
+    }
 }
