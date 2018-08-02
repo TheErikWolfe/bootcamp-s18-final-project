@@ -10608,7 +10608,7 @@ a.text-dark:focus {
 }
 
 a {
-  color: blue;
+  color: blue !important;
 }
 
 body {
