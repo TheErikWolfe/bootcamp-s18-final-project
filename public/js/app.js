@@ -47515,7 +47515,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             startWidth: 90,
             dWidth: 0,
             dHeight: 0,
-            reportString: ''
+            reportString: '',
+            currentDoodle: null
         };
     },
     mounted: function mounted() {
@@ -47527,6 +47528,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {},
 
     methods: {
+        setCurrentDoodle: function setCurrentDoodle(doodle) {
+            this.currentDoodle = doodle;
+        },
         changeDoodleSize: function changeDoodleSize(doodle) {
             var downVotes = -doodle.numberOfDownvotes;
             var upVotes = doodle.numberOfUpvotes;
@@ -47575,15 +47579,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vote: userVote
             });
         },
-        createReport: function createReport(doodle) {
-            doodle.show = false;
-            console.log(doodle);
+        createReport: function createReport() {
+            this.currentDoodle.show = false;
             axios.post('/reports', {
-                doodle_id: doodle.id,
+                doodle_id: this.currentDoodle.id,
                 report: this.reportString
             });
             this.reportString = '';
-            return doodle;
+            return this.currentDoodle;
         },
         doodleOnClick: function doodleOnClick() {
             console.log("Made it to onClick");
@@ -47606,161 +47609,171 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row justify-content-center" },
-      _vm._l(_vm.dData, function(doodle) {
-        return _c("div", { class: { "hide-doodle": doodle.show === false } }, [
-          _c(
+      [
+        _vm._l(_vm.dData, function(doodle) {
+          return _c(
             "div",
-            { staticClass: "img-frame", style: _vm.changeDoodleSize(doodle) },
+            _vm._b(
+              { class: { "hide-doodle": doodle.show === false } },
+              "div",
+              _vm.setCurrentDoodle(doodle),
+              false
+            ),
             [
-              _c("div", { staticClass: "img-props" }, [
-                _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
-                  _c("img", {
-                    style: _vm.changeDoodleSize(doodle),
-                    attrs: { src: doodle.source }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0, true),
-              _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "modal fade",
-                  attrs: {
-                    id: "reportModal",
-                    tabindex: "-1",
-                    role: "dialog",
-                    "aria-labelledby": "reportModalLabel",
-                    "aria-hidden": "true"
-                  }
+                  staticClass: "img-frame",
+                  style: _vm.changeDoodleSize(doodle)
                 },
                 [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal-dialog",
-                      attrs: { role: "document" }
-                    },
-                    [
-                      _c("div", { staticClass: "modal-content" }, [
-                        _vm._m(1, true),
-                        _vm._v(" "),
-                        _c("form", [
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.reportString,
-                                    expression: "reportString"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  id: "reportInput",
-                                  placeholder: ""
-                                },
-                                domProps: { value: _vm.reportString },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.reportString = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("small", [
-                                _vm._v(
-                                  "After reporting, you won't see this doodle anymore."
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-secondary",
-                                attrs: {
-                                  type: "button",
-                                  "data-dismiss": "modal"
-                                }
-                              },
-                              [_vm._v("Close")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: {
-                                  type: "button",
-                                  "data-dismiss": "modal"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    _vm.createReport(doodle)
-                                  }
-                                }
-                              },
-                              [_vm._v("Save changes")]
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
+                  _c("div", { staticClass: "img-props" }, [
+                    _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+                      _c("img", {
+                        style: _vm.changeDoodleSize(doodle),
+                        attrs: { src: doodle.source }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "arrow-container" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "arrow bg-transparent",
+                        on: {
+                          click: function($event) {
+                            _vm.onVote(doodle, 1)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-arrow-up upvote-arrow",
+                          class: {
+                            "upvote-arrow-active": doodle.userVote === 1
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "arrow bg-transparent",
+                        on: {
+                          click: function($event) {
+                            _vm.onVote(doodle, -1)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-arrow-down downvote-arrow",
+                          class: {
+                            "downvote-arrow-active": doodle.userVote === -1
+                          }
+                        })
+                      ]
+                    )
+                  ])
                 ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "arrow-container" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "arrow bg-transparent",
-                    on: {
-                      click: function($event) {
-                        _vm.onVote(doodle, 1)
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-arrow-up upvote-arrow",
-                      class: { "upvote-arrow-active": doodle.userVote === 1 }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "arrow bg-transparent",
-                    on: {
-                      click: function($event) {
-                        _vm.onVote(doodle, -1)
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-arrow-down downvote-arrow",
-                      class: { "downvote-arrow-active": doodle.userVote === -1 }
-                    })
-                  ]
-                )
-              ])
+              )
             ]
           )
-        ])
-      })
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "reportModal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "reportModalLabel",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("form", [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.reportString,
+                              expression: "reportString"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "reportInput",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.reportString },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.reportString = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("small", [
+                          _vm._v(
+                            "After reporting, you won't see this doodle anymore."
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              _vm.createReport()
+                            }
+                          }
+                        },
+                        [_vm._v("Save changes")]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      ],
+      2
     )
   ])
 }
@@ -47779,7 +47792,7 @@ var staticRenderFns = [
             "data-target": "#reportModal"
           }
         },
-        [_vm._v("\n                Report\n            ")]
+        [_vm._v("\n                    Report\n                ")]
       )
     ])
   },
