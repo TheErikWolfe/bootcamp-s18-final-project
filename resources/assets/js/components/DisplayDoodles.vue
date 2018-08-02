@@ -1,20 +1,26 @@
 <template>
     <div class="p-1">
-    <div class="row justify-content-center">
-        <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
-            <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
-            <div class="img-props">
-                <a :href="'/doodles/' + doodle.id">
-                    <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
-                </a>
+        <div class="row justify-content-center">
+            <div v-for="doodle in dData" v-bind="setCurrentDoodle(doodle)" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
+                <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
+                <div class="img-props">
+                    <a :href="'/doodles/' + doodle.id">
+                        <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
+                    </a>
+                </div>
+                <div class="report-container">
+                    <a href="" data-toggle="modal" data-target="#reportModal">
+                        Report
+                    </a>
+                </div>
+                <!-- Modal -->
+                <div class="arrow-container">
+                    <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
+                    <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
+                </div>
             </div>
-            <div class="report-container">
-                <a href="" data-toggle="modal" data-target="#reportModal">
-                    Report
-                </a>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+        </div>
+        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -32,19 +38,13 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" v-on:click="createReport(doodle)" data-dismiss="modal">Save changes</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="createReport()">Save changes</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="arrow-container">
-                <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
-                <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
-            </div>
-            </div>
         </div>
-    </div>
     </div>
 </template>
 
@@ -63,7 +63,8 @@
                 startWidth: 90,
                 dWidth: 0,
                 dHeight: 0,
-                reportString: ''
+                reportString: '',
+                currentDoodle: null
             }
         },
 
@@ -78,6 +79,9 @@
         },
 
         methods: {
+            setCurrentDoodle: function(doodle) {
+                this.currentDoodle = doodle;
+            },
             changeDoodleSize(doodle)
             {
                 let downVotes = -(doodle.numberOfDownvotes);
@@ -136,16 +140,15 @@
                     vote: userVote
                 });
             },
-            createReport: function (doodle)
+            createReport: function ()
             {
-                doodle.show = false;
-                console.log(doodle);
+                this.currentDoodle.show = false;
                 axios.post('/reports', {
-                    doodle_id: doodle.id,
+                    doodle_id: this.currentDoodle.id,
                     report: this.reportString
                 });
                 this.reportString = '';
-                return doodle;
+                return this.currentDoodle;
             },
             doodleOnClick: function () {
                 console.log("Made it to onClick");
