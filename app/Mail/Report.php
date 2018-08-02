@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\User;
+use App\Doodle;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,6 +13,7 @@ class Report extends Mailable
 {
     use Queueable, SerializesModels;
     public $user;
+    public $doodle;
     /**
      * Create a new message instance.
      *
@@ -29,6 +32,6 @@ class Report extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('emails.report');
     }
 }
