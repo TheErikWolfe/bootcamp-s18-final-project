@@ -23,8 +23,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $doodles = \App\Doodle::orderBy('id')->get();
-
-        return view('home', compact('doodles'));
+        $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
+        foreach ($doodles as $doodle)
+        {
+            $doodle->numberOfUpvotes = $doodle->votes()->where('vote', '=', 1)->count();
+            $doodle->numberOfDownvotes = $doodle->votes()->where('vote', '=', -1)->count();
+            if($doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
+            {
+                $doodle->userVote = $doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->get()[0]->vote;
+            }
+            else
+            {
+                $doodle->userVote = null;
+            }
+            if($doodle->reports()->where('reporter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
+            {
+                $doodle->show = false;
+            }
+            else
+            {
+                $doodle->show = true;
+            }
+            
+            // dd($doodle->userVote);
+        }
+        
+        return view('main.home', compact('doodles'));
     }
 }

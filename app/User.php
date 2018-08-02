@@ -31,4 +31,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Doodle', 'creator_id');
     }
+
+    public function votes ()
+    {
+        return $this->hasMany('App/Votes', 'voter_id');
+    }
+
+    public function reports ()
+    {
+        return $this->hasMany('App/Reports', 'reporter_id');
+    }
 }

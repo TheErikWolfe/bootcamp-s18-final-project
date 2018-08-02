@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reports extends Model
+class Votes extends Model
 {
-    public function img_reports() 
+    public function img_votes() 
     {
         return $this->belongsTo(App\Doodle);
     }

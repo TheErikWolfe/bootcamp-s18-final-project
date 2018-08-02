@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportsTable extends Migration
+class CreateVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
-            $table->unsignedInteger('reporter_id');
-            $table->foreign('reporter_id')->references('id')->on('users');
+            $table->unsignedInteger('voter_id');
+            $table->foreign('voter_id')->references('id')->on('users');
             $table->unsignedInteger('doodle_id');
-            $table->string('report_description')->nullable();
             $table->foreign('doodle_id')->references('id')->on('doodles');
+            $table->tinyInteger('vote');
+            $table->boolean('favorite')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -31,6 +32,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('votes');
     }
 }

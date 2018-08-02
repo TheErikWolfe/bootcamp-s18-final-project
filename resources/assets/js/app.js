@@ -17,8 +17,9 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('display-doodles', require('./components/DisplayDoodles.vue'));
+Vue.component('display-single-doodle', require('./components/DisplaySingleDoodle.vue'));
 Vue.component('drawing-pad', require('./components/DrawingAppComponent.vue'));
-
+Vue.component('display-user-doodles', require('./components/DisplayUserDoodles.vue'));
 const app = new Vue({
     el: '#app'
 });

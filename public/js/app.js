@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(20);
 
 /*global toString:true*/
@@ -402,6 +402,115 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -424,10 +533,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(9);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(9);
   }
   return adapter;
 }
@@ -502,10 +611,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3034,7 +3143,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13405,7 +13514,13 @@ return jQuery;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(19);
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13423,7 +13538,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -13613,7 +13728,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13624,7 +13739,7 @@ var settle = __webpack_require__(23);
 var buildURL = __webpack_require__(25);
 var parseHeaders = __webpack_require__(26);
 var isURLSameOrigin = __webpack_require__(27);
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(10);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(28);
 
 module.exports = function xhrAdapter(config) {
@@ -13800,7 +13915,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13825,7 +13940,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13837,7 +13952,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13863,124 +13978,15 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
-module.exports = __webpack_require__(46);
+__webpack_require__(14);
+module.exports = __webpack_require__(55);
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -13990,7 +13996,7 @@ module.exports = __webpack_require__(46);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(14);
+__webpack_require__(15);
 
 window.Vue = __webpack_require__(37);
 
@@ -14002,19 +14008,20 @@ window.Vue = __webpack_require__(37);
 
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('display-doodles', __webpack_require__(43));
-Vue.component('drawing-pad', __webpack_require__(51));
-
+Vue.component('display-single-doodle', __webpack_require__(46));
+Vue.component('drawing-pad', __webpack_require__(49));
+Vue.component('display-user-doodles', __webpack_require__(52));
 var app = new Vue({
   el: '#app'
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(15);
-window.Popper = __webpack_require__(3).default;
+window._ = __webpack_require__(16);
+window.Popper = __webpack_require__(4).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -14023,9 +14030,9 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(4);
+  window.$ = window.jQuery = __webpack_require__(5);
 
-  __webpack_require__(17);
+  __webpack_require__(18);
 } catch (e) {}
 
 /**
@@ -14034,7 +14041,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(18);
+window.axios = __webpack_require__(6);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -14070,7 +14077,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -31180,10 +31187,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -31211,7 +31218,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -31220,7 +31227,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(4), __webpack_require__(3)) :
+   true ? factory(exports, __webpack_require__(5), __webpack_require__(4)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -35161,12 +35168,6 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(19);
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35174,9 +35175,9 @@ module.exports = __webpack_require__(19);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(21);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -35209,9 +35210,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(10);
+axios.Cancel = __webpack_require__(12);
 axios.CancelToken = __webpack_require__(35);
-axios.isCancel = __webpack_require__(9);
+axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -35259,7 +35260,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(30);
 var dispatchRequest = __webpack_require__(31);
@@ -35364,7 +35365,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(10);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -35797,8 +35798,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(32);
-var isCancel = __webpack_require__(9);
-var defaults = __webpack_require__(2);
+var isCancel = __webpack_require__(11);
+var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(33);
 var combineURLs = __webpack_require__(34);
 
@@ -35957,7 +35958,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(10);
+var Cancel = __webpack_require__(12);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -47275,14 +47276,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(11)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(41)
 /* template */
@@ -47401,7 +47402,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(11)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(44)
 /* template */
@@ -47463,19 +47464,137 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
 
     data: function data() {
         return {
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            dData: null,
+            upvote: 1,
+            downvote: -1,
+            novote: 0,
+            startHeight: 60,
+            startWidth: 90,
+            dWidth: 0,
+            dHeight: 0,
+            reportString: '',
+            currentDoodle: null
         };
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.doodlesData);
+        this.dData = this.doodlesData;
+    },
 
 
-    computed: {}
+    computed: {},
+
+    methods: {
+        setCurrentDoodle: function setCurrentDoodle(doodle) {
+            this.currentDoodle = doodle;
+        },
+        changeDoodleSize: function changeDoodleSize(doodle) {
+            var downVotes = -doodle.numberOfDownvotes;
+            var upVotes = doodle.numberOfUpvotes;
+            var overallVote = downVotes + upVotes;
+
+            this.dWidth = 2 / 3 * (this.startHeight + overallVote);
+            this.dHeight = 2 / 3 * (this.startWidth + overallVote);
+
+            if (this.dHeight > 80) {
+                this.dHeight = 80;
+                this.dWidth = 2 / 3 * dHeight;
+            } else if (this.dHeight < 30) {
+                this.dHeight = 30;
+                this.dWidth = 2 / 3 * dHeight;
+            }
+
+            // console.log(this.dWidth + ', ' + this.dHeight);
+
+            return { width: 'auto', height: this.dHeight + 'vh' };
+        },
+
+        onVote: function onVote(doodle, userVote) {
+            if (doodle.userVote == null) {
+                this.createVote(doodle.id, userVote);
+                doodle.userVote = userVote;
+            } else if (doodle.userVote == userVote) {
+                this.saveVote(doodle.id, this.novote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                doodle.userVote = 0;
+            } else {
+                this.saveVote(doodle.id, userVote);
+                doodle.userVote = userVote;
+            }
+            console.log(doodle.userVote);
+        },
+        createVote: function createVote(doodleId, userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: doodleId,
+                vote: userVote
+            });
+        },
+        saveVote: function saveVote(id, userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + id.toString(), {
+                vote: userVote
+            });
+        },
+        createReport: function createReport() {
+            this.currentDoodle.show = false;
+            axios.post('/reports', {
+                doodle_id: this.currentDoodle.id,
+                report: this.reportString
+            });
+            this.reportString = '';
+            return this.currentDoodle;
+        },
+        doodleOnClick: function doodleOnClick() {
+            console.log("Made it to onClick");
+            axios.get('/doodles/' + id.toString(), {}).then(function (response) {
+                window.location = response.data.redirect;
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -47486,34 +47605,220 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.doodlesData, function(doodle) {
-      return _c("div", { staticClass: "img-frame" }, [
-        _c("div", { staticClass: "img-props" }, [
-          _c("img", { attrs: { src: doodle.source, alt: "" } })
-        ]),
+  return _c("div", { staticClass: "p-1" }, [
+    _c(
+      "div",
+      { staticClass: "row justify-content-center" },
+      [
+        _vm._l(_vm.dData, function(doodle) {
+          return _c(
+            "div",
+            _vm._b(
+              { class: { "hide-doodle": doodle.show === false } },
+              "div",
+              _vm.setCurrentDoodle(doodle),
+              false
+            ),
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "img-frame",
+                  style: _vm.changeDoodleSize(doodle)
+                },
+                [
+                  _c("div", { staticClass: "img-props" }, [
+                    _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+                      _c("img", {
+                        style: _vm.changeDoodleSize(doodle),
+                        attrs: { src: doodle.source }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "arrow-container" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "arrow bg-transparent",
+                        on: {
+                          click: function($event) {
+                            _vm.onVote(doodle, 1)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-arrow-up upvote-arrow",
+                          class: {
+                            "upvote-arrow-active": doodle.userVote === 1
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "arrow bg-transparent",
+                        on: {
+                          click: function($event) {
+                            _vm.onVote(doodle, -1)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-arrow-down downvote-arrow",
+                          class: {
+                            "downvote-arrow-active": doodle.userVote === -1
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        }),
         _vm._v(" "),
-        _vm._m(0, true)
-      ])
-    })
-  )
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "reportModal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "reportModalLabel",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("form", [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.reportString,
+                              expression: "reportString"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "reportInput",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.reportString },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.reportString = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("small", [
+                          _vm._v(
+                            "After reporting, you won't see this doodle anymore."
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button", "data-dismiss": "modal" },
+                          on: {
+                            click: function($event) {
+                              _vm.createReport()
+                            }
+                          }
+                        },
+                        [_vm._v("Save changes")]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "arrow-container" }, [
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-up upvote-arrow"
-      }),
+    return _c("div", { staticClass: "report-container" }, [
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "",
+            "data-toggle": "modal",
+            "data-target": "#reportModal"
+          }
+        },
+        [_vm._v("\n                    Report\n                ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "reportModalLabel" } },
+        [_vm._v("Please describe why you are reporting this image.")]
+      ),
       _vm._v(" "),
-      _c("div", {
-        staticClass:
-          "d-inline-flex arrow bg-transparent fa fa-arrow-down downvote-arrow"
-      })
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -47528,24 +47833,281 @@ if (false) {
 
 /***/ }),
 /* 46 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(11)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(52)
+var __vue_script__ = __webpack_require__(47)
 /* template */
-var __vue_template__ = __webpack_require__(53)
+var __vue_template__ = __webpack_require__(48)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DisplaySingleDoodle.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-09e2b67c", Component.options)
+  } else {
+    hotAPI.reload("data-v-09e2b67c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['doodleData'],
+
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            doodle: null,
+            imgSource: '',
+            userVote: 0,
+            upVotes: 0,
+            downVotes: 0,
+            noVote: 0,
+            whichColor: ''
+        };
+    },
+    mounted: function mounted() {
+        console.log(this.doodleData);
+        this.doodle = this.doodleData;
+        this.userVote = this.doodle.userVote;
+        this.imgSource = this.doodle.source;
+        this.upVotes = this.doodle.numberOfUpvotes;
+        this.downVotes = this.doodle.numberOfDownvotes;
+        this.userVote = this.doodle.userVote;
+    },
+
+    computed: {
+        votesColor: function votesColor() {
+            if (this.upVotes - this.downVotes > 0) {
+                this.whichColor = 'text-success';
+            } else {
+                this.whichColor = 'text-danger';
+            }
+        }
+    },
+    methods: {
+        onVote: function onVote(newVote) {
+            if (this.userVote == null) {
+                this.createVote(newVote);
+                this.userVote = newVote;
+            } else if (this.userVote == newVote) {
+                this.saveVote(this.noVote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                this.userVote = 0;
+            } else {
+                this.saveVote(newVote);
+                this.userVote = newVote;
+            }
+            console.log(this.userVote);
+        },
+        createVote: function createVote(userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: this.doodle.id,
+                vote: userVote
+            });
+        },
+        saveVote: function saveVote(userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + this.doodle.id.toString(), {
+                vote: userVote
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "d-flex justify-content-center" }, [
+      _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-dark",
+                  class: { hidden: _vm.doodleData.previous === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.previous }
+                },
+                [_vm._v("<")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-secondary shadow",
+                  class: { hidden: _vm.doodleData.next === null },
+                  attrs: { href: "/doodles/" + _vm.doodleData.next }
+                },
+                [_vm._v("Next >")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body p-0" }, [
+          _c("div", { staticClass: "img-props m-0" }, [
+            _c("img", { attrs: { src: _vm.imgSource } })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
+          _c("div", [
+            _c(
+              "div",
+              {
+                staticClass: "arrow bg-transparent",
+                on: {
+                  click: function($event) {
+                    _vm.onVote(1)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-arrow-up upvote-arrow",
+                  class: { "upvote-arrow-active": _vm.userVote === 1 }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "ml-3 text-success",
+                class: _vm.whichColor,
+                attrs: { id: "doodle-points" }
+              },
+              [
+                _vm._v(
+                  _vm._s(
+                    _vm.doodleData.numberOfUpvotes -
+                      _vm.doodleData.numberOfDownvotes
+                  )
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow bg-transparent",
+              on: {
+                click: function($event) {
+                  _vm.onVote(-1)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": _vm.userVote === -1 }
+              })
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-09e2b67c", module.exports)
+  }
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(50)
+/* template */
+var __vue_template__ = __webpack_require__(51)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47584,7 +48146,294 @@ module.exports = Component.exports
 
 
 /***/ }),
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            context: null,
+            canvas: null,
+            mouseDown: false,
+            radIncrement: 5,
+            radius: 10,
+            current: {
+                x: 0,
+                y: 0
+            },
+            previous: {
+                x: 0,
+                y: 0
+            },
+            colors: ['black', 'grey', 'white', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet'],
+            currentColor: 'black'
+        };
+    },
+
+
+    computed: {},
+
+    mounted: function mounted() {
+        this.canvas = document.getElementById('drawing-app-canvas');
+        this.context = this.canvas.getContext('2d');
+
+        this.context.rect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.fillStyle = "#FFF";
+        this.context.fill();
+    },
+
+    methods: {
+        changeColor: function changeColor(color) {
+            this.currentColor = color;
+        },
+        draw: function draw(event) {
+            if (this.mouseDown) {
+                this.context.lineWidth = this.radius * 2;
+                this.context.lineTo(this.current.x, this.current.y);
+                this.context.strokeStyle = this.currentColor;
+                this.context.stroke();
+                this.context.beginPath();
+                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+                this.context.fillStyle = this.currentColor;
+                this.context.fill();
+                this.context.beginPath();
+                this.context.moveTo(this.current.x, this.current.y);
+            }
+        },
+        setRadius: function setRadius(radDir) {
+            this.radius = this.radius + radDir * this.radIncrement;
+            if (this.radius <= 0) {
+                this.radius = 5;
+            }
+            if (this.radius >= 55) {
+                this.radius = 50;
+            }
+        },
+        handleMouseMove: function handleMouseMove(event) {
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+
+            this.draw(event);
+        },
+        handleMouseUp: function handleMouseUp() {
+            this.mouseDown = false;
+        },
+        handleMouseDown: function handleMouseDown(event) {
+            var rect = this.canvas.getBoundingClientRect();
+            this.context.beginPath();
+            this.mouseDown = true;
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        },
+        clearCanvas: function clearCanvas() {},
+        saveDoodle: function saveDoodle(event) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
+                doodle: this.canvas.toDataURL()
+            }).then(function (response) {
+                window.location = response.data.redirect;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "justify-content-center row" }, [
+      _c("div", { staticClass: "text-center drawing-app-width" }, [
+        _c(
+          "div",
+          { staticClass: "row justify-content-center" },
+          _vm._l(_vm.colors, function(color) {
+            return _c("div", [
+              _c("div", {
+                staticClass: "swatch",
+                style: { background: color },
+                on: {
+                  click: function($event) {
+                    _vm.changeColor(color)
+                  }
+                }
+              })
+            ])
+          })
+        ),
+        _vm._v(" "),
+        _c("canvas", {
+          attrs: { id: "drawing-app-canvas", width: "400px", height: "600px" },
+          on: {
+            mousedown: _vm.handleMouseDown,
+            mouseup: _vm.handleMouseUp,
+            mousemove: _vm.handleMouseMove
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "float-left" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.setRadius(-1)
+                }
+              }
+            },
+            [_vm._v("-")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.setRadius(1)
+                }
+              }
+            },
+            [_vm._v("+")]
+          ),
+          _vm._v(" "),
+          _c("div", [_vm._v(_vm._s(_vm.radius / 5))])
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "float-right",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.saveDoodle($event)
+              }
+            }
+          },
+          [
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
+              [_vm._v("Save")]
+            )
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7be2a8b3", module.exports)
+  }
+}
+
+/***/ }),
 /* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = __webpack_require__(54)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DisplayUserDoodles.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-181b4e04", Component.options)
+  } else {
+    hotAPI.reload("data-v-181b4e04", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47602,124 +48451,170 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['doodlesData'],
+
     data: function data() {
         return {
-            context: null,
-            canvas: null,
-            mouseDown: false,
-            radius: 10,
-            current: {
-                x: 0,
-                y: 0
-            },
-            previous: {
-                x: 0,
-                y: 0
-            }
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            dData: null,
+            upvote: 1,
+            downvote: -1,
+            novote: 0
         };
     },
-
-
-    computed: {
-        // currentMouse: function (event) {
-        //     var c = this.canvas;
-        //     var rect = c.getBoundingClientRect();
-
-        //     return {
-        //         x: (event.clientX - rect.left),
-        //         y: (event.clientY - rect.top)
-        //     }
-        // }
-    },
-
     mounted: function mounted() {
-        this.canvas = document.getElementById('drawing-app-canvas');
-        this.context = this.canvas.getContext('2d');
-
-        this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.fillStyle = "#FFF";
-        this.context.fill();
+        console.log(this.doodlesData);
+        this.dData = this.doodlesData;
     },
+
+
+    computed: {},
 
     methods: {
-        draw: function draw(event) {
-            if (this.mouseDown) {
-                this.context.lineWidth = this.radius * 2;
-                this.context.lineTo(this.current.x, this.current.y);
-                this.context.stroke();
-                this.context.beginPath();
-                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
-                this.context.fillStyle = "black";
-                this.context.fill();
-                this.context.beginPath();
-                this.context.moveTo(this.current.x, this.current.y);
+        onVote: function onVote(doodle, userVote) {
+            console.log(doodle.userVote, userVote);
+            if (doodle.userVote == null) {
+                this.createVote(doodle.id, userVote);
+                doodle.userVote = userVote;
+            } else if (doodle.userVote == userVote) {
+                this.saveVote(doodle.id, this.novote);
+                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
+                doodle.userVote = 0;
+            } else {
+                this.saveVote(doodle.id, userVote);
+                doodle.userVote = userVote;
             }
+            console.log(doodle.userVote);
         },
-        setRadius: function setRadius() {},
-        handleMouseMove: function handleMouseMove(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
-
-            // var mousePos = {x: event.clientX - rect.left,
-            // y: event.clientY - rect.top };
-            // var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-            // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            // this.context.font = '18pt Calibri';
-            // this.context.fillStyle = 'black';
-            // this.context.fillText(message, 10, 25);
-
-            this.draw(event);
+        createVote: function createVote(doodleId, userVote) {
+            console.log("Made it to createVote");
+            axios.post('/votes', {
+                doodle_id: doodleId,
+                vote: userVote
+            });
         },
-        handleMouseUp: function handleMouseUp() {
-            this.mouseDown = false;
+        saveVote: function saveVote(id, userVote) {
+            console.log("Made it to saveVote");
+            axios.patch('/votes/' + id.toString(), {
+                vote: userVote
+            });
         },
-        handleMouseDown: function handleMouseDown(event) {
-            this.context.beginPath();
-            this.mouseDown = true;
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
-
-            //this.context.moveTo(this.currentMouse.x, this.currentMouse.y)
-        },
-        clearCanvas: function clearCanvas() {}
+        doodleOnClick: function doodleOnClick() {
+            console.log("Made it to onClick");
+            axios.get('/doodles/' + id.toString(), {}).then(function (response) {
+                window.location = response.data.redirect;
+            });
+        }
     }
 });
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { "text-align": "center" } }, [
-    _c("canvas", {
-      attrs: { id: "drawing-app-canvas", width: "400px", height: "600px" },
-      on: {
-        mousedown: _vm.handleMouseDown,
-        mouseup: _vm.handleMouseUp,
-        mousemove: _vm.handleMouseMove
-      }
-    })
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "bg-secondary rounded pt-1 pb-2" }, [
+      _vm.doodlesData.length > 0
+        ? _c("h3", { staticClass: "text-center mt-3" }, [
+            _c("strong", [
+              _vm._v(
+                "You have " +
+                  _vm._s(_vm.doodlesData.length) +
+                  " images, keep up the great doodling!"
+              )
+            ])
+          ])
+        : _c("h3", { staticClass: "text-center mt-3" }, [
+            _c("strong", [_vm._v("You have no doodles :(")])
+          ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row justify-content-center" },
+      _vm._l(_vm.dData, function(doodle) {
+        return _c("div", { staticClass: "text-center user-img-wrapper m-4" }, [
+          _c(
+            "div",
+            {
+              staticClass: "user-img-thumbnail rounded border border-secondary"
+            },
+            [
+              _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+                _c("img", {
+                  staticClass: "user-img",
+                  attrs: { src: doodle.source }
+                })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "form",
+            { attrs: { method: "post", action: "/doodles/" + doodle.id } },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_method", value: "DELETE" }
+              }),
+              _vm._v(" "),
+              _vm._m(0, true)
+            ]
+          )
+        ])
+      })
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm bg-transparent border-0",
+        attrs: { type: "submit" }
+      },
+      [_c("i", { staticClass: "text-danger fas fa-trash-alt" })]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7be2a8b3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-181b4e04", module.exports)
   }
 }
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
