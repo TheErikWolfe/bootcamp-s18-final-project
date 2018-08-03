@@ -48021,6 +48021,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodleData'],
@@ -48097,7 +48107,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "d-flex justify-content-center" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
         _c("div", { staticClass: "card-header" }, [
           _c("div", { staticClass: "row" }, [
@@ -48190,10 +48200,38 @@ var render = function() {
           )
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center mt-3" }, [
+      _c("div", { staticClass: "comment-form" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("textarea", {
+            attrs: {
+              name: "user-comment",
+              placeholder: "Write a comment",
+              id: ""
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer" }, [
+          _c("button", {
+            staticClass: "btn btn-dark",
+            attrs: { type: "submit" }
+          })
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

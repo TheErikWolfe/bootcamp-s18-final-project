@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="d-flex justify-content-center">
+        <div class="row justify-content-center">
             <div class="single-doodle-bkgd text-center mt-4">
                 <div class="card-header">
                     <div class="row">
@@ -24,6 +24,16 @@
                         <div id="doodle-points" class="ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div>
                     </div>    
                     <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="comment-form">
+                <div class="card-body">
+                    <textarea name="user-comment" placeholder="Write a comment" id=""></textarea>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-dark"></button>
                 </div>
             </div>
         </div>

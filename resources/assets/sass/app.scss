@@ -190,6 +190,15 @@ body {
   @extend .shadow;
 }
 
+.comment-form {
+  background-color: $secondary;
+  width: 600px;
+  min-width: 400px;
+  @extend .p-0;
+  @extend .card;
+  @extend .shadow;
+}
+
 .hidden {
   visibility: hidden;
 }
