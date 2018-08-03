@@ -40,7 +40,7 @@
                     <div class="card-header text-light bg-dark">
                         <div class="row">
                             <div class="col">
-                                {{ comment.commenter_id }}
+                                Anonymous
                             </div>
                             <div class="col text-align-right">
                                 commented at: {{ comment.created_at }}

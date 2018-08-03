@@ -48267,9 +48267,7 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col" }, [
                     _vm._v(
-                      "\n                            " +
-                        _vm._s(comment.commenter_id) +
-                        "\n                        "
+                      "\n                            Anonymous\n                        "
                     )
                   ]),
                   _vm._v(" "),
