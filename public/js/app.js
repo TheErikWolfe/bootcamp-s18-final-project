@@ -47500,6 +47500,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47516,7 +47535,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dWidth: 0,
             dHeight: 0,
             reportString: '',
-            currentDoodle: null
+            currentDoodle: null,
+            doodleSize: false, //true is same size, false is by popularity sizes
+            sortBy: true //true is newest first, false is by popularite
         };
     },
     mounted: function mounted() {
@@ -47528,30 +47549,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {},
 
     methods: {
+        changeDoodleSize: function changeDoodleSize(doodle) {
+            if (this.doodleSize = false) {
+                var downVotes = -doodle.numberOfDownvotes;
+                var upVotes = doodle.numberOfUpvotes;
+                var overallVote = downVotes + upVotes;
+
+                this.dWidth = 2 / 3 * (this.startHeight + overallVote);
+                this.dHeight = 2 / 3 * (this.startWidth + overallVote);
+
+                if (this.dHeight > 80) {
+                    this.dHeight = 80;
+                    this.dWidth = 2 / 3 * dHeight;
+                } else if (this.dHeight < 30) {
+                    this.dHeight = 30;
+                    this.dWidth = 2 / 3 * dHeight;
+                }
+
+                // console.log(this.dWidth + ', ' + this.dHeight);
+                this.$forceUpdate();
+                return { width: 'auto', height: this.dHeight + 'vh' };
+            } else {
+                return { width: 'auto', height: this.startHeight + 'vh' };
+            }
+        },
+
         setCurrentDoodle: function setCurrentDoodle(doodle) {
             this.currentDoodle = doodle;
         },
-        changeDoodleSize: function changeDoodleSize(doodle) {
-            var downVotes = -doodle.numberOfDownvotes;
-            var upVotes = doodle.numberOfUpvotes;
-            var overallVote = downVotes + upVotes;
-
-            this.dWidth = 2 / 3 * (this.startHeight + overallVote);
-            this.dHeight = 2 / 3 * (this.startWidth + overallVote);
-
-            if (this.dHeight > 80) {
-                this.dHeight = 80;
-                this.dWidth = 2 / 3 * dHeight;
-            } else if (this.dHeight < 30) {
-                this.dHeight = 30;
-                this.dWidth = 2 / 3 * dHeight;
-            }
-
-            // console.log(this.dWidth + ', ' + this.dHeight);
-
-            return { width: 'auto', height: this.dHeight + 'vh' };
-        },
-
         onVote: function onVote(doodle, userVote) {
             if (doodle.userVote == null) {
                 this.createVote(doodle.id, userVote);
@@ -47606,6 +47631,86 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-1" }, [
+    _c("div", { staticClass: "p-2 container rounded bg-secondary" }, [
+      _c("div", { staticClass: "row align-items-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary dropdown-toggle",
+              attrs: {
+                type: "button",
+                "data-toggle": "dropdown",
+                "aria-haspopup": "true",
+                "aria-expanded": "false"
+              }
+            },
+            [_vm._v("\n                    Sort By:\n                ")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "dropdown-menu" }, [
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item",
+                attrs: { href: "" },
+                on: {
+                  click: function($event) {
+                    _vm.sortBy = true
+                  }
+                }
+              },
+              [_vm._v("Newest First")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item",
+                attrs: { href: "" },
+                on: {
+                  click: function($event) {
+                    _vm.sortBy = false
+                  }
+                }
+              },
+              [_vm._v("Popularity")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col pr-4" }, [
+          _c("div", { staticClass: "float-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn-secondary border-0 mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.doodleSize = true
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fab fa-microsoft" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn-secondary border-0 mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.doodleSize = false
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-align-center" })]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "row justify-content-center" },
@@ -48184,6 +48289,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48193,8 +48304,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             context: null,
             canvas: null,
             mouseDown: false,
-            radIncrement: 5,
+            radIncrement: 3,
             radius: 10,
+            maxRadius: 28,
+            minRadius: 1,
             current: {
                 x: 0,
                 y: 0
@@ -48203,14 +48316,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: 0,
                 y: 0
             },
-            colors: ['black', 'grey', 'white', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet'],
+            colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
             currentColor: 'black'
         };
     },
-
-
-    computed: {},
-
     mounted: function mounted() {
         this.canvas = document.getElementById('drawing-app-canvas');
         this.context = this.canvas.getContext('2d');
@@ -48240,11 +48349,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setRadius: function setRadius(radDir) {
             this.radius = this.radius + radDir * this.radIncrement;
-            if (this.radius <= 0) {
-                this.radius = 5;
-            }
-            if (this.radius >= 55) {
-                this.radius = 50;
+            if (this.radius < this.minRadius) {
+                this.radius = this.minRadius;
+            } else if (this.radius > this.maxRadius) {
+                this.radius = this.maxRadius;
             }
         },
         handleMouseMove: function handleMouseMove(event) {
@@ -48267,6 +48375,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: event.clientX - rect.left,
                 y: event.clientY - rect.top
             };
+            this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+            this.context.fillStyle = this.currentColor;
+            this.context.fill();
+            this.context.beginPath();
         },
         clearCanvas: function clearCanvas() {},
         saveDoodle: function saveDoodle(event) {
@@ -48287,92 +48399,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "justify-content-center row" }, [
-      _c("div", { staticClass: "text-center drawing-app-width" }, [
+  return _c("div", { staticClass: "p-5 contain row justify-content-center" }, [
+    _c(
+      "div",
+      {
+        staticClass: "border-dark drawing-app-width row bg-secondary border p-0"
+      },
+      [
         _c(
           "div",
-          { staticClass: "row justify-content-center" },
-          _vm._l(_vm.colors, function(color) {
-            return _c("div", [
-              _c("div", {
-                staticClass: "swatch",
-                style: { background: color },
-                on: {
-                  click: function($event) {
-                    _vm.changeColor(color)
-                  }
-                }
-              })
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("canvas", {
-          attrs: { id: "drawing-app-canvas", width: "400px", height: "600px" },
-          on: {
-            mousedown: _vm.handleMouseDown,
-            mouseup: _vm.handleMouseUp,
-            mousemove: _vm.handleMouseMove
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-left" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              on: {
-                click: function($event) {
-                  _vm.setRadius(-1)
-                }
-              }
-            },
-            [_vm._v("-")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              on: {
-                click: function($event) {
-                  _vm.setRadius(1)
-                }
-              }
-            },
-            [_vm._v("+")]
-          ),
-          _vm._v(" "),
-          _c("div", [_vm._v(_vm._s(_vm.radius / 5))])
-        ]),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            staticClass: "float-right",
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.saveDoodle($event)
-              }
-            }
-          },
+          { staticClass: "col-2 pr-2 pt-1 p-0 border border-dark text-center" },
           [
-            _c("input", {
-              attrs: { type: "hidden", name: "_token" },
-              domProps: { value: _vm.csrf }
-            }),
+            _c(
+              "div",
+              { staticClass: "row justify-content-center" },
+              _vm._l(_vm.colors, function(color) {
+                return _c("div", [
+                  _c("div", {
+                    staticClass: "swatch",
+                    class: { active: _vm.currentColor === color },
+                    style: { background: color },
+                    on: {
+                      click: function($event) {
+                        _vm.changeColor(color)
+                      }
+                    }
+                  })
+                ])
+              })
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center mt-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.setRadius(-1)
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.setRadius(1)
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center mt-2" }, [
+              _c("div", { staticClass: "text-center" }, [
+                _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
+              ])
+            ]),
             _vm._v(" "),
             _c(
-              "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
-              [_vm._v("Save")]
+              "form",
+              {
+                staticClass: "row justify-content-center align-items-end",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.saveDoodle($event)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn border-dark btn-secondary",
+                    attrs: { type: "submit" }
+                  },
+                  [_vm._v("Save")]
+                )
+              ]
             )
           ]
-        )
-      ])
-    ])
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-10 p-1" }, [
+          _c("canvas", {
+            staticClass: "m-0",
+            attrs: {
+              id: "drawing-app-canvas",
+              width: "400px",
+              height: "600px"
+            },
+            on: {
+              mousedown: _vm.handleMouseDown,
+              mouseup: _vm.handleMouseUp,
+              mousemove: _vm.handleMouseMove,
+              mouseleave: _vm.handleMouseUp
+            }
+          })
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []

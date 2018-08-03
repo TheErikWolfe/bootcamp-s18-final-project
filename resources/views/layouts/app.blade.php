@@ -27,7 +27,8 @@
         <nav class="navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/>
+                    <img class="logo mx-auto" src="https://files.slack.com/files-pri/TA033TWNB-FC24Z3ZDJ/doodle_on_new.png"/>
+                    <!-- <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/> -->
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

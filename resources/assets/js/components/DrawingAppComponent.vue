@@ -1,31 +1,37 @@
 <template>
     <!-- Temporary div for centering of the canvas. -->
-    <div class="container">
-    <div class="justify-content-center row">
-        <div class="text-center drawing-app-width">
-            <div class="row justify-content-center">
-                <div v-for="color in colors">
-                    <div v-on:click="changeColor(color)" class="swatch" v-bind:style="{ background : color }"></div>
+    <div class="p-5 contain row justify-content-center">
+        <div class="border-dark drawing-app-width row bg-secondary border p-0">
+            <div class="col-2 pr-2 pt-1 p-0 border border-dark text-center">
+                <div class="row justify-content-center">
+                    <div v-for="color in colors">
+                        <div v-on:click="changeColor(color)" class="swatch" v-bind:class="{ 'active': currentColor === color }" v-bind:style="{ background : color }"></div>
+                    </div>
                 </div>
+                <div class="row justify-content-center mt-2">
+                    <button v-on:click="setRadius(-1)" class="btn border-dark btn-secondary">-</button>
+                    <button v-on:click="setRadius(1)" class="btn border-dark btn-secondary">+</button>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="text-center">{{ (radius - 1) / radIncrement + 1 }}</div>
+                </div>
+                <form v-on:submit.prevent="saveDoodle" class="row justify-content-center align-items-end">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <button class="btn border-dark btn-secondary"  type="submit">Save</button>
+                </form>
             </div>
-            <canvas id="drawing-app-canvas"
-                v-on:mousedown="handleMouseDown" 
-                v-on:mouseup="handleMouseUp" 
-                v-on:mousemove="handleMouseMove"
-                width="400px"
-                height="600px">
-            </canvas>
-            <div class="float-left">
-                <button v-on:click="setRadius(-1)" class="btn btn-secondary">-</button>
-                <button v-on:click="setRadius(1)" class="btn btn-secondary">+</button>
-                <div>{{ radius / 5 }}</div>
+            <div class="col-10 p-1">
+                <canvas id="drawing-app-canvas"
+                    v-on:mousedown="handleMouseDown" 
+                    v-on:mouseup="handleMouseUp" 
+                    v-on:mousemove="handleMouseMove"
+                    v-on:mouseleave="handleMouseUp"
+                    width="400px"
+                    height="600px"
+                    class="m-0">
+                </canvas>
             </div>
-            <form v-on:submit.prevent="saveDoodle" class="float-right">
-                <input type="hidden" name="_token" :value="csrf">
-                <button class="btn btn-secondary"  type="submit">Save</button>
-            </form>
-        </div>
-    </div>  
+        </div>  
     </div>  
 </template>
 
@@ -40,8 +46,10 @@ import axios from 'axios';
                 context: null,
                 canvas: null,
                 mouseDown: false,
-                radIncrement: 5,
+                radIncrement: 3,
                 radius: 10,
+                maxRadius: 28,
+                minRadius: 1,
                 current: {
                     x: 0,
                     y: 0 
@@ -50,16 +58,10 @@ import axios from 'axios';
                     x: 0,
                     y: 0
                 },
-                colors : ['black', 'grey', 'white', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet'],
+                colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
                 currentColor : 'black'
             }
         },
-
-        computed:
-        {
-            
-        },
-
         mounted () 
         {
             this.canvas = document.getElementById('drawing-app-canvas');
@@ -93,13 +95,13 @@ import axios from 'axios';
             setRadius: function (radDir) 
             {
                 this.radius = this.radius + radDir * this.radIncrement;
-                if(this.radius <= 0)
+                if(this.radius < this.minRadius)
                 {
-                    this.radius = 5;
+                    this.radius = this.minRadius;
                 }
-                if(this.radius >= 55)
+                else if(this.radius > this.maxRadius)
                 {
-                    this.radius = 50;
+                    this.radius = this.maxRadius;
                 }
             },
             handleMouseMove: function (event) 
@@ -126,6 +128,10 @@ import axios from 'axios';
                     x: event.clientX - rect.left,
                     y: event.clientY - rect.top
                 };
+                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2*Math.PI*2);
+                this.context.fillStyle = this.currentColor;
+                this.context.fill();
+                this.context.beginPath();
             },
             clearCanvas: function ()
             {
