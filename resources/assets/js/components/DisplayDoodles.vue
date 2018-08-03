@@ -7,8 +7,8 @@
                         Sort By:
                     </button>
                     <div class="dropdown-menu">
-                        <a v-on:click="sortBy = true" class="dropdown-item" href="">Newest First</a>
-                        <a v-on:click="sortBy = false" class="dropdown-item" href="">Popularity</a>
+                        <a v-on:click="sortDoodles('Newest First')" class="dropdown-item">Newest First</a>
+                        <a v-on:click="sortDoodles('Popularity')" class="dropdown-item">Popularity</a>
                     </div>
                 </div>
                 <div class="col pr-4">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div v-for="doodle in dData" v-bind="setCurrentDoodle(doodle)" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
+            <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
                 <div class="img-props">
                     <a :href="'/doodles/' + doodle.id">
@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="report-container">
-                    <a href="" data-toggle="modal" data-target="#reportModal">
+                    <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
                         Report
                     </a>
                 </div>
@@ -83,9 +83,7 @@
                 dWidth: 0,
                 dHeight: 0,
                 reportString: '',
-                currentDoodle: null,
-                doodleSize: false, //true is same size, false is by popularity sizes
-                sortBy: true //true is newest first, false is by popularite
+                currentDoodle: null
             }
         },
 
@@ -94,10 +92,24 @@
             this.dData = this.doodlesData;
         },
 
-        computed: {  
-        },
-
         methods: {
+            sortDoodles(sortBy)
+            {   
+                
+                // let num = 0;
+                // console.log('length' + this.dData.length)
+                // while (this.dData.length != 0)
+                // {
+                //     num = Math.floor(Math.random() * (this.dData.length - 1));
+                //     console.log(num);
+                //     result.push(this.dData[num]);
+                //     this.dData.splice(num, 1);
+                //     console.log(this.dData);
+                // }
+                // console.log("Made it out alive");
+                // this.dData = result;
+                // return this.dData;
+            },
             changeDoodleSize(doodle)
             {
                 if(this.doodleSize = false)
@@ -121,7 +133,6 @@
                     }
 
                     // console.log(this.dWidth + ', ' + this.dHeight);
-                    this.$forceUpdate();
                     return {width: 'auto', height: this.dHeight + 'vh'};
                 }
                 else
@@ -130,6 +141,7 @@
                 }
             },
             setCurrentDoodle: function(doodle) {
+                console.log('currrent doodle is ' + doodle.id);
                 this.currentDoodle = doodle;
             },
             onVote:function (doodle, userVote) 

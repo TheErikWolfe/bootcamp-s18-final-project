@@ -47535,9 +47535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dWidth: 0,
             dHeight: 0,
             reportString: '',
-            currentDoodle: null,
-            doodleSize: false, //true is same size, false is by popularity sizes
-            sortBy: true //true is newest first, false is by popularite
+            currentDoodle: null
         };
     },
     mounted: function mounted() {
@@ -47546,9 +47544,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    computed: {},
-
     methods: {
+        sortDoodles: function sortDoodles(sortBy) {
+
+            // let num = 0;
+            // console.log('length' + this.dData.length)
+            // while (this.dData.length != 0)
+            // {
+            //     num = Math.floor(Math.random() * (this.dData.length - 1));
+            //     console.log(num);
+            //     result.push(this.dData[num]);
+            //     this.dData.splice(num, 1);
+            //     console.log(this.dData);
+            // }
+            // console.log("Made it out alive");
+            // this.dData = result;
+            // return this.dData;
+        },
         changeDoodleSize: function changeDoodleSize(doodle) {
             if (this.doodleSize = false) {
                 var downVotes = -doodle.numberOfDownvotes;
@@ -47567,7 +47579,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
 
                 // console.log(this.dWidth + ', ' + this.dHeight);
-                this.$forceUpdate();
                 return { width: 'auto', height: this.dHeight + 'vh' };
             } else {
                 return { width: 'auto', height: this.startHeight + 'vh' };
@@ -47575,6 +47586,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         setCurrentDoodle: function setCurrentDoodle(doodle) {
+            console.log('currrent doodle is ' + doodle.id);
             this.currentDoodle = doodle;
         },
         onVote: function onVote(doodle, userVote) {
@@ -47653,10 +47665,9 @@ var render = function() {
               "a",
               {
                 staticClass: "dropdown-item",
-                attrs: { href: "" },
                 on: {
                   click: function($event) {
-                    _vm.sortBy = true
+                    _vm.sortDoodles("Newest First")
                   }
                 }
               },
@@ -47667,10 +47678,9 @@ var render = function() {
               "a",
               {
                 staticClass: "dropdown-item",
-                attrs: { href: "" },
                 on: {
                   click: function($event) {
-                    _vm.sortBy = false
+                    _vm.sortDoodles("Popularity")
                   }
                 }
               },
@@ -47718,12 +47728,7 @@ var render = function() {
         _vm._l(_vm.dData, function(doodle) {
           return _c(
             "div",
-            _vm._b(
-              { class: { "hide-doodle": doodle.show === false } },
-              "div",
-              _vm.setCurrentDoodle(doodle),
-              false
-            ),
+            { class: { "hide-doodle": doodle.show === false } },
             [
               _c(
                 "div",
@@ -47741,7 +47746,24 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(0, true),
+                  _c("div", { staticClass: "report-container" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "",
+                          "data-toggle": "modal",
+                          "data-target": "#reportModal"
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.setCurrentDoodle(doodle)
+                          }
+                        }
+                      },
+                      [_vm._v("\n                    Report\n                ")]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "arrow-container" }, [
                     _c(
@@ -47808,7 +47830,7 @@ var render = function() {
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("form", [
                     _c("div", { staticClass: "modal-body" }, [
@@ -47883,24 +47905,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "report-container" }, [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "",
-            "data-toggle": "modal",
-            "data-target": "#reportModal"
-          }
-        },
-        [_vm._v("\n                    Report\n                ")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

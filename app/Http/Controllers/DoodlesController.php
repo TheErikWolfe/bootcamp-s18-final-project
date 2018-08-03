@@ -105,6 +105,7 @@ class DoodlesController extends Controller
         $doodle = \App\Doodle::find($id);
         $doodle->reports()->delete();
         $doodle->votes()->delete();
+        $doodle->comments()->delete();
         $doodle->delete();
 
         return redirect()->route('doodles.index');
