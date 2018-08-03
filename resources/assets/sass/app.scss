@@ -64,7 +64,7 @@ body {
 
 
 .settings-menu-navbar {
-  background-color: #5672AD;
+  background-color: $secondary;
   border: none;
   @extend .rounded-0;
   @extend .mt-4;
@@ -79,7 +79,7 @@ body {
 }
 
 .settings-card {
-  background-color: #5672AD;
+  background-color: $secondary;
   @extend .shadow;
   border: none;
   @extend .rounded-0;
@@ -236,11 +236,11 @@ body {
   
 }
 
-.swatch.active {
+.active {
   border: 2px solid white;
   box-shadow: inset 0px 1px 2px rgba(0,0,0,.5);
 }
 
 .drawing-app-width {
-  width: 400px;
+  width: 500px;
 }

@@ -1,5 +1,24 @@
 <template>
     <div class="p-1">
+        <div class="p-2 container rounded bg-secondary">
+            <div class="row align-items-center">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By:
+                    </button>
+                    <div class="dropdown-menu">
+                        <a v-on:click="sortBy = true" class="dropdown-item" href="">Newest First</a>
+                        <a v-on:click="sortBy = false" class="dropdown-item" href="">Popularity</a>
+                    </div>
+                </div>
+                <div class="col pr-4">
+                    <div class="float-right">
+                        <button v-on:click="doodleSize = true" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
+                        <button v-on:click="doodleSize = false" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
+                    </div>
+                </div>               
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div v-for="doodle in dData" v-bind="setCurrentDoodle(doodle)" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
@@ -64,7 +83,9 @@
                 dWidth: 0,
                 dHeight: 0,
                 reportString: '',
-                currentDoodle: null
+                currentDoodle: null,
+                doodleSize: false, //true is same size, false is by popularity sizes
+                sortBy: true //true is newest first, false is by popularite
             }
         },
 
@@ -73,38 +94,43 @@
             this.dData = this.doodlesData;
         },
 
-        computed: {
-            
-            
+        computed: {  
         },
 
         methods: {
-            setCurrentDoodle: function(doodle) {
-                this.currentDoodle = doodle;
-            },
             changeDoodleSize(doodle)
             {
-                let downVotes = -(doodle.numberOfDownvotes);
-                let upVotes = doodle.numberOfUpvotes;
-                let overallVote = downVotes + upVotes;
-
-                this.dWidth = 2/3 * (this.startHeight + overallVote);
-                this.dHeight = 2/3 * (this.startWidth + overallVote);
-
-                if(this.dHeight > 80)
+                if(this.doodleSize = false)
                 {
-                    this.dHeight = 80;
-                    this.dWidth = 2 / 3 * dHeight;
+                    let downVotes = -(doodle.numberOfDownvotes);
+                    let upVotes = doodle.numberOfUpvotes;
+                    let overallVote = downVotes + upVotes;
+
+                    this.dWidth = 2/3 * (this.startHeight + overallVote);
+                    this.dHeight = 2/3 * (this.startWidth + overallVote);
+
+                    if(this.dHeight > 80)
+                    {
+                        this.dHeight = 80;
+                        this.dWidth = 2 / 3 * dHeight;
+                    }
+                    else if(this.dHeight < 30)
+                    {
+                        this.dHeight = 30;
+                        this.dWidth = 2 / 3 * dHeight;
+                    }
+
+                    // console.log(this.dWidth + ', ' + this.dHeight);
+                    this.$forceUpdate();
+                    return {width: 'auto', height: this.dHeight + 'vh'};
                 }
-                else if(this.dHeight < 30)
+                else
                 {
-                    this.dHeight = 30;
-                    this.dWidth = 2 / 3 * dHeight;
+                    return {width: 'auto', height: this.startHeight + 'vh'};
                 }
-
-                // console.log(this.dWidth + ', ' + this.dHeight);
-
-                return {width: 'auto', height: this.dHeight + 'vh'};
+            },
+            setCurrentDoodle: function(doodle) {
+                this.currentDoodle = doodle;
             },
             onVote:function (doodle, userVote) 
             {
