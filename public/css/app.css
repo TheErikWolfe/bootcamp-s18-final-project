@@ -7255,7 +7255,8 @@ button.bg-dark:focus {
 .rounded-0,
 .settings-menu-navbar,
 .settings-card,
-.img-frame {
+.img-frame,
+.comment-form {
   border-radius: 0 !important;
 }
 

@@ -2,38 +2,36 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="single-doodle-bkgd text-center mt-4">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col">
+                <div class="card-header bg-dark p-0">
+                    <div class="row p-0">
+                        <div class="col pl-5 p-0">
+                            <div class="row">
+                                <div v-on:click="onVote(1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                                <!-- <div id="doodle-points" class="col ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div> -->
+                                <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
 
-                        </div>
+                            </div>    
+                        </div>                      
                         <div class="col">
-                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn btn-dark"><</a>
-                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn btn-secondary shadow">Next ></a>
+                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn mt-4 btn-secondary shadow"><</a>
+                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn mt-4 btn-secondary shadow">Next ></a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <div class="img-props m-0">
+                    <div class="img-props m-2">
                         <img :src=imgSource>
                     </div>
-                </div>
-                <div class="card-footer d-flex bg-info text-left">
-                    <div>
-                        <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
-                        <div id="doodle-points" class="ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div>
-                    </div>    
-                    <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mt-3">
             <div class="comment-form">
-                <div class="card-body">
-                    <textarea name="user-comment" placeholder="Write a comment" id=""></textarea>
+                <div class="card-body p-0 m-0 rounded-0">
+                    <textarea name="user-comment" v-model="commentString" placeholder="Write a comment" row="3" class="form-control text-dark w-100 h-100" id=""></textarea>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-dark"></button>
+                <div class="card-footer rounded-0 p-0 m-0">
+                    <button v-on:click="postComment()" class="m-0 float-right btn btn-dark">Post</button>
                 </div>
             </div>
         </div>
@@ -53,7 +51,8 @@
                 upVotes: 0,
                 downVotes: 0,
                 noVote: 0,
-                whichColor: ''
+                whichColor: '',
+                commentString: ''
             }
         },
         mounted() {
@@ -111,6 +110,14 @@
                 console.log("Made it to saveVote");
                 axios.patch('/votes/' + this.doodle.id.toString(), {
                     vote: userVote
+                });
+            },
+            postComment: function ()
+            {
+                console.log("Made it to createVote");
+                axios.post('/comments', {
+                    comment: this.commentString,
+                    doodle_id: this.doodleData.id
                 });
             },
         }

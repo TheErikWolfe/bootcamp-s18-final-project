@@ -34,7 +34,11 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $comment = new \App\Comment;
+        $comment->commenter_id = \Auth::user()->id;
+        $comment->doodle_id = $request->input('doodle_id');
+        $comment->comment_string = $request->input('comment');
+        $doodle->save();
     }
 
     /**

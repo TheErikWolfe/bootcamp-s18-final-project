@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('commenter_id')->references('id')->on('users');
             $table->unsignedInteger('doodle_id');
             $table->foreign('doodle_id')->references('id')->on('doodles');
-            $table->string('report_description');
+            $table->string('comment_string');
             $table->timestamps();
         });
     }

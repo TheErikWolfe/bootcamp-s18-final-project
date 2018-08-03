@@ -48029,8 +48029,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodleData'],
@@ -48044,7 +48042,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             upVotes: 0,
             downVotes: 0,
             noVote: 0,
-            whichColor: ''
+            whichColor: '',
+            commentString: ''
         };
     },
     mounted: function mounted() {
@@ -48093,6 +48092,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('/votes/' + this.doodle.id.toString(), {
                 vote: userVote
             });
+        },
+        postComment: function postComment() {
+            console.log("Made it to createVote");
+            axios.post('/comments', {
+                comment: this.commentString,
+                doodle_id: this.doodleData.id
+            });
         }
     }
 
@@ -48109,15 +48115,53 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col" }),
+        _c("div", { staticClass: "card-header bg-dark p-0" }, [
+          _c("div", { staticClass: "row p-0" }, [
+            _c("div", { staticClass: "col pl-5 p-0" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-up upvote-arrow",
+                      class: { "upvote-arrow-active": _vm.userVote === 1 }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(-1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-down downvote-arrow",
+                      class: { "downvote-arrow-active": _vm.userVote === -1 }
+                    })
+                  ]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col" }, [
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-dark",
+                  staticClass: "btn mt-4 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.previous === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.previous }
                 },
@@ -48127,7 +48171,7 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-secondary shadow",
+                  staticClass: "btn mt-4 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.next === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.next }
                 },
@@ -48138,100 +48182,63 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body p-0" }, [
-          _c("div", { staticClass: "img-props m-0" }, [
+          _c("div", { staticClass: "img-props m-2" }, [
             _c("img", { attrs: { src: _vm.imgSource } })
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
-          _c("div", [
-            _c(
-              "div",
-              {
-                staticClass: "arrow bg-transparent",
-                on: {
-                  click: function($event) {
-                    _vm.onVote(1)
-                  }
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-arrow-up upvote-arrow",
-                  class: { "upvote-arrow-active": _vm.userVote === 1 }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "ml-3 text-success",
-                class: _vm.whichColor,
-                attrs: { id: "doodle-points" }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm.doodleData.numberOfUpvotes -
-                      _vm.doodleData.numberOfDownvotes
-                  )
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "arrow bg-transparent",
-              on: {
-                click: function($event) {
-                  _vm.onVote(-1)
-                }
-              }
-            },
-            [
-              _c("i", {
-                staticClass: "fa fa-arrow-down downvote-arrow",
-                class: { "downvote-arrow-active": _vm.userVote === -1 }
-              })
-            ]
-          )
         ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center mt-3" }, [
+    _c("div", { staticClass: "row justify-content-center mt-3" }, [
       _c("div", { staticClass: "comment-form" }, [
-        _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "card-body p-0 m-0 rounded-0" }, [
           _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.commentString,
+                expression: "commentString"
+              }
+            ],
+            staticClass: "form-control text-dark w-100 h-100",
             attrs: {
               name: "user-comment",
               placeholder: "Write a comment",
+              row: "3",
               id: ""
+            },
+            domProps: { value: _vm.commentString },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.commentString = $event.target.value
+              }
             }
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer" }, [
-          _c("button", {
-            staticClass: "btn btn-dark",
-            attrs: { type: "submit" }
-          })
+        _c("div", { staticClass: "card-footer rounded-0 p-0 m-0" }, [
+          _c(
+            "button",
+            {
+              staticClass: "m-0 float-right btn btn-dark",
+              on: {
+                click: function($event) {
+                  _vm.postComment()
+                }
+              }
+            },
+            [_vm._v("Post")]
+          )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
