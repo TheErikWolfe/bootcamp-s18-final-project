@@ -57,6 +57,7 @@ class DoodlesController extends Controller
         $doodle->previous = \App\Doodle::where('id', '>', $doodle->id)->min('id');
         $doodle->numberOfUpvotes = $doodle->votes()->where('vote', '=', 1)->count();
         $doodle->numberOfDownvotes = $doodle->votes()->where('vote', '=', -1)->count();
+        $doodle->comments = $doodle->comments()->where('doodle_id', '=', $doodle->id)->get();
 
         if($doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
         {

@@ -38,7 +38,7 @@ class CommentsController extends Controller
         $comment->commenter_id = \Auth::user()->id;
         $comment->doodle_id = $request->input('doodle_id');
         $comment->comment_string = $request->input('comment');
-        $doodle->save();
+        $comment->save();
     }
 
     /**

@@ -34,6 +34,24 @@
                     <button v-on:click="postComment()" class="m-0 float-right btn btn-dark">Post</button>
                 </div>
             </div>
+
+            <div class="mt-3 d-flex" v-for="comment in comments">
+                <div class="comment-form">
+                    <div class="card-header text-light bg-dark">
+                        <div class="row">
+                            <div class="col">
+                                {{ comment.commenter_id }}
+                            </div>
+                            <div class="col text-align-right">
+                                commented at: {{ comment.created_at }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-light bg-secondary">
+                        <strong>{{ comment.comment_string }}</strong>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -48,6 +66,7 @@
                 doodle: null,
                 imgSource: '',
                 userVote: 0,
+                comments: [],
                 upVotes: 0,
                 downVotes: 0,
                 noVote: 0,
@@ -63,6 +82,7 @@
             this.upVotes = this.doodle.numberOfUpvotes;
             this.downVotes = this.doodle.numberOfDownvotes;
             this.userVote = this.doodle.userVote;
+            this.comments = this.doodle.comments;
         },
         computed: {
             votesColor: function () {
@@ -74,7 +94,6 @@
                 {
                     this.whichColor = 'text-danger';
                 }
-                
             },
         },
         methods: {
@@ -114,11 +133,13 @@
             },
             postComment: function ()
             {
-                console.log("Made it to createVote");
                 axios.post('/comments', {
                     comment: this.commentString,
                     doodle_id: this.doodleData.id
                 });
+                this.comments.unshift({comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now'})
+                this.commentString = '';
+                
             },
         }
 

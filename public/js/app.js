@@ -48029,6 +48029,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodleData'],
@@ -48039,6 +48057,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             doodle: null,
             imgSource: '',
             userVote: 0,
+            comments: [],
             upVotes: 0,
             downVotes: 0,
             noVote: 0,
@@ -48054,6 +48073,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.upVotes = this.doodle.numberOfUpvotes;
         this.downVotes = this.doodle.numberOfDownvotes;
         this.userVote = this.doodle.userVote;
+        this.comments = this.doodle.comments;
     },
 
     computed: {
@@ -48094,11 +48114,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         postComment: function postComment() {
-            console.log("Made it to createVote");
             axios.post('/comments', {
                 comment: this.commentString,
                 doodle_id: this.doodleData.id
             });
+            this.comments.unshift({ comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now' });
+            this.commentString = '';
         }
     }
 
@@ -48189,53 +48210,88 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center mt-3" }, [
-      _c("div", { staticClass: "comment-form" }, [
-        _c("div", { staticClass: "card-body p-0 m-0 rounded-0" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.commentString,
-                expression: "commentString"
-              }
-            ],
-            staticClass: "form-control text-dark w-100 h-100",
-            attrs: {
-              name: "user-comment",
-              placeholder: "Write a comment",
-              row: "3",
-              id: ""
-            },
-            domProps: { value: _vm.commentString },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+    _c(
+      "div",
+      { staticClass: "row justify-content-center mt-3" },
+      [
+        _c("div", { staticClass: "comment-form" }, [
+          _c("div", { staticClass: "card-body p-0 m-0 rounded-0" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.commentString,
+                  expression: "commentString"
                 }
-                _vm.commentString = $event.target.value
+              ],
+              staticClass: "form-control text-dark w-100 h-100",
+              attrs: {
+                name: "user-comment",
+                placeholder: "Write a comment",
+                row: "3",
+                id: ""
+              },
+              domProps: { value: _vm.commentString },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.commentString = $event.target.value
+                }
               }
-            }
-          })
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer rounded-0 p-0 m-0" }, [
+            _c(
+              "button",
+              {
+                staticClass: "m-0 float-right btn btn-dark",
+                on: {
+                  click: function($event) {
+                    _vm.postComment()
+                  }
+                }
+              },
+              [_vm._v("Post")]
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer rounded-0 p-0 m-0" }, [
-          _c(
-            "button",
-            {
-              staticClass: "m-0 float-right btn btn-dark",
-              on: {
-                click: function($event) {
-                  _vm.postComment()
-                }
-              }
-            },
-            [_vm._v("Post")]
-          )
-        ])
-      ])
-    ])
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { staticClass: "mt-3 d-flex" }, [
+            _c("div", { staticClass: "comment-form" }, [
+              _c("div", { staticClass: "card-header text-light bg-dark" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(comment.commenter_id) +
+                        "\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col text-align-right" }, [
+                    _vm._v(
+                      "\n                            commented at: " +
+                        _vm._s(comment.created_at) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body text-light bg-secondary" }, [
+                _c("strong", [_vm._v(_vm._s(comment.comment_string))])
+              ])
+            ])
+          ])
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
