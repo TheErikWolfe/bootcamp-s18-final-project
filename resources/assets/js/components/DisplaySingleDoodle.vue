@@ -1,29 +1,55 @@
 <template>
     <div class="container">
-        <div class="d-flex justify-content-center">
+        <div class="row justify-content-center">
             <div class="single-doodle-bkgd text-center mt-4">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col">
+                <div class="card-header bg-dark p-0">
+                    <div class="row p-0">
+                        <div class="col pl-5 p-0">
+                            <div class="row">
+                                <div v-on:click="onVote(1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                                <!-- <div id="doodle-points" class="col ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div> -->
+                                <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
 
-                        </div>
+                            </div>    
+                        </div>                      
                         <div class="col">
-                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn btn-dark"><</a>
-                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn btn-secondary shadow">Next ></a>
+                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn mt-4 btn-secondary shadow"><</a>
+                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn mt-4 btn-secondary shadow">Next ></a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <div class="img-props m-0">
+                    <div class="img-props m-2">
                         <img :src=imgSource>
                     </div>
                 </div>
-                <div class="card-footer d-flex bg-info text-left">
-                    <div>
-                        <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
-                        <div id="doodle-points" class="ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div>
-                    </div>    
-                    <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="comment-form">
+                <div class="card-body p-0 m-0 rounded-0">
+                    <textarea name="user-comment" v-model="commentString" placeholder="Write a comment" row="3" class="form-control text-dark w-100 h-100" id=""></textarea>
+                </div>
+                <div class="card-footer rounded-0 p-0 m-0">
+                    <button v-on:click="postComment()" class="m-0 float-right btn btn-dark">Post</button>
+                </div>
+            </div>
+
+            <div class="mt-3 d-flex" v-for="comment in comments">
+                <div class="comment-form">
+                    <div class="card-header text-light bg-dark">
+                        <div class="row">
+                            <div class="col">
+                                Anonymous
+                            </div>
+                            <div class="col text-align-right">
+                                commented at: {{ comment.created_at }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-light bg-secondary">
+                        <strong>{{ comment.comment_string }}</strong>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,10 +66,12 @@
                 doodle: null,
                 imgSource: '',
                 userVote: 0,
+                comments: [],
                 upVotes: 0,
                 downVotes: 0,
                 noVote: 0,
-                whichColor: ''
+                whichColor: '',
+                commentString: ''
             }
         },
         mounted() {
@@ -54,6 +82,7 @@
             this.upVotes = this.doodle.numberOfUpvotes;
             this.downVotes = this.doodle.numberOfDownvotes;
             this.userVote = this.doodle.userVote;
+            this.comments = this.doodle.comments;
         },
         computed: {
             votesColor: function () {
@@ -65,7 +94,6 @@
                 {
                     this.whichColor = 'text-danger';
                 }
-                
             },
         },
         methods: {
@@ -102,6 +130,16 @@
                 axios.patch('/votes/' + this.doodle.id.toString(), {
                     vote: userVote
                 });
+            },
+            postComment: function ()
+            {
+                axios.post('/comments', {
+                    comment: this.commentString,
+                    doodle_id: this.doodleData.id
+                });
+                this.comments.unshift({comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now'})
+                this.commentString = '';
+                
             },
         }
 

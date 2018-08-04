@@ -47536,8 +47536,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dHeight: 0,
             reportString: '',
             currentDoodle: null,
-            doodleSize: false, //true is same size, false is by popularity sizes
-            sortBy: true //true is newest first, false is by popularite
+            doodleSize: false // false changes size by popularite and true changes to standard size
         };
     },
     mounted: function mounted() {
@@ -47546,35 +47545,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    computed: {},
-
     methods: {
+        sortDoodles: function sortDoodles(sortBy) {
+            if (sortBy == 'Newest First') {
+                this.dData = this.dData.sort(function (a, b) {
+                    return +new Date(b.created_at) - +new Date(a.created_at);
+                });
+            } else {
+                this.dData = this.dData.sort(function (a, b) {
+                    return b.numberOfUpvotes - b.numberOfDownvotes - (a.numberOfUpvotes - a.numberOfDownvotes);
+                });
+            }
+
+            return this.dData;
+        },
+        setDoodleSize: function setDoodleSize(changeBy) {
+            if (changeBy == "standard") {
+                this.doodleSize = true;
+            } else {
+                this.doodleSize = false;
+            }
+            return this.dData;
+        },
         changeDoodleSize: function changeDoodleSize(doodle) {
-            if (this.doodleSize = false) {
+            var result = {};
+
+            if (this.doodleSize == false) {
+                var dWidth = 0;
+                var dHeight = 0;
+
                 var downVotes = -doodle.numberOfDownvotes;
                 var upVotes = doodle.numberOfUpvotes;
                 var overallVote = downVotes + upVotes;
 
-                this.dWidth = 2 / 3 * (this.startHeight + overallVote);
-                this.dHeight = 2 / 3 * (this.startWidth + overallVote);
+                dWidth = 2 / 3 * (this.startHeight + overallVote);
+                dHeight = 2 / 3 * (this.startWidth + overallVote);
+                console.log(dHeight);
 
-                if (this.dHeight > 80) {
-                    this.dHeight = 80;
-                    this.dWidth = 2 / 3 * dHeight;
-                } else if (this.dHeight < 30) {
-                    this.dHeight = 30;
-                    this.dWidth = 2 / 3 * dHeight;
+                if (dHeight > 80) {
+                    dHeight = 80;
+                    dWidth = 2 / 3 * dHeight;
+                } else if (dHeight < 30) {
+                    dHeight = 30;
+                    dWidth = 2 / 3 * dHeight;
                 }
 
-                // console.log(this.dWidth + ', ' + this.dHeight);
-                this.$forceUpdate();
-                return { width: 'auto', height: this.dHeight + 'vh' };
-            } else {
-                return { width: 'auto', height: this.startHeight + 'vh' };
-            }
-        },
+                console.log(dHeight);
 
+                result = { width: 'auto', height: dHeight + 'vh' };
+            } else {
+                result = { width: 'auto', height: this.startHeight + 'vh' };
+            }
+            return result;
+        },
         setCurrentDoodle: function setCurrentDoodle(doodle) {
+            console.log('currrent doodle is ' + doodle.id);
             this.currentDoodle = doodle;
         },
         onVote: function onVote(doodle, userVote) {
@@ -47653,10 +47678,9 @@ var render = function() {
               "a",
               {
                 staticClass: "dropdown-item",
-                attrs: { href: "" },
                 on: {
                   click: function($event) {
-                    _vm.sortBy = true
+                    _vm.sortDoodles("Newest First")
                   }
                 }
               },
@@ -47667,10 +47691,9 @@ var render = function() {
               "a",
               {
                 staticClass: "dropdown-item",
-                attrs: { href: "" },
                 on: {
                   click: function($event) {
-                    _vm.sortBy = false
+                    _vm.sortDoodles("Popularity")
                   }
                 }
               },
@@ -47687,7 +47710,7 @@ var render = function() {
                 staticClass: "btn-secondary border-0 mr-1",
                 on: {
                   click: function($event) {
-                    _vm.doodleSize = true
+                    _vm.setDoodleSize("standard")
                   }
                 }
               },
@@ -47700,7 +47723,7 @@ var render = function() {
                 staticClass: "btn-secondary border-0 mr-1",
                 on: {
                   click: function($event) {
-                    _vm.doodleSize = false
+                    _vm.setDoodleSize("popularity")
                   }
                 }
               },
@@ -47718,12 +47741,7 @@ var render = function() {
         _vm._l(_vm.dData, function(doodle) {
           return _c(
             "div",
-            _vm._b(
-              { class: { "hide-doodle": doodle.show === false } },
-              "div",
-              _vm.setCurrentDoodle(doodle),
-              false
-            ),
+            { class: { "hide-doodle": doodle.show === false } },
             [
               _c(
                 "div",
@@ -47741,7 +47759,24 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(0, true),
+                  _c("div", { staticClass: "report-container" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "",
+                          "data-toggle": "modal",
+                          "data-target": "#reportModal"
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.setCurrentDoodle(doodle)
+                          }
+                        }
+                      },
+                      [_vm._v("\n                    Report\n                ")]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "arrow-container" }, [
                     _c(
@@ -47808,7 +47843,7 @@ var render = function() {
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("form", [
                     _c("div", { staticClass: "modal-body" }, [
@@ -47883,24 +47918,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "report-container" }, [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "",
-            "data-toggle": "modal",
-            "data-target": "#reportModal"
-          }
-        },
-        [_vm._v("\n                    Report\n                ")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -48021,6 +48038,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodleData'],
@@ -48031,10 +48074,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             doodle: null,
             imgSource: '',
             userVote: 0,
+            comments: [],
             upVotes: 0,
             downVotes: 0,
             noVote: 0,
-            whichColor: ''
+            whichColor: '',
+            commentString: ''
         };
     },
     mounted: function mounted() {
@@ -48045,6 +48090,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.upVotes = this.doodle.numberOfUpvotes;
         this.downVotes = this.doodle.numberOfDownvotes;
         this.userVote = this.doodle.userVote;
+        this.comments = this.doodle.comments;
     },
 
     computed: {
@@ -48083,6 +48129,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('/votes/' + this.doodle.id.toString(), {
                 vote: userVote
             });
+        },
+        postComment: function postComment() {
+            axios.post('/comments', {
+                comment: this.commentString,
+                doodle_id: this.doodleData.id
+            });
+            this.comments.unshift({ comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now' });
+            this.commentString = '';
         }
     }
 
@@ -48097,17 +48151,55 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "d-flex justify-content-center" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col" }),
+        _c("div", { staticClass: "card-header bg-dark p-0" }, [
+          _c("div", { staticClass: "row p-0" }, [
+            _c("div", { staticClass: "col pl-5 p-0" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-up upvote-arrow",
+                      class: { "upvote-arrow-active": _vm.userVote === 1 }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(-1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-down downvote-arrow",
+                      class: { "downvote-arrow-active": _vm.userVote === -1 }
+                    })
+                  ]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col" }, [
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-dark",
+                  staticClass: "btn mt-4 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.previous === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.previous }
                 },
@@ -48117,7 +48209,7 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-secondary shadow",
+                  staticClass: "btn mt-4 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.next === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.next }
                 },
@@ -48128,69 +48220,93 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body p-0" }, [
-          _c("div", { staticClass: "img-props m-0" }, [
+          _c("div", { staticClass: "img-props m-2" }, [
             _c("img", { attrs: { src: _vm.imgSource } })
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
-          _c("div", [
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row justify-content-center mt-3" },
+      [
+        _c("div", { staticClass: "comment-form" }, [
+          _c("div", { staticClass: "card-body p-0 m-0 rounded-0" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.commentString,
+                  expression: "commentString"
+                }
+              ],
+              staticClass: "form-control text-dark w-100 h-100",
+              attrs: {
+                name: "user-comment",
+                placeholder: "Write a comment",
+                row: "3",
+                id: ""
+              },
+              domProps: { value: _vm.commentString },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.commentString = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer rounded-0 p-0 m-0" }, [
             _c(
-              "div",
+              "button",
               {
-                staticClass: "arrow bg-transparent",
+                staticClass: "m-0 float-right btn btn-dark",
                 on: {
                   click: function($event) {
-                    _vm.onVote(1)
+                    _vm.postComment()
                   }
                 }
               },
-              [
-                _c("i", {
-                  staticClass: "fa fa-arrow-up upvote-arrow",
-                  class: { "upvote-arrow-active": _vm.userVote === 1 }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "ml-3 text-success",
-                class: _vm.whichColor,
-                attrs: { id: "doodle-points" }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm.doodleData.numberOfUpvotes -
-                      _vm.doodleData.numberOfDownvotes
-                  )
-                )
-              ]
+              [_vm._v("Post")]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "arrow bg-transparent",
-              on: {
-                click: function($event) {
-                  _vm.onVote(-1)
-                }
-              }
-            },
-            [
-              _c("i", {
-                staticClass: "fa fa-arrow-down downvote-arrow",
-                class: { "downvote-arrow-active": _vm.userVote === -1 }
-              })
-            ]
-          )
-        ])
-      ])
-    ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { staticClass: "mt-3 d-flex" }, [
+            _c("div", { staticClass: "comment-form" }, [
+              _c("div", { staticClass: "card-header text-light bg-dark" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _vm._v(
+                      "\n                            Anonymous\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col text-align-right" }, [
+                    _vm._v(
+                      "\n                            commented at: " +
+                        _vm._s(comment.created_at) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body text-light bg-secondary" }, [
+                _c("strong", [_vm._v(_vm._s(comment.comment_string))])
+              ])
+            ])
+          ])
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []

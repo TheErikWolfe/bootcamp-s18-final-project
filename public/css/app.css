@@ -5118,7 +5118,8 @@ input[type="button"].btn-block {
 
 .card,
 .settings-card,
-.single-doodle-bkgd {
+.single-doodle-bkgd,
+.comment-form {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5137,21 +5138,24 @@ input[type="button"].btn-block {
 
 .card > hr,
 .settings-card > hr,
-.single-doodle-bkgd > hr {
+.single-doodle-bkgd > hr,
+.comment-form > hr {
   margin-right: 0;
   margin-left: 0;
 }
 
 .card > .list-group:first-child .list-group-item:first-child,
 .settings-card > .list-group:first-child .list-group-item:first-child,
-.single-doodle-bkgd > .list-group:first-child .list-group-item:first-child {
+.single-doodle-bkgd > .list-group:first-child .list-group-item:first-child,
+.comment-form > .list-group:first-child .list-group-item:first-child {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
 
 .card > .list-group:last-child .list-group-item:last-child,
 .settings-card > .list-group:last-child .list-group-item:last-child,
-.single-doodle-bkgd > .list-group:last-child .list-group-item:last-child {
+.single-doodle-bkgd > .list-group:last-child .list-group-item:last-child,
+.comment-form > .list-group:last-child .list-group-item:last-child {
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
@@ -5259,7 +5263,8 @@ input[type="button"].btn-block {
 
 .card-deck .card,
 .card-deck .settings-card,
-.card-deck .single-doodle-bkgd {
+.card-deck .single-doodle-bkgd,
+.card-deck .comment-form {
   margin-bottom: 15px;
 }
 
@@ -5275,7 +5280,8 @@ input[type="button"].btn-block {
 
   .card-deck .card,
   .card-deck .settings-card,
-  .card-deck .single-doodle-bkgd {
+  .card-deck .single-doodle-bkgd,
+  .card-deck .comment-form {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -5304,7 +5310,8 @@ input[type="button"].btn-block {
 
 .card-group > .card,
 .card-group > .settings-card,
-.card-group > .single-doodle-bkgd {
+.card-group > .single-doodle-bkgd,
+.card-group > .comment-form {
   margin-bottom: 15px;
 }
 
@@ -5318,7 +5325,8 @@ input[type="button"].btn-block {
 
   .card-group > .card,
   .card-group > .settings-card,
-  .card-group > .single-doodle-bkgd {
+  .card-group > .single-doodle-bkgd,
+  .card-group > .comment-form {
     -webkit-box-flex: 1;
         -ms-flex: 1 0 0%;
             flex: 1 0 0%;
@@ -5328,19 +5336,27 @@ input[type="button"].btn-block {
   .card-group > .card + .card,
   .card-group > .settings-card + .card,
   .card-group > .single-doodle-bkgd + .card,
+  .card-group > .comment-form + .card,
   .card-group > .card + .settings-card,
   .card-group > .settings-card + .settings-card,
   .card-group > .single-doodle-bkgd + .settings-card,
+  .card-group > .comment-form + .settings-card,
   .card-group > .card + .single-doodle-bkgd,
   .card-group > .settings-card + .single-doodle-bkgd,
-  .card-group > .single-doodle-bkgd + .single-doodle-bkgd {
+  .card-group > .single-doodle-bkgd + .single-doodle-bkgd,
+  .card-group > .comment-form + .single-doodle-bkgd,
+  .card-group > .card + .comment-form,
+  .card-group > .settings-card + .comment-form,
+  .card-group > .single-doodle-bkgd + .comment-form,
+  .card-group > .comment-form + .comment-form {
     margin-left: 0;
     border-left: 0;
   }
 
   .card-group > .card:first-child,
   .card-group > .settings-card:first-child,
-  .card-group > .single-doodle-bkgd:first-child {
+  .card-group > .single-doodle-bkgd:first-child,
+  .card-group > .comment-form:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -5348,24 +5364,29 @@ input[type="button"].btn-block {
   .card-group > .card:first-child .card-img-top,
   .card-group > .settings-card:first-child .card-img-top,
   .card-group > .single-doodle-bkgd:first-child .card-img-top,
+  .card-group > .comment-form:first-child .card-img-top,
   .card-group > .card:first-child .card-header,
   .card-group > .settings-card:first-child .card-header,
-  .card-group > .single-doodle-bkgd:first-child .card-header {
+  .card-group > .single-doodle-bkgd:first-child .card-header,
+  .card-group > .comment-form:first-child .card-header {
     border-top-right-radius: 0;
   }
 
   .card-group > .card:first-child .card-img-bottom,
   .card-group > .settings-card:first-child .card-img-bottom,
   .card-group > .single-doodle-bkgd:first-child .card-img-bottom,
+  .card-group > .comment-form:first-child .card-img-bottom,
   .card-group > .card:first-child .card-footer,
   .card-group > .settings-card:first-child .card-footer,
-  .card-group > .single-doodle-bkgd:first-child .card-footer {
+  .card-group > .single-doodle-bkgd:first-child .card-footer,
+  .card-group > .comment-form:first-child .card-footer {
     border-bottom-right-radius: 0;
   }
 
   .card-group > .card:last-child,
   .card-group > .settings-card:last-child,
-  .card-group > .single-doodle-bkgd:last-child {
+  .card-group > .single-doodle-bkgd:last-child,
+  .card-group > .comment-form:last-child {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -5373,33 +5394,40 @@ input[type="button"].btn-block {
   .card-group > .card:last-child .card-img-top,
   .card-group > .settings-card:last-child .card-img-top,
   .card-group > .single-doodle-bkgd:last-child .card-img-top,
+  .card-group > .comment-form:last-child .card-img-top,
   .card-group > .card:last-child .card-header,
   .card-group > .settings-card:last-child .card-header,
-  .card-group > .single-doodle-bkgd:last-child .card-header {
+  .card-group > .single-doodle-bkgd:last-child .card-header,
+  .card-group > .comment-form:last-child .card-header {
     border-top-left-radius: 0;
   }
 
   .card-group > .card:last-child .card-img-bottom,
   .card-group > .settings-card:last-child .card-img-bottom,
   .card-group > .single-doodle-bkgd:last-child .card-img-bottom,
+  .card-group > .comment-form:last-child .card-img-bottom,
   .card-group > .card:last-child .card-footer,
   .card-group > .settings-card:last-child .card-footer,
-  .card-group > .single-doodle-bkgd:last-child .card-footer {
+  .card-group > .single-doodle-bkgd:last-child .card-footer,
+  .card-group > .comment-form:last-child .card-footer {
     border-bottom-left-radius: 0;
   }
 
   .card-group > .card:only-child,
   .card-group > .settings-card:only-child,
-  .card-group > .single-doodle-bkgd:only-child {
+  .card-group > .single-doodle-bkgd:only-child,
+  .card-group > .comment-form:only-child {
     border-radius: 0.25rem;
   }
 
   .card-group > .card:only-child .card-img-top,
   .card-group > .settings-card:only-child .card-img-top,
   .card-group > .single-doodle-bkgd:only-child .card-img-top,
+  .card-group > .comment-form:only-child .card-img-top,
   .card-group > .card:only-child .card-header,
   .card-group > .settings-card:only-child .card-header,
-  .card-group > .single-doodle-bkgd:only-child .card-header {
+  .card-group > .single-doodle-bkgd:only-child .card-header,
+  .card-group > .comment-form:only-child .card-header {
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
   }
@@ -5407,38 +5435,46 @@ input[type="button"].btn-block {
   .card-group > .card:only-child .card-img-bottom,
   .card-group > .settings-card:only-child .card-img-bottom,
   .card-group > .single-doodle-bkgd:only-child .card-img-bottom,
+  .card-group > .comment-form:only-child .card-img-bottom,
   .card-group > .card:only-child .card-footer,
   .card-group > .settings-card:only-child .card-footer,
-  .card-group > .single-doodle-bkgd:only-child .card-footer {
+  .card-group > .single-doodle-bkgd:only-child .card-footer,
+  .card-group > .comment-form:only-child .card-footer {
     border-bottom-right-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
   }
 
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child),
   .card-group > .settings-card:not(:first-child):not(:last-child):not(:only-child),
-  .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) {
+  .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child),
+  .card-group > .comment-form:not(:first-child):not(:last-child):not(:only-child) {
     border-radius: 0;
   }
 
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
   .card-group > .settings-card:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
   .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
+  .card-group > .comment-form:not(:first-child):not(:last-child):not(:only-child) .card-img-top,
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
   .card-group > .settings-card:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
   .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
+  .card-group > .comment-form:not(:first-child):not(:last-child):not(:only-child) .card-img-bottom,
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-header,
   .card-group > .settings-card:not(:first-child):not(:last-child):not(:only-child) .card-header,
   .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) .card-header,
+  .card-group > .comment-form:not(:first-child):not(:last-child):not(:only-child) .card-header,
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-footer,
   .card-group > .settings-card:not(:first-child):not(:last-child):not(:only-child) .card-footer,
-  .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) .card-footer {
+  .card-group > .single-doodle-bkgd:not(:first-child):not(:last-child):not(:only-child) .card-footer,
+  .card-group > .comment-form:not(:first-child):not(:last-child):not(:only-child) .card-footer {
     border-radius: 0;
   }
 }
 
 .card-columns .card,
 .card-columns .settings-card,
-.card-columns .single-doodle-bkgd {
+.card-columns .single-doodle-bkgd,
+.card-columns .comment-form {
   margin-bottom: 0.75rem;
 }
 
@@ -5454,7 +5490,8 @@ input[type="button"].btn-block {
 
   .card-columns .card,
   .card-columns .settings-card,
-  .card-columns .single-doodle-bkgd {
+  .card-columns .single-doodle-bkgd,
+  .card-columns .comment-form {
     display: inline-block;
     width: 100%;
   }
@@ -5462,20 +5499,23 @@ input[type="button"].btn-block {
 
 .accordion .card:not(:first-of-type):not(:last-of-type),
 .accordion .settings-card:not(:first-of-type):not(:last-of-type),
-.accordion .single-doodle-bkgd:not(:first-of-type):not(:last-of-type) {
+.accordion .single-doodle-bkgd:not(:first-of-type):not(:last-of-type),
+.accordion .comment-form:not(:first-of-type):not(:last-of-type) {
   border-bottom: 0;
   border-radius: 0;
 }
 
 .accordion .card:not(:first-of-type) .card-header:first-child,
 .accordion .settings-card:not(:first-of-type) .card-header:first-child,
-.accordion .single-doodle-bkgd:not(:first-of-type) .card-header:first-child {
+.accordion .single-doodle-bkgd:not(:first-of-type) .card-header:first-child,
+.accordion .comment-form:not(:first-of-type) .card-header:first-child {
   border-radius: 0;
 }
 
 .accordion .card:first-of-type,
 .accordion .settings-card:first-of-type,
-.accordion .single-doodle-bkgd:first-of-type {
+.accordion .single-doodle-bkgd:first-of-type,
+.accordion .comment-form:first-of-type {
   border-bottom: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -5483,7 +5523,8 @@ input[type="button"].btn-block {
 
 .accordion .card:last-of-type,
 .accordion .settings-card:last-of-type,
-.accordion .single-doodle-bkgd:last-of-type {
+.accordion .single-doodle-bkgd:last-of-type,
+.accordion .comment-form:last-of-type {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -7214,7 +7255,8 @@ button.bg-dark:focus {
 .rounded-0,
 .settings-menu-navbar,
 .settings-card,
-.img-frame {
+.img-frame,
+.comment-form {
   border-radius: 0 !important;
 }
 
@@ -8621,7 +8663,8 @@ button.bg-dark:focus {
 .shadow,
 .navbar-laravel,
 .settings-card,
-.single-doodle-bkgd {
+.single-doodle-bkgd,
+.comment-form {
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
@@ -8844,7 +8887,8 @@ button.bg-dark:focus {
 .p-0,
 .img-frame,
 .img-props,
-.single-doodle-bkgd {
+.single-doodle-bkgd,
+.comment-form {
   padding: 0 !important;
 }
 
@@ -10721,6 +10765,12 @@ label {
 }
 
 .single-doodle-bkgd {
+  background-color: #6485C9;
+  width: 600px;
+  min-width: 400px;
+}
+
+.comment-form {
   background-color: #6485C9;
   width: 600px;
   min-width: 400px;

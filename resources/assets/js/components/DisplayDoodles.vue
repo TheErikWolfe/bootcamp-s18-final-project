@@ -7,20 +7,20 @@
                         Sort By:
                     </button>
                     <div class="dropdown-menu">
-                        <a v-on:click="sortBy = true" class="dropdown-item" href="">Newest First</a>
-                        <a v-on:click="sortBy = false" class="dropdown-item" href="">Popularity</a>
+                        <a v-on:click="sortDoodles('Newest First')" class="dropdown-item">Newest First</a>
+                        <a v-on:click="sortDoodles('Popularity')" class="dropdown-item">Popularity</a>
                     </div>
                 </div>
                 <div class="col pr-4">
                     <div class="float-right">
-                        <button v-on:click="doodleSize = true" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
-                        <button v-on:click="doodleSize = false" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
+                        <button v-on:click="setDoodleSize('standard')" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
+                        <button v-on:click="setDoodleSize('popularity')" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
                     </div>
                 </div>               
             </div>
         </div>
         <div class="row justify-content-center">
-            <div v-for="doodle in dData" v-bind="setCurrentDoodle(doodle)" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
+            <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
                 <div class="img-props">
                     <a :href="'/doodles/' + doodle.id">
@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="report-container">
-                    <a href="" data-toggle="modal" data-target="#reportModal">
+                    <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
                         Report
                     </a>
                 </div>
@@ -84,8 +84,7 @@
                 dHeight: 0,
                 reportString: '',
                 currentDoodle: null,
-                doodleSize: false, //true is same size, false is by popularity sizes
-                sortBy: true //true is newest first, false is by popularite
+                doodleSize: false // false changes size by popularite and true changes to standard size
             }
         },
 
@@ -94,42 +93,72 @@
             this.dData = this.doodlesData;
         },
 
-        computed: {  
-        },
-
         methods: {
-            changeDoodleSize(doodle)
-            {
-                if(this.doodleSize = false)
+            sortDoodles: function(sortBy)
+            {   
+                if(sortBy == 'Newest First')
                 {
+                    this.dData = this.dData.sort((a,b)=> +new Date(b.created_at) - +new Date(a.created_at));
+                }
+                else
+                {
+                    this.dData = this.dData.sort((a,b) => (b.numberOfUpvotes - b.numberOfDownvotes) - (a.numberOfUpvotes - a.numberOfDownvotes));
+                }
+
+                return this.dData;
+            },
+            setDoodleSize: function(changeBy)
+            {
+                if(changeBy == "standard")
+                {
+                    this.doodleSize = true;
+                }
+                else
+                {
+                    this.doodleSize = false;
+                }
+                return this.dData;
+            },
+            changeDoodleSize: function(doodle)
+            {
+                let result = {};
+
+                if(this.doodleSize == false)
+                {
+                    let dWidth = 0;
+                    let dHeight = 0;
+
                     let downVotes = -(doodle.numberOfDownvotes);
                     let upVotes = doodle.numberOfUpvotes;
                     let overallVote = downVotes + upVotes;
 
-                    this.dWidth = 2/3 * (this.startHeight + overallVote);
-                    this.dHeight = 2/3 * (this.startWidth + overallVote);
+                    dWidth = 2/3 * (this.startHeight + overallVote);
+                    dHeight = 2/3 * (this.startWidth + overallVote);
+                    console.log(dHeight);
 
-                    if(this.dHeight > 80)
+                    if(dHeight > 80)
                     {
-                        this.dHeight = 80;
-                        this.dWidth = 2 / 3 * dHeight;
+                        dHeight = 80;
+                        dWidth = 2 / 3 * dHeight;
                     }
-                    else if(this.dHeight < 30)
+                    else if(dHeight < 30)
                     {
-                        this.dHeight = 30;
-                        this.dWidth = 2 / 3 * dHeight;
+                        dHeight = 30;
+                        dWidth = 2 / 3 * dHeight;
                     }
 
-                    // console.log(this.dWidth + ', ' + this.dHeight);
-                    this.$forceUpdate();
-                    return {width: 'auto', height: this.dHeight + 'vh'};
+                    console.log(dHeight);
+
+                    result = {width: 'auto', height: dHeight + 'vh'};
                 }
                 else
                 {
-                    return {width: 'auto', height: this.startHeight + 'vh'};
+                    result = {width: 'auto', height: this.startHeight + 'vh'};
                 }
+                return result;
             },
             setCurrentDoodle: function(doodle) {
+                console.log('currrent doodle is ' + doodle.id);
                 this.currentDoodle = doodle;
             },
             onVote:function (doodle, userVote) 

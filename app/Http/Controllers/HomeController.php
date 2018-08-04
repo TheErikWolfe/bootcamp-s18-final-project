@@ -21,7 +21,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
         foreach ($doodles as $doodle)
