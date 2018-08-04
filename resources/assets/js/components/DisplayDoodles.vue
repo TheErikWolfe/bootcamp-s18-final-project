@@ -13,8 +13,8 @@
                 </div>
                 <div class="col pr-4">
                     <div class="float-right">
-                        <button v-on:click="doodleSize = true" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
-                        <button v-on:click="doodleSize = false" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
+                        <button v-on:click="setDoodleSize('standard')" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
+                        <button v-on:click="setDoodleSize('popularity')" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
                     </div>
                 </div>               
             </div>
@@ -83,7 +83,8 @@
                 dWidth: 0,
                 dHeight: 0,
                 reportString: '',
-                currentDoodle: null
+                currentDoodle: null,
+                doodleSize: false // false changes size by popularite and true changes to standard size
             }
         },
 
@@ -93,52 +94,68 @@
         },
 
         methods: {
-            sortDoodles(sortBy)
+            sortDoodles: function(sortBy)
             {   
-                
-                // let num = 0;
-                // console.log('length' + this.dData.length)
-                // while (this.dData.length != 0)
-                // {
-                //     num = Math.floor(Math.random() * (this.dData.length - 1));
-                //     console.log(num);
-                //     result.push(this.dData[num]);
-                //     this.dData.splice(num, 1);
-                //     console.log(this.dData);
-                // }
-                // console.log("Made it out alive");
-                // this.dData = result;
-                // return this.dData;
-            },
-            changeDoodleSize(doodle)
-            {
-                if(this.doodleSize = false)
+                if(sortBy == 'Newest First')
                 {
+                    this.dData = this.dData.sort((a,b)=> +new Date(b.created_at) - +new Date(a.created_at));
+                }
+                else
+                {
+                    this.dData = this.dData.sort((a,b) => (b.numberOfUpvotes - b.numberOfDownvotes) - (a.numberOfUpvotes - a.numberOfDownvotes));
+                }
+
+                return this.dData;
+            },
+            setDoodleSize: function(changeBy)
+            {
+                if(changeBy == "standard")
+                {
+                    this.doodleSize = true;
+                }
+                else
+                {
+                    this.doodleSize = false;
+                }
+                return this.dData;
+            },
+            changeDoodleSize: function(doodle)
+            {
+                let result = {};
+
+                if(this.doodleSize == false)
+                {
+                    let dWidth = 0;
+                    let dHeight = 0;
+
                     let downVotes = -(doodle.numberOfDownvotes);
                     let upVotes = doodle.numberOfUpvotes;
                     let overallVote = downVotes + upVotes;
 
-                    this.dWidth = 2/3 * (this.startHeight + overallVote);
-                    this.dHeight = 2/3 * (this.startWidth + overallVote);
+                    dWidth = 2/3 * (this.startHeight + overallVote);
+                    dHeight = 2/3 * (this.startWidth + overallVote);
+                    console.log(dHeight);
 
-                    if(this.dHeight > 80)
+                    if(dHeight > 80)
                     {
-                        this.dHeight = 80;
-                        this.dWidth = 2 / 3 * dHeight;
+                        dHeight = 80;
+                        dWidth = 2 / 3 * dHeight;
                     }
-                    else if(this.dHeight < 30)
+                    else if(dHeight < 30)
                     {
-                        this.dHeight = 30;
-                        this.dWidth = 2 / 3 * dHeight;
+                        dHeight = 30;
+                        dWidth = 2 / 3 * dHeight;
                     }
 
-                    // console.log(this.dWidth + ', ' + this.dHeight);
-                    return {width: 'auto', height: this.dHeight + 'vh'};
+                    console.log(dHeight);
+
+                    result = {width: 'auto', height: dHeight + 'vh'};
                 }
                 else
                 {
-                    return {width: 'auto', height: this.startHeight + 'vh'};
+                    result = {width: 'auto', height: this.startHeight + 'vh'};
                 }
+                return result;
             },
             setCurrentDoodle: function(doodle) {
                 console.log('currrent doodle is ' + doodle.id);

@@ -47535,7 +47535,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dWidth: 0,
             dHeight: 0,
             reportString: '',
-            currentDoodle: null
+            currentDoodle: null,
+            doodleSize: false // false changes size by popularite and true changes to standard size
         };
     },
     mounted: function mounted() {
@@ -47546,45 +47547,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         sortDoodles: function sortDoodles(sortBy) {
+            if (sortBy == 'Newest First') {
+                this.dData = this.dData.sort(function (a, b) {
+                    return +new Date(b.created_at) - +new Date(a.created_at);
+                });
+            } else {
+                this.dData = this.dData.sort(function (a, b) {
+                    return b.numberOfUpvotes - b.numberOfDownvotes - (a.numberOfUpvotes - a.numberOfDownvotes);
+                });
+            }
 
-            // let num = 0;
-            // console.log('length' + this.dData.length)
-            // while (this.dData.length != 0)
-            // {
-            //     num = Math.floor(Math.random() * (this.dData.length - 1));
-            //     console.log(num);
-            //     result.push(this.dData[num]);
-            //     this.dData.splice(num, 1);
-            //     console.log(this.dData);
-            // }
-            // console.log("Made it out alive");
-            // this.dData = result;
-            // return this.dData;
+            return this.dData;
+        },
+        setDoodleSize: function setDoodleSize(changeBy) {
+            if (changeBy == "standard") {
+                this.doodleSize = true;
+            } else {
+                this.doodleSize = false;
+            }
+            return this.dData;
         },
         changeDoodleSize: function changeDoodleSize(doodle) {
-            if (this.doodleSize = false) {
+            var result = {};
+
+            if (this.doodleSize == false) {
+                var dWidth = 0;
+                var dHeight = 0;
+
                 var downVotes = -doodle.numberOfDownvotes;
                 var upVotes = doodle.numberOfUpvotes;
                 var overallVote = downVotes + upVotes;
 
-                this.dWidth = 2 / 3 * (this.startHeight + overallVote);
-                this.dHeight = 2 / 3 * (this.startWidth + overallVote);
+                dWidth = 2 / 3 * (this.startHeight + overallVote);
+                dHeight = 2 / 3 * (this.startWidth + overallVote);
+                console.log(dHeight);
 
-                if (this.dHeight > 80) {
-                    this.dHeight = 80;
-                    this.dWidth = 2 / 3 * dHeight;
-                } else if (this.dHeight < 30) {
-                    this.dHeight = 30;
-                    this.dWidth = 2 / 3 * dHeight;
+                if (dHeight > 80) {
+                    dHeight = 80;
+                    dWidth = 2 / 3 * dHeight;
+                } else if (dHeight < 30) {
+                    dHeight = 30;
+                    dWidth = 2 / 3 * dHeight;
                 }
 
-                // console.log(this.dWidth + ', ' + this.dHeight);
-                return { width: 'auto', height: this.dHeight + 'vh' };
-            } else {
-                return { width: 'auto', height: this.startHeight + 'vh' };
-            }
-        },
+                console.log(dHeight);
 
+                result = { width: 'auto', height: dHeight + 'vh' };
+            } else {
+                result = { width: 'auto', height: this.startHeight + 'vh' };
+            }
+            return result;
+        },
         setCurrentDoodle: function setCurrentDoodle(doodle) {
             console.log('currrent doodle is ' + doodle.id);
             this.currentDoodle = doodle;
@@ -47697,7 +47710,7 @@ var render = function() {
                 staticClass: "btn-secondary border-0 mr-1",
                 on: {
                   click: function($event) {
-                    _vm.doodleSize = true
+                    _vm.setDoodleSize("standard")
                   }
                 }
               },
@@ -47710,7 +47723,7 @@ var render = function() {
                 staticClass: "btn-secondary border-0 mr-1",
                 on: {
                   click: function($event) {
-                    _vm.doodleSize = false
+                    _vm.setDoodleSize("popularity")
                   }
                 }
               },
