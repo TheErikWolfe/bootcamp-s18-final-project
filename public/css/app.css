@@ -8783,8 +8783,7 @@ button.bg-dark:focus {
 
 .m-2,
 .settings-menu-navbar,
-.settings-card,
-.arrow {
+.settings-card {
   margin: 0.5rem !important;
 }
 
@@ -10341,8 +10340,7 @@ body,
   text-align: right !important;
 }
 
-.text-center,
-.arrow-container {
+.text-center {
   text-align: center !important;
 }
 
@@ -10711,10 +10709,10 @@ label {
 }
 
 .img-frame:hover .img-props {
-  opacity: 0.5;
+  opacity: 0.70;
 }
 
-.img-frame:hover .arrow-container {
+.img-frame:hover .arrow {
   opacity: 1;
 }
 
@@ -10723,22 +10721,18 @@ label {
 }
 
 .arrow-container {
-  -webkit-transition: .5s ease;
-  transition: .5s ease;
-  opacity: 0;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   position: absolute;
   left: 50%;
-  right: 0;
   bottom: 0;
 }
 
 .arrow {
-  position: relative;
-  font-size: 300%;
-  display: inline-block;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  bottom: 8%;
+  font-size: 200%;
 }
 
 .upvote-arrow:hover,
@@ -10749,6 +10743,14 @@ label {
 .downvote-arrow:hover,
 .downvote-arrow-active {
   color: pink !important;
+}
+
+.upvote-arrow {
+  left: 30%;
+}
+
+.downvote-arrow {
+  right: 30%;
 }
 
 .report-container {

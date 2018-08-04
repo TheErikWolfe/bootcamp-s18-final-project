@@ -32,11 +32,9 @@
                         Report
                     </a>
                 </div>
-                <!-- Modal -->
-                <div class="arrow-container">
-                    <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
-                    <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
-                </div>
+                    <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></div>
+                    <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></div>
+                
             </div>
         </div>
         <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
@@ -113,7 +111,7 @@
                 {
                     this.doodleSize = true;
                 }
-                else
+                else if(changeBy == "popularity")
                 {
                     this.doodleSize = false;
                 }
@@ -158,7 +156,6 @@
                 return result;
             },
             setCurrentDoodle: function(doodle) {
-                console.log('currrent doodle is ' + doodle.id);
                 this.currentDoodle = doodle;
             },
             onVote:function (doodle, userVote) 

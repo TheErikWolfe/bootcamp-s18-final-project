@@ -47517,8 +47517,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47562,7 +47560,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setDoodleSize: function setDoodleSize(changeBy) {
             if (changeBy == "standard") {
                 this.doodleSize = true;
-            } else {
+            } else if (changeBy == "popularity") {
                 this.doodleSize = false;
             }
             return this.dData;
@@ -47599,7 +47597,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return result;
         },
         setCurrentDoodle: function setCurrentDoodle(doodle) {
-            console.log('currrent doodle is ' + doodle.id);
             this.currentDoodle = doodle;
         },
         onVote: function onVote(doodle, userVote) {
@@ -47778,47 +47775,27 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "arrow-container" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, 1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-up upvote-arrow",
-                          class: {
-                            "upvote-arrow-active": doodle.userVote === 1
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, -1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-down downvote-arrow",
-                          class: {
-                            "downvote-arrow-active": doodle.userVote === -1
-                          }
-                        })
-                      ]
-                    )
-                  ])
+                  _c("div", {
+                    staticClass:
+                      "arrow bg-transparent fa fa-arrow-up upvote-arrow",
+                    class: { "upvote-arrow-active": doodle.userVote === 1 },
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(doodle, 1)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass:
+                      "arrow bg-transparent fa fa-arrow-down downvote-arrow",
+                    class: { "downvote-arrow-active": doodle.userVote === -1 },
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(doodle, -1)
+                      }
+                    }
+                  })
                 ]
               )
             ]
