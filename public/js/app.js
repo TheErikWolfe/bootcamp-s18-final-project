@@ -47519,6 +47519,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47536,7 +47537,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dHeight: 0,
             reportString: '',
             currentDoodle: null,
-            doodleSize: false // false changes size by popularite and true changes to standard size
+            doodleSize: false, // false changes size by popularite and true changes to standard size
+            sortBy: 'Newest First'
         };
     },
     mounted: function mounted() {
@@ -47556,13 +47558,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return b.numberOfUpvotes - b.numberOfDownvotes - (a.numberOfUpvotes - a.numberOfDownvotes);
                 });
             }
-
+            this.sortBy = sortBy;
             return this.dData;
         },
         setDoodleSize: function setDoodleSize(changeBy) {
             if (changeBy == "standard") {
                 this.doodleSize = true;
-            } else {
+            } else if (changeBy == "popularity") {
                 this.doodleSize = false;
             }
             return this.dData;
@@ -47592,14 +47594,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 console.log(dHeight);
 
-                result = { width: 'auto', height: dHeight + 'vh' };
+                result = { 'width': 'auto', 'height': dHeight + 'vh' };
             } else {
                 result = { width: 'auto', height: this.startHeight + 'vh' };
             }
             return result;
         },
         setCurrentDoodle: function setCurrentDoodle(doodle) {
-            console.log('currrent doodle is ' + doodle.id);
             this.currentDoodle = doodle;
         },
         onVote: function onVote(doodle, userVote) {
@@ -47670,7 +47671,13 @@ var render = function() {
                 "aria-expanded": "false"
               }
             },
-            [_vm._v("\n                    Sort By:\n                ")]
+            [
+              _vm._v(
+                "\n                    " +
+                  _vm._s("Sort By: " + _vm.sortBy) +
+                  "\n                "
+              )
+            ]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "dropdown-menu" }, [
@@ -47703,7 +47710,10 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col pr-4" }, [
-          _c("div", { staticClass: "float-right" }, [
+          _c("div", { staticClass: "float-right text-light" }, [
+            _vm._v(
+              "\n                    Change Doodle Sizes:\n                    "
+            ),
             _c(
               "button",
               {
@@ -47736,184 +47746,157 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row justify-content-center" },
-      [
-        _vm._l(_vm.dData, function(doodle) {
-          return _c(
+      { staticClass: "row mt-4 justify-content-center" },
+      _vm._l(_vm.dData, function(doodle) {
+        return _c("div", { class: { "hide-doodle": doodle.show === false } }, [
+          _c(
             "div",
-            { class: { "hide-doodle": doodle.show === false } },
+            { staticClass: "img-frame", style: _vm.changeDoodleSize(doodle) },
             [
-              _c(
-                "div",
-                {
-                  staticClass: "img-frame",
-                  style: _vm.changeDoodleSize(doodle)
-                },
-                [
-                  _c("div", { staticClass: "img-props" }, [
-                    _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
-                      _c("img", {
-                        style: _vm.changeDoodleSize(doodle),
-                        attrs: { src: doodle.source }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "report-container" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "",
-                          "data-toggle": "modal",
-                          "data-target": "#reportModal"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.setCurrentDoodle(doodle)
-                          }
-                        }
-                      },
-                      [_vm._v("\n                    Report\n                ")]
+              _c("div", { staticClass: "img-props" }, [
+                _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+                  _c("img", {
+                    style: _vm.changeDoodleSize(doodle),
+                    attrs: { src: doodle.source }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "report-container" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: "",
+                      "data-toggle": "modal",
+                      "data-target": "#reportModal"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.setCurrentDoodle(doodle)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Report\n                    "
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "arrow-container" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, 1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-up upvote-arrow",
-                          class: {
-                            "upvote-arrow-active": doodle.userVote === 1
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, -1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-down downvote-arrow",
-                          class: {
-                            "downvote-arrow-active": doodle.userVote === -1
-                          }
-                        })
-                      ]
-                    )
-                  ])
-                ]
-              )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "arrow bg-transparent fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": doodle.userVote === 1 },
+                on: {
+                  click: function($event) {
+                    _vm.onVote(doodle, 1)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "arrow bg-transparent fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": doodle.userVote === -1 },
+                on: {
+                  click: function($event) {
+                    _vm.onVote(doodle, -1)
+                  }
+                }
+              })
             ]
           )
-        }),
-        _vm._v(" "),
+        ])
+      })
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "reportModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "reportModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
         _c(
           "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "reportModal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "reportModalLabel",
-              "aria-hidden": "true"
-            }
-          },
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("form", [
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportString,
-                              expression: "reportString"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "reportInput",
-                            placeholder: ""
-                          },
-                          domProps: { value: _vm.reportString },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.reportString = $event.target.value
-                            }
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("form", [
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.reportString,
+                          expression: "reportString"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "reportInput",
+                        placeholder: ""
+                      },
+                      domProps: { value: _vm.reportString },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("small", [
-                          _vm._v(
-                            "After reporting, you won't see this doodle anymore."
-                          )
-                        ])
-                      ])
-                    ]),
+                          _vm.reportString = $event.target.value
+                        }
+                      }
+                    }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button", "data-dismiss": "modal" }
-                        },
-                        [_vm._v("Close")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: {
-                            click: function($event) {
-                              _vm.createReport()
-                            }
-                          }
-                        },
-                        [_vm._v("Save changes")]
+                    _c("small", [
+                      _vm._v(
+                        "After reporting, you won't see this doodle anymore."
                       )
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button", "data-dismiss": "modal" },
+                      on: {
+                        click: function($event) {
+                          _vm.createReport()
+                        }
+                      }
+                    },
+                    [_vm._v("Save changes")]
+                  )
                 ])
-              ]
-            )
+              ])
+            ])
           ]
         )
-      ],
-      2
+      ]
     )
   ])
 }
@@ -48150,17 +48133,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container text-center p-2" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
+      _c("div", { staticClass: "single-doodle-bkgd text-center" }, [
         _c("div", { staticClass: "card-header bg-dark p-0" }, [
           _c("div", { staticClass: "row p-0" }, [
-            _c("div", { staticClass: "col pl-5 p-0" }, [
+            _c("div", { staticClass: "col pl-5" }, [
               _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
                   {
-                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
                     on: {
                       click: function($event) {
                         _vm.onVote(1)
@@ -48178,7 +48162,8 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
                     on: {
                       click: function($event) {
                         _vm.onVote(-1)
@@ -48199,17 +48184,17 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "btn mt-4 btn-secondary shadow",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.previous === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.previous }
                 },
-                [_vm._v("<")]
+                [_vm._v("< Back")]
               ),
               _vm._v(" "),
               _c(
                 "a",
                 {
-                  staticClass: "btn mt-4 btn-secondary shadow",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.next === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.next }
                 },
@@ -48217,13 +48202,13 @@ var render = function() {
               )
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0" }, [
-          _c("div", { staticClass: "img-props m-2" }, [
-            _c("img", { attrs: { src: _vm.imgSource } })
-          ])
         ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "single-doodle-img-frame m-3" }, [
+      _c("div", { staticClass: "single-doodle-img-props m-2" }, [
+        _c("img", { attrs: { src: _vm.imgSource } })
       ])
     ]),
     _vm._v(" "),
@@ -48411,6 +48396,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48528,7 +48516,7 @@ var render = function() {
           [
             _c(
               "div",
-              { staticClass: "row justify-content-center" },
+              { staticClass: "row mt-2 justify-content-center" },
               _vm._l(_vm.colors, function(color) {
                 return _c("div", [
                   _c("div", {
@@ -48545,67 +48533,78 @@ var render = function() {
               })
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center mt-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.setRadius(-1)
-                    }
-                  }
-                },
-                [_vm._v("-")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.setRadius(1)
-                    }
-                  }
-                },
-                [_vm._v("+")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center mt-2" }, [
-              _c("div", { staticClass: "text-center" }, [
-                _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
-              ])
-            ]),
-            _vm._v(" "),
             _c(
-              "form",
+              "div",
               {
-                staticClass: "row justify-content-center align-items-end",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.saveDoodle($event)
-                  }
-                }
+                staticClass:
+                  "text-light row justify-content-center text-center pl-2 mt-3"
               },
               [
-                _c("input", {
-                  attrs: { type: "hidden", name: "_token" },
-                  domProps: { value: _vm.csrf }
-                }),
+                _c("p", [
+                  _c("strong", [_vm._v("Brush Size: ")]),
+                  _c("br"),
+                  _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
                   {
                     staticClass: "btn border-dark btn-secondary",
-                    attrs: { type: "submit" }
+                    on: {
+                      click: function($event) {
+                        _vm.setRadius(-1)
+                      }
+                    }
                   },
-                  [_vm._v("Save")]
+                  [_vm._v("-")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn border-dark btn-secondary",
+                    on: {
+                      click: function($event) {
+                        _vm.setRadius(1)
+                      }
+                    }
+                  },
+                  [_vm._v("+")]
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center mt-2" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "save-button" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "row justify-content-center align-items-end",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.saveDoodle($event)
+                    }
+                  }
+                },
+                [
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_token" },
+                    domProps: { value: _vm.csrf }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn border-dark btn-secondary",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),

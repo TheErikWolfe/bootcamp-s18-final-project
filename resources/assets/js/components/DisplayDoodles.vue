@@ -4,38 +4,39 @@
             <div class="row align-items-center">
                 <div class="col">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sort By:
+                        {{ 'Sort By: ' + sortBy }}
                     </button>
                     <div class="dropdown-menu">
                         <a v-on:click="sortDoodles('Newest First')" class="dropdown-item">Newest First</a>
                         <a v-on:click="sortDoodles('Popularity')" class="dropdown-item">Popularity</a>
                     </div>
+                    
                 </div>
+                
                 <div class="col pr-4">
-                    <div class="float-right">
+                    <div class="float-right text-light">
+                        Change Doodle Sizes:
                         <button v-on:click="setDoodleSize('standard')" class="btn-secondary border-0 mr-1"><i class="fab fa-microsoft"></i></button>
                         <button v-on:click="setDoodleSize('popularity')" class="btn-secondary border-0 mr-1"><i class="fas fa-align-center"></i></button>                 
                     </div>
                 </div>               
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row mt-4 justify-content-center">
             <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
-                <div class="img-props">
-                    <a :href="'/doodles/' + doodle.id">
-                        <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
-                    </a>
-                </div>
-                <div class="report-container">
-                    <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
-                        Report
-                    </a>
-                </div>
-                <!-- Modal -->
-                <div class="arrow-container">
-                    <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></i></div>
-                    <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></i></div>
+                    <div class="img-props">
+                        <a :href="'/doodles/' + doodle.id">
+                            <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
+                        </a>
+                    </div>
+                    <div class="report-container">
+                        <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
+                            Report
+                        </a>
+                    </div>
+                    <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></div>
+                    <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></div>
                 </div>
             </div>
         </div>
@@ -84,7 +85,8 @@
                 dHeight: 0,
                 reportString: '',
                 currentDoodle: null,
-                doodleSize: false // false changes size by popularite and true changes to standard size
+                doodleSize: false, // false changes size by popularite and true changes to standard size
+                sortBy: 'Newest First'
             }
         },
 
@@ -104,7 +106,7 @@
                 {
                     this.dData = this.dData.sort((a,b) => (b.numberOfUpvotes - b.numberOfDownvotes) - (a.numberOfUpvotes - a.numberOfDownvotes));
                 }
-
+                this.sortBy = sortBy;
                 return this.dData;
             },
             setDoodleSize: function(changeBy)
@@ -113,7 +115,7 @@
                 {
                     this.doodleSize = true;
                 }
-                else
+                else if(changeBy == "popularity")
                 {
                     this.doodleSize = false;
                 }
@@ -149,7 +151,7 @@
 
                     console.log(dHeight);
 
-                    result = {width: 'auto', height: dHeight + 'vh'};
+                    result = {'width': 'auto', 'height': dHeight + 'vh'};
                 }
                 else
                 {
@@ -158,7 +160,6 @@
                 return result;
             },
             setCurrentDoodle: function(doodle) {
-                console.log('currrent doodle is ' + doodle.id);
                 this.currentDoodle = doodle;
             },
             onVote:function (doodle, userVote) 
