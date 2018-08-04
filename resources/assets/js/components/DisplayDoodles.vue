@@ -25,19 +25,19 @@
         <div class="row mt-4 justify-content-center">
             <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
-                <div class="img-props">
-                    <a :href="'/doodles/' + doodle.id">
-                        <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
-                    </a>
-                </div>
-                <div class="report-container">
-                    <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
-                        Report
-                    </a>
-                </div>
+                    <div class="img-props">
+                        <a :href="'/doodles/' + doodle.id">
+                            <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
+                        </a>
+                    </div>
+                    <div class="report-container">
+                        <a href="" data-toggle="modal" v-on:click="setCurrentDoodle(doodle)" data-target="#reportModal">
+                            Report
+                        </a>
+                    </div>
                     <div v-on:click="onVote(doodle, 1)" class="arrow bg-transparent fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : doodle.userVote === 1 }"></div>
                     <div v-on:click="onVote(doodle, -1)" class="arrow bg-transparent fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : doodle.userVote === -1 }"></div>
-                
+                </div>
             </div>
         </div>
         <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
@@ -151,7 +151,7 @@
 
                     console.log(dHeight);
 
-                    result = {width: 'auto', height: dHeight + 'vh'};
+                    result = {'width': 'auto', 'height': dHeight + 'vh'};
                 }
                 else
                 {

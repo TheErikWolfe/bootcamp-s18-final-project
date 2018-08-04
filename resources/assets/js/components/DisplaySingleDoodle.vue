@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container text-center p-2">
         <div class="row justify-content-center">
-            <div class="single-doodle-bkgd text-center mt-4">
+            <div class="single-doodle-bkgd text-center">
                 <div class="card-header bg-dark p-0">
                     <div class="row p-0">
                         <div class="col pl-5">
@@ -18,13 +18,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="img-props m-2">
-                        <img :src=imgSource>
-                    </div>
-                </div>
             </div>
         </div>
+        <div class="single-doodle-img-frame m-3">
+                        <div class="single-doodle-img-props m-2">
+                            <img :src=imgSource>
+                        </div>
+                    </div>
         <div class="row justify-content-center mt-3">
             <div class="comment-form">
                 <div class="card-body p-0 m-0 rounded-0">
