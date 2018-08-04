@@ -21,6 +21,7 @@ a {
 
 body {
   // background-color: $primary;
+  overflow-x: hidden;
   @extend .pt-5;
 
   background-color: $primary;
@@ -137,6 +138,11 @@ body {
   // right:50%;
   bottom: 0;
   // @extend .text-center;
+}
+
+.single-doodle-arrow {
+  font-size: 250%;
+  @extend .m-2;
 }
 
 .arrow {
@@ -258,4 +264,14 @@ body {
 
 .drawing-app-width {
   width: 500px;
+}
+
+#drawing-app-canvas {
+  cursor: crosshair;
+}
+
+.save-button {
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
 }

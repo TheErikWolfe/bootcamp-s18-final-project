@@ -47517,6 +47517,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47534,7 +47537,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dHeight: 0,
             reportString: '',
             currentDoodle: null,
-            doodleSize: false // false changes size by popularite and true changes to standard size
+            doodleSize: false, // false changes size by popularite and true changes to standard size
+            sortBy: 'Newest First'
         };
     },
     mounted: function mounted() {
@@ -47554,7 +47558,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return b.numberOfUpvotes - b.numberOfDownvotes - (a.numberOfUpvotes - a.numberOfDownvotes);
                 });
             }
-
+            this.sortBy = sortBy;
             return this.dData;
         },
         setDoodleSize: function setDoodleSize(changeBy) {
@@ -47667,7 +47671,13 @@ var render = function() {
                 "aria-expanded": "false"
               }
             },
-            [_vm._v("\n                    Sort By:\n                ")]
+            [
+              _vm._v(
+                "\n                    " +
+                  _vm._s("Sort By: " + _vm.sortBy) +
+                  "\n                "
+              )
+            ]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "dropdown-menu" }, [
@@ -47700,7 +47710,10 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col pr-4" }, [
-          _c("div", { staticClass: "float-right" }, [
+          _c("div", { staticClass: "float-right text-light" }, [
+            _vm._v(
+              "\n                    Change Doodle Sizes:\n                    "
+            ),
             _c(
               "button",
               {
@@ -47733,7 +47746,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row justify-content-center" },
+      { staticClass: "row mt-4 justify-content-center" },
       [
         _vm._l(_vm.dData, function(doodle) {
           return _c(
@@ -48132,12 +48145,13 @@ var render = function() {
       _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
         _c("div", { staticClass: "card-header bg-dark p-0" }, [
           _c("div", { staticClass: "row p-0" }, [
-            _c("div", { staticClass: "col pl-5 p-0" }, [
+            _c("div", { staticClass: "col pl-5" }, [
               _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
                   {
-                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
                     on: {
                       click: function($event) {
                         _vm.onVote(1)
@@ -48155,7 +48169,8 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "col-1 m-0 p-0 arrow bg-transparent",
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
                     on: {
                       click: function($event) {
                         _vm.onVote(-1)
@@ -48176,17 +48191,17 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "btn mt-4 btn-secondary shadow",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.previous === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.previous }
                 },
-                [_vm._v("<")]
+                [_vm._v("< Back")]
               ),
               _vm._v(" "),
               _c(
                 "a",
                 {
-                  staticClass: "btn mt-4 btn-secondary shadow",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.next === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.next }
                 },
@@ -48388,6 +48403,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48505,7 +48523,7 @@ var render = function() {
           [
             _c(
               "div",
-              { staticClass: "row justify-content-center" },
+              { staticClass: "row mt-2 justify-content-center" },
               _vm._l(_vm.colors, function(color) {
                 return _c("div", [
                   _c("div", {
@@ -48522,67 +48540,78 @@ var render = function() {
               })
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center mt-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.setRadius(-1)
-                    }
-                  }
-                },
-                [_vm._v("-")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.setRadius(1)
-                    }
-                  }
-                },
-                [_vm._v("+")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center mt-2" }, [
-              _c("div", { staticClass: "text-center" }, [
-                _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
-              ])
-            ]),
-            _vm._v(" "),
             _c(
-              "form",
+              "div",
               {
-                staticClass: "row justify-content-center align-items-end",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.saveDoodle($event)
-                  }
-                }
+                staticClass:
+                  "text-light row justify-content-center text-center pl-2 mt-3"
               },
               [
-                _c("input", {
-                  attrs: { type: "hidden", name: "_token" },
-                  domProps: { value: _vm.csrf }
-                }),
+                _c("p", [
+                  _c("strong", [_vm._v("Brush Size: ")]),
+                  _c("br"),
+                  _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
                   {
                     staticClass: "btn border-dark btn-secondary",
-                    attrs: { type: "submit" }
+                    on: {
+                      click: function($event) {
+                        _vm.setRadius(-1)
+                      }
+                    }
                   },
-                  [_vm._v("Save")]
+                  [_vm._v("-")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn border-dark btn-secondary",
+                    on: {
+                      click: function($event) {
+                        _vm.setRadius(1)
+                      }
+                    }
+                  },
+                  [_vm._v("+")]
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center mt-2" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "save-button" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "row justify-content-center align-items-end",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.saveDoodle($event)
+                    }
+                  }
+                },
+                [
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_token" },
+                    domProps: { value: _vm.csrf }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn border-dark btn-secondary",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),

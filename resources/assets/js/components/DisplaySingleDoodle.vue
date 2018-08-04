@@ -4,17 +4,17 @@
             <div class="single-doodle-bkgd text-center mt-4">
                 <div class="card-header bg-dark p-0">
                     <div class="row p-0">
-                        <div class="col pl-5 p-0">
+                        <div class="col pl-5">
                             <div class="row">
-                                <div v-on:click="onVote(1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                                <div v-on:click="onVote(1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
                                 <!-- <div id="doodle-points" class="col ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div> -->
-                                <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
+                                <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
 
                             </div>    
                         </div>                      
                         <div class="col">
-                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn mt-4 btn-secondary shadow"><</a>
-                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn mt-4 btn-secondary shadow">Next ></a>
+                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn my-3 btn-secondary shadow">< Back</a>
+                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn my-3 btn-secondary shadow">Next ></a>
                         </div>
                     </div>
                 </div>
