@@ -11,11 +11,16 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <style>
+        @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+        @import url('https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Shadow');
+        
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
+                /* background-color: #fff; */
+                /* color: #636b6f; */
+                font-family: 'Londrina Sketch', sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
@@ -45,15 +50,16 @@
                 text-align: center;
             }
 
-            .title {
-                font-size: 84px;
+            .welcome-logo {
+                width: 70%;
+                height: auto;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #55A6E5;
                 padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
+                font-size: 4vh;
+                font-weight: bold;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -68,8 +74,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <!-- Temporary Title, Load Image Later -->
-                    DoodleOn
+                    <img class="welcome-logo mx-auto" src="/img/doodleonlogo.png"/>
                 </div>
 
                 <div class="links">

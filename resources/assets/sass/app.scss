@@ -1,6 +1,8 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+@import url('https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Shadow');
 
 // Variables
 @import "variables";
@@ -17,6 +19,11 @@
 
 a {
   color: blue;
+}
+
+.nav-item > a {
+  font-family: 'Londrina Sketch', sans-serif;
+  font-size: 2.5vh;
 }
 
 body {
