@@ -7,14 +7,14 @@
         <nav class="settings-menu-navbar">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">{{ __('Signature') }}</a>
+                    <a class="nav-link active" href="/settings">{{ __('Signature') }}</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" href="">{{ __('Account') }}</a>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a class="nav-link active" href="">{{ __('Preferences') }}</a>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <div class="settings-card">
