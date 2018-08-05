@@ -13,64 +13,8 @@
         <!-- Styles -->
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <style>
-        @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
-        @import url('https://fonts.googleapis.com/css?family=Londrina+Sketch|Londrina+Shadow');
-        
-            html, body {
-                /* background-color: #fff; */
-                /* color: #636b6f; */
-                font-family: 'Londrina Sketch', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .welcome-logo {
-                width: 70%;
-                height: auto;
-            }
-
-            .links > a {
-                color: #55A6E5;
-                padding: 0 25px;
-                font-size: 4vh;
-                font-weight: bold;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
     </head>
-    <body>
+    <body id="welcome">
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
