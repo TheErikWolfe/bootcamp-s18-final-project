@@ -13,7 +13,8 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings.index');
+        $signature = \App\Signature::where('creator_id', '=', \Auth::user()->id)->first();
+        return view('settings.editsignature', compact('signature'));
     }
 
     /**
