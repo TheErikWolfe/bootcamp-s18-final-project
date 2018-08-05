@@ -71,7 +71,7 @@ class DoodlesController extends Controller
         {
             $doodle->userVote = null;
         }
-        
+        $doodle->signature = \App\Signature::where('creator_id', '=', $doodle->creator_id)->first();
         return view('main.show', compact('doodle'));
     }
 

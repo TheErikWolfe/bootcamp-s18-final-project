@@ -23,6 +23,7 @@
         <div class="single-doodle-img-frame m-3">
                         <div class="single-doodle-img-props m-2">
                             <img :src=imgSource>
+                            <img class="single-doodle-signature-props" :src="doodle.signature.source">
                         </div>
                     </div>
         <div class="row justify-content-center mt-3">

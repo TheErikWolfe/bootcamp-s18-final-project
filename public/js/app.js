@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3140,7 +3140,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -13982,7 +13982,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(58);
 
 
 /***/ }),
@@ -14011,7 +14011,7 @@ Vue.component('display-doodles', __webpack_require__(43));
 Vue.component('display-single-doodle', __webpack_require__(46));
 Vue.component('drawing-pad', __webpack_require__(49));
 Vue.component('display-user-doodles', __webpack_require__(52));
-Vue.component('signature-app', __webpack_require__(60));
+Vue.component('signature-app', __webpack_require__(55));
 var app = new Vue({
   el: '#app'
 });
@@ -31188,7 +31188,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(17)(module)))
 
 /***/ }),
 /* 17 */
@@ -47014,7 +47014,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(38).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(38).setImmediate))
 
 /***/ }),
 /* 38 */
@@ -47084,7 +47084,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 39 */
@@ -47277,14 +47277,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(41)
 /* template */
@@ -47403,7 +47403,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(44)
 /* template */
@@ -47521,6 +47521,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47534,8 +47535,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             novote: 0,
             startHeight: 60,
             startWidth: 90,
-            dWidth: 0,
-            dHeight: 0,
             reportString: '',
             currentDoodle: null,
             doodleSize: false, // false changes size by popularite and true changes to standard size
@@ -47599,6 +47598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 result = { width: 'auto', height: this.startHeight + 'vh' };
             }
+
             return result;
         },
         setCurrentDoodle: function setCurrentDoodle(doodle) {
@@ -47759,6 +47759,11 @@ var render = function() {
                   _c("img", {
                     style: _vm.changeDoodleSize(doodle),
                     attrs: { src: doodle.source }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticClass: "signature-props",
+                    attrs: { src: doodle.signature.source }
                   })
                 ])
               ]),
@@ -47942,7 +47947,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(47)
 /* template */
@@ -47990,6 +47995,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -48209,7 +48215,12 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "single-doodle-img-frame m-3" }, [
       _c("div", { staticClass: "single-doodle-img-props m-2" }, [
-        _c("img", { attrs: { src: _vm.imgSource } })
+        _c("img", { attrs: { src: _vm.imgSource } }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "single-doodle-signature-props",
+          attrs: { src: _vm.doodle.signature.source }
+        })
       ])
     ]),
     _vm._v(" "),
@@ -48310,7 +48321,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(50)
 /* template */
@@ -48640,7 +48651,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
@@ -48862,24 +48873,14 @@ if (false) {
 
 /***/ }),
 /* 55 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(61)
+var __vue_script__ = __webpack_require__(56)
 /* template */
-var __vue_template__ = __webpack_require__(62)
+var __vue_template__ = __webpack_require__(57)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48918,7 +48919,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 61 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48949,6 +48950,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['signatureData'],
     data: function data() {
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -48968,8 +48970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.context = this.canvas.getContext('2d');
 
         this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-        // this.context.fillStyle = "#FFF";
-        // this.context.fill();
+        console.log(this.signatureData.id);
     },
 
     methods: {
@@ -49017,17 +49018,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.canvas.height = 100;
         },
         saveSignature: function saveSignature(event) {
-            axios.post('/signature', {
-                signature: this.canvas.toDataURL()
-            }).then(function (response) {
-                window.location = response.data.redirect;
-            });
+            if (this.signatureData == undefined) {
+                axios.post('/signature', {
+                    signature: this.canvas.toDataURL()
+                }).then(function (response) {
+                    window.location = response.data.redirect;
+                });
+            } else {
+                axios.put('/signature/' + this.signatureData.id, {
+                    signature: this.canvas.toDataURL()
+                }).then(function (response) {
+                    window.location = response.data.redirect;
+                });
+            }
         }
     }
 });
 
 /***/ }),
-/* 62 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49106,6 +49115,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-0f27d71c", module.exports)
   }
 }
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

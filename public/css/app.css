@@ -10817,6 +10817,15 @@ label {
   max-width: 100%;
 }
 
+.signature-props {
+  position: absolute;
+  width: 33%;
+  bottom: 7%;
+  right: 7%;
+  -webkit-transform: rotate(-20deg);
+          transform: rotate(-20deg);
+}
+
 .img-frame:hover .img-props {
   opacity: 0.70;
 }
@@ -10939,6 +10948,15 @@ label {
   max-width: 100%;
 }
 
+.single-doodle-signature-props {
+  position: absolute;
+  width: 33%;
+  bottom: 16%;
+  right: 15%;
+  -webkit-transform: rotate(-20deg);
+          transform: rotate(-20deg);
+}
+
 .comment-form {
   background-color: #6485C9;
   width: 600px;
@@ -11014,5 +11032,10 @@ label {
 
 .signature-card {
   min-width: 400px;
+}
+
+.settings-signature-card {
+  width: 400px;
+  height: 100px;
 }
 

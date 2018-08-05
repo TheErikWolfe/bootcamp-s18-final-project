@@ -7,7 +7,7 @@
         <nav class="settings-menu-navbar">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">{{ __('Profile') }}</a>
+                    <a class="nav-link active" href="">{{ __('Signature') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="">{{ __('Account') }}</a>
@@ -18,7 +18,7 @@
             </ul>
         </nav>
         <div class="settings-card">
-            <div class="card-body">
+            <div class="card-body text-light">
                 @yield('settings-content')
             </div>
         </div>

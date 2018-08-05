@@ -28,6 +28,7 @@
                     <div class="img-props">
                         <a :href="'/doodles/' + doodle.id">
                             <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
+                            <img class="signature-props" :src="doodle.signature.source">
                         </a>
                     </div>
                     <div class="report-container">
@@ -81,8 +82,6 @@
                 novote: 0,
                 startHeight: 60,
                 startWidth: 90,
-                dWidth: 0,
-                dHeight: 0,
                 reportString: '',
                 currentDoodle: null,
                 doodleSize: false, // false changes size by popularite and true changes to standard size
@@ -157,6 +156,7 @@
                 {
                     result = {width: 'auto', height: this.startHeight + 'vh'};
                 }
+
                 return result;
             },
             setCurrentDoodle: function(doodle) {

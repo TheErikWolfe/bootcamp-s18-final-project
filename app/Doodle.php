@@ -20,6 +20,10 @@ class Doodle extends Model
     }
     public function comments ()
     {
-        return $this->hasmany('App\Comment');
+        return $this->hasMany('App\Comment');
+    }
+    public function signature ()
+    {
+        return $this->belongsTo('App\Signature');
     }
 }

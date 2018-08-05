@@ -24,8 +24,12 @@ class SignatureController extends Controller
         return ['redirect' => route('home')];
         
     }
-    public function edit(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $signature = \App\Signature::find($id);
+        $signature->source = $request->input('signature');
+        $signature->save();
+
+        return ['redirect' => route('home')];
     }
 }

@@ -24,6 +24,7 @@
 
 <script>
     export default {
+        props: ['signatureData'],
         data () 
         {
             return {
@@ -44,8 +45,7 @@
             this.context = this.canvas.getContext('2d');
 
             this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-            // this.context.fillStyle = "#FFF";
-            // this.context.fill();
+            console.log(this.signatureData.id)
         },
         methods: {
             draw: function (event) 
@@ -99,12 +99,24 @@
                 this.canvas.height = 100;
             },
             saveSignature: function (event) {
-                axios.post('/signature', {
-                    signature: this.canvas.toDataURL()
-                })
-                .then(function (response) {
-                    window.location = response.data.redirect;
-                });
+                if(this.signatureData == undefined)
+                {
+                    axios.post('/signature', {
+                        signature: this.canvas.toDataURL()
+                    })
+                    .then(function (response) {
+                        window.location = response.data.redirect;
+                    });
+                }
+                else
+                {
+                    axios.put('/signature/' + this.signatureData.id, {
+                        signature: this.canvas.toDataURL()
+                    })
+                    .then(function (response) {
+                        window.location = response.data.redirect;
+                    });
+                }
             },
         }
     }
