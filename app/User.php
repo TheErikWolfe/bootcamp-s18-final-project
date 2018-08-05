@@ -34,15 +34,20 @@ class User extends Authenticatable
 
     public function votes ()
     {
-        return $this->hasMany('App/Votes', 'voter_id');
+        return $this->hasMany('App\Votes', 'voter_id');
     }
 
     public function reports ()
     {
-        return $this->hasMany('App/Reports', 'reporter_id');
+        return $this->hasMany('App\Reports', 'reporter_id');
     }
     public function comments ()
     {
         return $this->hasmany('App\Comment');
+    }
+
+    public function signature ()
+    {
+        return $this->hasOne('App\Signature');
     }
 }

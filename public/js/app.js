@@ -48941,6 +48941,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49009,6 +49015,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         clearCanvas: function clearCanvas() {
             this.canvas.width = 400;
             this.canvas.height = 100;
+        },
+        saveSignature: function saveSignature(event) {
+            axios.post('/signature', {
+                signature: this.canvas.toDataURL()
+            }).then(function (response) {
+                window.location = response.data.redirect;
+            });
         }
     }
 });
@@ -49021,13 +49034,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center pb-3" }, [
-    _c("div", { staticClass: "signature-canvas bg-light" }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "_token" },
-        domProps: { value: _vm.csrf }
-      }),
-      _vm._v(" "),
+  return _c("div", { staticClass: "text-center" }, [
+    _c("div", { staticClass: "row mx-auto signature-canvas bg-light" }, [
       _c("canvas", {
         staticClass: "m-0",
         attrs: { id: "drawing-app-canvas", width: "400px", height: "100px" },
@@ -49040,21 +49048,56 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "btn btn-dark",
-        on: {
-          click: function($event) {
-            _vm.clearCanvas()
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-3" }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "ml-5 float-left btn btn-dark",
+          on: {
+            click: function($event) {
+              _vm.clearCanvas()
+            }
           }
-        }
-      },
-      [_vm._v("Clear")]
-    )
+        },
+        [_vm._v("Clear")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "mr-5 float-right btn btn-dark",
+          on: {
+            click: function($event) {
+              _vm.saveSignature()
+            }
+          }
+        },
+        [_vm._v("Save")]
+      )
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2" }, [
+      _c("p", [
+        _vm._v(
+          "Your signature will show up at the bottom of every doodle you make, so make it good"
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

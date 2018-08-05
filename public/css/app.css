@@ -11012,3 +11012,7 @@ label {
   height: 100px;
 }
 
+.signature-card {
+  min-width: 400px;
+}
+

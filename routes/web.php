@@ -24,3 +24,6 @@ Route::resource('/votes', 'VotesController');
 Route::resource('/comments', 'CommentsController');
 Route::post('/doodles/vote/{id}', 'DoodlesController@updateVote');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/signature', 'SignatureController@store')->name('storesignature');
+Route::post('/signature/{id}', 'SignatureController@edit')->name('editsignature');
+Route::get('/signature/create', 'SignatureController@create')->name('createsignature');

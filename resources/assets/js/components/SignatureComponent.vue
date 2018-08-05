@@ -1,7 +1,6 @@
 <template>
-    <div class="row justify-content-center pb-3">
-        <div class="signature-canvas bg-light">
-            <input type="hidden" name="_token" :value="csrf">
+    <div class="text-center">
+        <div class="row mx-auto signature-canvas bg-light">
             <canvas id="drawing-app-canvas"
                     v-on:mousedown="handleMouseDown" 
                     v-on:mouseup="handleMouseUp" 
@@ -12,7 +11,14 @@
                     class="m-0">
             </canvas>
         </div>
-        <div v-on:click="clearCanvas()" class="btn btn-dark">Clear</div>
+        <div class="mt-2">
+            <p>Your signature will show up at the bottom of every doodle you make, so make it good</p>
+        </div>
+        <div class="mt-3">
+            <input type="hidden" name="_token" :value="csrf">
+            <div v-on:click="clearCanvas()" class="ml-5 float-left btn btn-dark">Clear</div>
+            <div v-on:click="saveSignature()" class="mr-5 float-right btn btn-dark">Save</div>
+        </div>
     </div>
 </template>
 
@@ -91,7 +97,15 @@
             {
                 this.canvas.width = 400;
                 this.canvas.height = 100;
-            }
+            },
+            saveSignature: function (event) {
+                axios.post('/signature', {
+                    signature: this.canvas.toDataURL()
+                })
+                .then(function (response) {
+                    window.location = response.data.redirect;
+                });
+            },
         }
     }
 </script>

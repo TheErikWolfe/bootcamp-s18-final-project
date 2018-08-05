@@ -44,8 +44,7 @@ class HomeController extends Controller
             {
                 $doodle->show = true;
             }
-            
-            // dd($doodle->userVote);
+            $doodle->signature = $doodle->signature()->where('creator_id', '=', \Auth::user()->id)->first();
         }
         
         return view('main.home', compact('doodles'));
