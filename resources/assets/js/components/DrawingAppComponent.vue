@@ -57,10 +57,6 @@ import axios from 'axios';
                     x: 0,
                     y: 0 
                 },
-                previous: {
-                    x: 0,
-                    y: 0
-                },
                 colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
                 currentColor : 'black'
             }

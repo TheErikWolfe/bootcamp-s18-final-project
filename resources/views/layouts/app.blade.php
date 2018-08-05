@@ -27,7 +27,7 @@
         <nav class="navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img class="logo mx-auto" src="https://files.slack.com/files-pri/TA033TWNB-FC24Z3ZDJ/doodle_on_new.png"/>
+                    <img class="logo mx-auto" src="/img/doodleonlogo.png"/>
                     <!-- <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/> -->
                 </a>
 

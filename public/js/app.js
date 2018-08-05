@@ -14011,6 +14011,7 @@ Vue.component('display-doodles', __webpack_require__(43));
 Vue.component('display-single-doodle', __webpack_require__(46));
 Vue.component('drawing-pad', __webpack_require__(49));
 Vue.component('display-user-doodles', __webpack_require__(52));
+Vue.component('signature-app', __webpack_require__(60));
 var app = new Vue({
   el: '#app'
 });
@@ -47657,7 +47658,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-1" }, [
-    _c("div", { staticClass: "p-2 container rounded bg-secondary" }, [
+    _c("div", { staticClass: "p-2 container rounded bg-dark" }, [
       _c("div", { staticClass: "row align-items-center" }, [
         _c("div", { staticClass: "col" }, [
           _c(
@@ -48416,10 +48417,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: 0,
                 y: 0
             },
-            previous: {
-                x: 0,
-                y: 0
-            },
             colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
             currentColor: 'black'
         };
@@ -48868,6 +48865,204 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SignatureComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0f27d71c", Component.options)
+  } else {
+    hotAPI.reload("data-v-0f27d71c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            context: null,
+            canvas: null,
+            mouseDown: false,
+            radius: 1,
+            current: {
+                x: 0,
+                y: 0
+            },
+            currentColor: 'black'
+        };
+    },
+    mounted: function mounted() {
+        this.canvas = document.getElementById('drawing-app-canvas');
+        this.context = this.canvas.getContext('2d');
+
+        this.context.rect(0, 0, this.canvas.width, this.canvas.height);
+        // this.context.fillStyle = "#FFF";
+        // this.context.fill();
+    },
+
+    methods: {
+        draw: function draw(event) {
+            if (this.mouseDown) {
+                this.context.lineWidth = this.radius * 2;
+                this.context.lineTo(this.current.x, this.current.y);
+                this.context.strokeStyle = this.currentColor;
+                this.context.stroke();
+                this.context.beginPath();
+                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+                this.context.fillStyle = this.currentColor;
+                this.context.fill();
+                this.context.beginPath();
+                this.context.moveTo(this.current.x, this.current.y);
+            }
+        },
+        handleMouseMove: function handleMouseMove(event) {
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+
+            this.draw(event);
+        },
+        handleMouseUp: function handleMouseUp() {
+            this.mouseDown = false;
+        },
+        handleMouseDown: function handleMouseDown(event) {
+            var rect = this.canvas.getBoundingClientRect();
+            this.context.beginPath();
+            this.mouseDown = true;
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+            this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+            this.context.fillStyle = this.currentColor;
+            this.context.fill();
+            this.context.beginPath();
+        },
+        clearCanvas: function clearCanvas() {
+            this.canvas.width = 400;
+            this.canvas.height = 100;
+        }
+    }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row justify-content-center pb-3" }, [
+    _c("div", { staticClass: "signature-canvas bg-light" }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf }
+      }),
+      _vm._v(" "),
+      _c("canvas", {
+        staticClass: "m-0",
+        attrs: { id: "drawing-app-canvas", width: "400px", height: "100px" },
+        on: {
+          mousedown: _vm.handleMouseDown,
+          mouseup: _vm.handleMouseUp,
+          mousemove: _vm.handleMouseMove,
+          mouseleave: _vm.handleMouseUp
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "btn btn-dark",
+        on: {
+          click: function($event) {
+            _vm.clearCanvas()
+          }
+        }
+      },
+      [_vm._v("Clear")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0f27d71c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
