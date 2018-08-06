@@ -191,9 +191,10 @@ import axios from 'axios';
                     this.context.lineJoin = this.context.lineCap = 'round';
                     self = this;
                     this.timeout = setTimeout(function spray() {
+                        var sprayRadMultiplier = 3;
                         for (var i = self.density; i-- ; ) {
                             var angle = self.getRandomFloat(0, Math.PI*2);
-                            var radius = self.getRandomFloat(0, 20);
+                            var radius = self.getRandomFloat(0, self.radius * sprayRadMultiplier);
                             self.context.fillStyle = self.currentColor;
                             var addedx = self.current.x + radius * Math.cos(angle)
                             var addedy = self.current.y + radius * Math.sin(angle);
