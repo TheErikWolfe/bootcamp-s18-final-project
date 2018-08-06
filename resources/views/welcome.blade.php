@@ -18,9 +18,11 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
+                <!-- <h1>Push Your Creativity Onward</h1> -->
                     <img class="welcome-logo mx-auto" src="/img/doodleonlogo.png"/>
+                    
                 </div>
-
+                    
                 <div class="links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>

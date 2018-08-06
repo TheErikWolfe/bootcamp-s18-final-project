@@ -32,7 +32,7 @@
                 context: null,
                 canvas: null,
                 mouseDown: false,
-                radius: 1,
+                radius: 2,
                 current: {
                     x: 0,
                     y: 0 

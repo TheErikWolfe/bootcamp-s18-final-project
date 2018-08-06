@@ -1,5 +1,5 @@
 <template>
-    <div class="p-1">
+    <div class="p-2">
         <div class="p-2 container rounded bg-dark">
             <div class="row align-items-center">
                 <div class="col">

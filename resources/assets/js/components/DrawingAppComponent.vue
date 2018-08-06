@@ -1,33 +1,33 @@
 <template>
     <!-- Temporary div for centering of the canvas. -->
-    <div class="p-5 contain row justify-content-center">
-        <div class="border-dark drawing-app-width row bg-secondary border p-0">
-            <div class="col-2 pr-2 pt-1 p-0 border border-dark text-center">
-                <div class="row mt-2 justify-content-center">
-                    <div v-for="color in colors">
-                        <div v-on:click="changeColor(color)" class="swatch" v-bind:class="{ 'active': currentColor === color }" v-bind:style="{ background : color }"></div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'pencil'"><i class="fas fa-pencil-alt"></i></button>
-                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'marker'"><i class="fas fa-marker"></i></button>
-                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'spray'"><i class="fas fa-spray-can"></i></button>
-                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fab fa-connectdevelop"></i></button>
-                    <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white'"><i class="fas fa-eraser"></i></button>
-                </div>
-                <div class="text-light row justify-content-center text-center pl-2 mt-3">
-                    <p><strong>Brush Size: </strong><br/>{{ (radius - 1) / radIncrement + 1 }}</p>
-                    <button v-on:click="setRadius(-1)" class="btn border-dark btn-secondary">-</button>
-                    <button v-on:click="setRadius(1)" class="btn border-dark btn-secondary">+</button>
-                </div>
-                <div class="save-button">
-                    <form v-on:submit.prevent="saveDoodle" class="row justify-content-center align-items-end">
-                        <input type="hidden" name="_token" :value="csrf">
-                        <button class="btn border-dark btn-secondary"  type="submit">Save</button>
-                    </form>
+    <div class="p-3 row justify-content-center">
+        <div class="col-lg-2 pr-2 mt-2 pt-1 border rounded shadow-lg bg-secondary border-dark text-center">
+            <div class="row mt-2 bg-dark border rounded border-dark justify-content-center p-1 m-3">
+                <div v-for="color in colors">
+                    <div v-on:click="changeColor(color)" class="swatch" v-bind:class="{ 'active': currentColor === color }" v-bind:style="{ background : color }"></div>
                 </div>
             </div>
-            <div class="col-10 p-1">
+            <div class="row bg-dark border rounded border-dark justify-content-center m-3 p-1">
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'pencil'"><i class="fas fa-pencil-alt"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'marker'"><i class="fas fa-marker"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'spray'"><i class="fas fa-spray-can"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fab fa-connectdevelop"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white'"><i class="fas fa-eraser"></i></button>
+            </div>
+            <div class="text-light bg-dark border rounded border-dark row justify-content-center text-center pl-2 m-3">
+                <p><strong>Brush Size: </strong><br/>{{ (radius - 1) / radIncrement + 1 }}</p>
+                <button v-on:click="setRadius(-1)" class="ml-3 my-2 btn border-dark btn-secondary"><i class="fas fa-minus"></i></button>
+                <button v-on:click="setRadius(1)" class="my-2 btn border-dark btn-secondary"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="row my-3 justify-content-center">
+                <form v-on:submit.prevent="saveDoodle">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <button class="btn border-dark btn-secondary"  type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="border-dark mt-2 rounded shadow-lg col-lg-5 bg-secondary border p-0">
+            <div class="p-1 row justify-content-center">
                 <canvas id="drawing-app-canvas"
                     v-on:mousedown="handleMouseDown" 
                     v-on:mouseup="handleMouseUp" 
@@ -61,7 +61,8 @@ import axios from 'axios';
                     x: 0,
                     y: 0 
                 },
-                colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
+                // colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
+                colors : ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
                 currentColor : 'black',
                 strokeStyle: 'pencil',
                 timeout: null,

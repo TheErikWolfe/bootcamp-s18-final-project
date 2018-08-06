@@ -47657,7 +47657,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "p-1" }, [
+  return _c("div", { staticClass: "p-2" }, [
     _c("div", { staticClass: "p-2 container rounded bg-dark" }, [
       _c("div", { staticClass: "row align-items-center" }, [
         _c("div", { staticClass: "col" }, [
@@ -48442,7 +48442,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: 0,
                 y: 0
             },
-            colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
+            // colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
+            colors: ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
             currentColor: 'black',
             strokeStyle: 'pencil',
             timeout: null,
@@ -48597,177 +48598,190 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "p-5 contain row justify-content-center" }, [
+  return _c("div", { staticClass: "p-3 row justify-content-center" }, [
     _c(
       "div",
       {
-        staticClass: "border-dark drawing-app-width row bg-secondary border p-0"
+        staticClass:
+          "col-lg-2 pr-2 mt-2 pt-1 border rounded shadow-lg bg-secondary border-dark text-center"
       },
       [
         _c(
           "div",
-          { staticClass: "col-2 pr-2 pt-1 p-0 border border-dark text-center" },
+          {
+            staticClass:
+              "row mt-2 bg-dark border rounded border-dark justify-content-center p-1 m-3"
+          },
+          _vm._l(_vm.colors, function(color) {
+            return _c("div", [
+              _c("div", {
+                staticClass: "swatch",
+                class: { active: _vm.currentColor === color },
+                style: { background: color },
+                on: {
+                  click: function($event) {
+                    _vm.changeColor(color)
+                  }
+                }
+              })
+            ])
+          })
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "row bg-dark border rounded border-dark justify-content-center m-3 p-1"
+          },
           [
             _c(
-              "div",
-              { staticClass: "row mt-2 justify-content-center" },
-              _vm._l(_vm.colors, function(color) {
-                return _c("div", [
-                  _c("div", {
-                    staticClass: "swatch",
-                    class: { active: _vm.currentColor === color },
-                    style: { background: color },
-                    on: {
-                      click: function($event) {
-                        _vm.changeColor(color)
-                      }
-                    }
-                  })
-                ])
-              })
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "pencil"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-pencil-alt" })]
             ),
-            _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.strokeStyle = "pencil"
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-pencil-alt" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.strokeStyle = "marker"
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-marker" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.strokeStyle = "spray"
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-spray-can" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.strokeStyle = "connecting"
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fab fa-connectdevelop" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn border-dark btn-secondary",
-                  on: {
-                    click: function($event) {
-                      _vm.currentColor = "white"
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-eraser" })]
-              )
-            ]),
             _vm._v(" "),
             _c(
-              "div",
+              "button",
               {
-                staticClass:
-                  "text-light row justify-content-center text-center pl-2 mt-3"
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "marker"
+                  }
+                }
               },
-              [
-                _c("p", [
-                  _c("strong", [_vm._v("Brush Size: ")]),
-                  _c("br"),
-                  _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn border-dark btn-secondary",
-                    on: {
-                      click: function($event) {
-                        _vm.setRadius(-1)
-                      }
-                    }
-                  },
-                  [_vm._v("-")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn border-dark btn-secondary",
-                    on: {
-                      click: function($event) {
-                        _vm.setRadius(1)
-                      }
-                    }
-                  },
-                  [_vm._v("+")]
-                )
-              ]
+              [_c("i", { staticClass: "fas fa-marker" })]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "save-button" }, [
-              _c(
-                "form",
-                {
-                  staticClass: "row justify-content-center align-items-end",
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.saveDoodle($event)
-                    }
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "spray"
                   }
-                },
-                [
-                  _c("input", {
-                    attrs: { type: "hidden", name: "_token" },
-                    domProps: { value: _vm.csrf }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn border-dark btn-secondary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Save")]
-                  )
-                ]
-              )
-            ])
+                }
+              },
+              [_c("i", { staticClass: "fas fa-spray-can" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "connecting"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fab fa-connectdevelop" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.currentColor = "white"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-eraser" })]
+            )
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-10 p-1" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "text-light bg-dark border rounded border-dark row justify-content-center text-center pl-2 m-3"
+          },
+          [
+            _c("p", [
+              _c("strong", [_vm._v("Brush Size: ")]),
+              _c("br"),
+              _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "ml-3 my-2 btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.setRadius(-1)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-minus" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "my-2 btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.setRadius(1)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-plus" })]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "row my-3 justify-content-center" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.saveDoodle($event)
+                }
+              }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Save")]
+              )
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border-dark mt-2 rounded shadow-lg col-lg-5 bg-secondary border p-0"
+      },
+      [
+        _c("div", { staticClass: "p-1 row justify-content-center" }, [
           _c("canvas", {
             staticClass: "m-0",
             attrs: {
@@ -49108,7 +49122,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             context: null,
             canvas: null,
             mouseDown: false,
-            radius: 1,
+            radius: 2,
             current: {
                 x: 0,
                 y: 0
