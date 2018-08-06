@@ -8,19 +8,23 @@
                         <div v-on:click="changeColor(color)" class="swatch" v-bind:class="{ 'active': currentColor === color }" v-bind:style="{ background : color }"></div>
                     </div>
                 </div>
+                <div class="row justify-content-center">
+                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'pencil'"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'marker'"><i class="fas fa-marker"></i></button>
+                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'spray'"><i class="fas fa-spray-can"></i></button>
+                    <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fab fa-connectdevelop"></i></button>
+                    <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white'"><i class="fas fa-eraser"></i></button>
+                </div>
                 <div class="text-light row justify-content-center text-center pl-2 mt-3">
                     <p><strong>Brush Size: </strong><br/>{{ (radius - 1) / radIncrement + 1 }}</p>
                     <button v-on:click="setRadius(-1)" class="btn border-dark btn-secondary">-</button>
                     <button v-on:click="setRadius(1)" class="btn border-dark btn-secondary">+</button>
                 </div>
-                <div class="row justify-content-center mt-2">
-                    
-                </div>
                 <div class="save-button">
-                <form v-on:submit.prevent="saveDoodle" class="row justify-content-center align-items-end">
-                    <input type="hidden" name="_token" :value="csrf">
-                    <button class="btn border-dark btn-secondary"  type="submit">Save</button>
-                </form>
+                    <form v-on:submit.prevent="saveDoodle" class="row justify-content-center align-items-end">
+                        <input type="hidden" name="_token" :value="csrf">
+                        <button class="btn border-dark btn-secondary"  type="submit">Save</button>
+                    </form>
                 </div>
             </div>
             <div class="col-10 p-1">
@@ -59,9 +63,10 @@ import axios from 'axios';
                 },
                 colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
                 currentColor : 'black',
-                strokeStyle: 'marker',
+                strokeStyle: 'pencil',
                 timeout: null,
-                density: 50
+                density: 50,
+                points: []
             }
         },
         mounted () 
@@ -77,6 +82,37 @@ import axios from 'axios';
             changeColor: function (color)
             {
                 this.currentColor = color; 
+            },
+            drawConnecting: function(event)
+            {
+                if (!this.mouseDown) 
+                {
+                    return;
+                }
+                this.points.push({ x: this.current.x, y: this.current.y });
+
+                this.context.beginPath();
+                console.log(this.points[this.points.length - 2]);
+                this.context.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
+                this.context.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
+                this.context.stroke();
+                let dx = 0;
+                let dy = 0;
+                let d = 0;
+                for (var i = 0, len = this.points.length; i < len; i++) 
+                {
+                    dx = this.points[i].x - this.points[this.points.length-1].x;
+                    dy = this.points[i].y - this.points[this.points.length-1].y;
+                    d = dx * dx + dy * dy;
+                    if (d < 1000) 
+                    {
+                        this.context.beginPath();
+                        this.context.strokeStyle = 'rgba(0,0,0,0.3)';
+                        this.context.moveTo( this.points[this.points.length-1].x + (dx * 0.2), this.points[this.points.length-1].y + (dy * 0.2));
+                        this.context.lineTo( this.points[i].x - (dx * 0.2), this.points[i].y - (dy * 0.2));
+                        this.context.stroke();
+                    }
+                }
             },
             draw: function (event) 
             {
@@ -118,15 +154,21 @@ import axios from 'axios';
                 this.current = {
                     x: event.clientX - rect.left,
                     y: event.clientY - rect.top
-                };
-                if(this.strokeStyle != 'spray')
-                this.draw(event);
-            },
+                }
+                if(this.strokeStyle == 'connecting')
+                {
+                    this.drawConnecting(event);
+                }
+                else if(this.strokeStyle != 'spray')
+                {
+                    this.draw(event);
+                }
+            }, 
             handleMouseUp: function () 
             {
                 this.mouseDown = false;
                 clearTimeout(this.timeout);
-                // console.log("made it into mouseUp");
+                this.context.shadowBlur = 0;
                 
             },
             getRandomFloat: function (min, max) {
@@ -143,7 +185,7 @@ import axios from 'axios';
                     x: event.clientX - rect.left,
                     y: event.clientY - rect.top
                 };
-                    
+                
                 if(this.strokeStyle == 'spray')
                 {
                     this.context.lineJoin = this.context.lineCap = 'round';
@@ -163,6 +205,14 @@ import axios from 'axios';
                         if (!self.timeout) return;
                         self.timeout = setTimeout(spray, 50);
                     }, 50);
+                }
+                else if(this.strokeStyle == 'connecting')
+                {
+                    console.log('made it to draw connecting in mouseDown');
+                    this.context.lineWidth = this.radius;
+                    this.context.lineJoin = this.context.lineCap = 'round';
+                    this.points = [ ];
+                    this.points.push({ x: this.current.x, y: this.current.y });
                 }
                 else 
                 {

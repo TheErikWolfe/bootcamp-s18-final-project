@@ -48421,6 +48421,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48440,9 +48444,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
             currentColor: 'black',
-            strokeStyle: 'marker',
+            strokeStyle: 'pencil',
             timeout: null,
-            density: 50
+            density: 50,
+            points: []
         };
     },
     mounted: function mounted() {
@@ -48457,6 +48462,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         changeColor: function changeColor(color) {
             this.currentColor = color;
+        },
+        drawConnecting: function drawConnecting(event) {
+            if (!this.mouseDown) {
+                return;
+            }
+            this.points.push({ x: this.current.x, y: this.current.y });
+
+            this.context.beginPath();
+            console.log(this.points[this.points.length - 2]);
+            this.context.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
+            this.context.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
+            this.context.stroke();
+            var dx = 0;
+            var dy = 0;
+            var d = 0;
+            for (var i = 0, len = this.points.length; i < len; i++) {
+                dx = this.points[i].x - this.points[this.points.length - 1].x;
+                dy = this.points[i].y - this.points[this.points.length - 1].y;
+                d = dx * dx + dy * dy;
+                if (d < 1000) {
+                    this.context.beginPath();
+                    this.context.strokeStyle = 'rgba(0,0,0,0.3)';
+                    this.context.moveTo(this.points[this.points.length - 1].x + dx * 0.2, this.points[this.points.length - 1].y + dy * 0.2);
+                    this.context.lineTo(this.points[i].x - dx * 0.2, this.points[i].y - dy * 0.2);
+                    this.context.stroke();
+                }
+            }
         },
         draw: function draw(event) {
             if (this.mouseDown) {
@@ -48490,12 +48522,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: event.clientX - rect.left,
                 y: event.clientY - rect.top
             };
-            if (this.strokeStyle != 'spray') this.draw(event);
+            if (this.strokeStyle == 'connecting') {
+                this.drawConnecting(event);
+            } else if (this.strokeStyle != 'spray') {
+                this.draw(event);
+            }
         },
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
             clearTimeout(this.timeout);
-            // console.log("made it into mouseUp");
+            this.context.shadowBlur = 0;
         },
         getRandomFloat: function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
@@ -48526,6 +48562,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (!self.timeout) return;
                     self.timeout = setTimeout(spray, 50);
                 }, 50);
+            } else if (this.strokeStyle == 'connecting') {
+                console.log('made it to draw connecting in mouseDown');
+                this.context.lineWidth = this.radius;
+                this.context.lineJoin = this.context.lineCap = 'round';
+                this.points = [];
+                this.points.push({ x: this.current.x, y: this.current.y });
             } else {
                 this.context.beginPath();
                 this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
@@ -48584,6 +48626,73 @@ var render = function() {
               })
             ),
             _vm._v(" "),
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.strokeStyle = "pencil"
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-pencil-alt" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.strokeStyle = "marker"
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-marker" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.strokeStyle = "spray"
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-spray-can" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.strokeStyle = "connecting"
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fab fa-connectdevelop" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  on: {
+                    click: function($event) {
+                      _vm.currentColor = "white"
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-eraser" })]
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               {
@@ -48624,8 +48733,6 @@ var render = function() {
                 )
               ]
             ),
-            _vm._v(" "),
-            _c("div", { staticClass: "row justify-content-center mt-2" }),
             _vm._v(" "),
             _c("div", { staticClass: "save-button" }, [
               _c(
