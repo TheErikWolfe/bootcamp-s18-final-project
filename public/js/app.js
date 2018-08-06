@@ -48440,7 +48440,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
             currentColor: 'black',
-            strokeStyle: ''
+            strokeStyle: '',
+            timeout: null,
+            density: 50
         };
     },
     mounted: function mounted() {
@@ -48458,20 +48460,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         draw: function draw(event) {
             if (this.mouseDown) {
-                this.context.lineWidth = this.radius * 2;
-                if (this.strokeStyle == "marker") {
-                    this.context.shadowBlur = this.radius;
-                    this.context.shadowColor = this.currentColor;
-                }
-                this.context.lineTo(this.current.x, this.current.y);
-                this.context.strokeStyle = this.currentColor;
-                this.context.stroke();
-                this.context.beginPath();
-                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
-                this.context.fillStyle = this.currentColor;
-                this.context.fill();
-                this.context.beginPath();
-                this.context.moveTo(this.current.x, this.current.y);
+                // this.context.lineWidth = this.radius * 2;
+                // if(this.strokeStyle == "marker")
+                // {
+                //     this.context.shadowBlur = this.radius;
+                //     this.context.shadowColor = this.currentColor;
+                // }
+                // this.context.lineTo(this.current.x, this.current.y);
+                // this.context.strokeStyle = this.currentColor;
+                // this.context.stroke();
+                // this.context.beginPath();
+                // this.context.arc(this.current.x, this.current.y, this.radius, 0, 2*Math.PI*2);
+                // this.context.fillStyle = this.currentColor;
+                // this.context.fill();
+                // this.context.beginPath();
+                // this.context.moveTo(this.current.x, this.current.y);
+
             }
         },
         setRadius: function setRadius(radDir) {
@@ -48489,23 +48493,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 y: event.clientY - rect.top
             };
 
-            this.draw(event);
+            // this.draw(event);
         },
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
+            clearTimeout(this.timeout);
+            console.log("made it into mouseUp");
+        },
+        getRandomFloat: function getRandomFloat(min, max) {
+            return Math.random() * (max - min) + min;
         },
         handleMouseDown: function handleMouseDown(event) {
+            console.log("made it into mouseDown");
+            this.context.lineJoin = this.context.lineCap = 'round';
             var rect = this.canvas.getBoundingClientRect();
-            this.context.beginPath();
-            this.mouseDown = true;
+            // this.context.beginPath();
+            // this.mouseDown = true;
             this.current = {
                 x: event.clientX - rect.left,
                 y: event.clientY - rect.top
             };
-            this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
-            this.context.fillStyle = this.currentColor;
-            this.context.fill();
-            this.context.beginPath();
+            // this.context.arc(this.current.x, this.current.y, this.radius, 0, 2*Math.PI*2);
+            // this.context.fillStyle = this.currentColor;
+            // this.context.fill();
+            // this.context.beginPath();
+            // this.context.lineJoin = this.context.lineCap = 'round';
+            self = this;
+            this.timeout = setTimeout(function spray() {
+                console.log("made it into timeout");
+                for (var i = self.density; i--;) {
+                    var angle = self.getRandomFloat(0, Math.PI * 2);
+                    // console.log(angle);
+                    var radius = self.getRandomFloat(0, 20);
+                    self.context.fillStyle = this.currentColor;
+                    // self.context.fill();
+                    self.context.fillRect(self.current.x + radius * Math.cos(angle), self.current.x + radius * Math.sin(angle), 1, 1);
+                }
+                if (!self.timeout) return;
+                self.timeout = setTimeout(spray, 50);
+            }, 50);
         },
         clearCanvas: function clearCanvas() {},
         saveDoodle: function saveDoodle(event) {
