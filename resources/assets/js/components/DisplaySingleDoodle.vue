@@ -2,7 +2,7 @@
     <div class="container text-center p-2">
         <div class="row justify-content-center">
             <div class="single-doodle-bkgd text-center">
-                <div class="card-header bg-dark p-0">
+                <div class="card bg-dark p-0">
                     <div class="row p-0">
                         <div class="col pl-5">
                             <div class="row">

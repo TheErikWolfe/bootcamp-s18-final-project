@@ -19,6 +19,17 @@ class UsersTableSeeder_development extends Seeder
     		'password' => bcrypt('secret!'),
     		'created_at' => Carbon::now(),
     		'updated_at' => Carbon::now()
-    	]);
+        ]);
+        
+        $names = ['Aaron', 'Beth', 'Chris', 'Dennis', 'Erik', 'Francine', 'Ginny', 'Hermione', 'Ian', 'Jennifer', 'Karla', 'Linus', 'Madeline', 'Neville', 'Opie', 'Persephone', 'Quill', 'Rasputin', 'Sunny', 'Trevor', 'Ursula', 'Vanessa', 'Wendy', 'Xephos', 'Yolanda', 'Zander'];
+    	foreach ($names as $name) {
+	    	DB::table('users')->insert([
+	    		'name' => $name,
+	    		'email' => strtolower($name) . '@example.com',
+	    		'password' => bcrypt(strtolower($name)),
+	    		'created_at' => Carbon::now(),
+	    		'updated_at' => Carbon::now()
+	    	]);
+      }
     }
 }

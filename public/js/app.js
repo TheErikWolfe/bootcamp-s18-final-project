@@ -13987,8 +13987,9 @@ module.exports = __webpack_require__(58);
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -48135,7 +48136,7 @@ var render = function() {
   return _c("div", { staticClass: "container text-center p-2" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "single-doodle-bkgd text-center" }, [
-        _c("div", { staticClass: "card-header bg-dark p-0" }, [
+        _c("div", { staticClass: "card bg-dark p-0" }, [
           _c("div", { staticClass: "row p-0" }, [
             _c("div", { staticClass: "col pl-5" }, [
               _c("div", { staticClass: "row" }, [
