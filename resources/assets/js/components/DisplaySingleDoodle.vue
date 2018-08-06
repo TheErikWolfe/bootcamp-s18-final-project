@@ -7,9 +7,9 @@
                         <div class="col pl-5">
                             <div class="row">
                                 <div v-on:click="onVote(1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
-                                <!-- <div id="doodle-points" class="col ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div> -->
+                                <div id="doodle-points" class="col p-0 m-0 mt-3 text-success">{{ doodle.numberOfUpvotes }}</div>
                                 <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
-
+                                <div id="doodle-points" class="col p-0 m-0 mt-3 text-danger">{{ doodle.numberOfDownvotes }}</div>
                             </div>    
                         </div>                      
                         <div class="col">
@@ -85,18 +85,6 @@
             this.userVote = this.doodle.userVote;
             this.comments = this.doodle.comments;
         },
-        computed: {
-            votesColor: function () {
-                if(this.upVotes - this.downVotes > 0)
-                {
-                    this.whichColor = 'text-success';
-                }
-                else
-                {
-                    this.whichColor = 'text-danger';
-                }
-            },
-        },
         methods: {
             onVote: function (newVote) 
             {
@@ -115,6 +103,7 @@
                     this.saveVote(newVote);
                     this.userVote = newVote;
                 }
+                
                 console.log(this.userVote);
             },
             createVote: function (userVote)
