@@ -48083,15 +48083,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.comments = this.doodle.comments;
     },
 
-    computed: {
-        votesColor: function votesColor() {
-            if (this.upVotes - this.downVotes > 0) {
-                this.whichColor = 'text-success';
-            } else {
-                this.whichColor = 'text-danger';
-            }
-        }
-    },
     methods: {
         onVote: function onVote(newVote) {
             if (this.userVote == null) {
@@ -48105,6 +48096,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.saveVote(newVote);
                 this.userVote = newVote;
             }
+
             console.log(this.userVote);
         },
         createVote: function createVote(userVote) {
@@ -48169,6 +48161,15 @@ var render = function() {
                 _c(
                   "div",
                   {
+                    staticClass: "col p-0 m-0 mt-3 text-success",
+                    attrs: { id: "doodle-points" }
+                  },
+                  [_vm._v(_vm._s(_vm.doodle.numberOfUpvotes))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
                     staticClass:
                       "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
                     on: {
@@ -48183,6 +48184,15 @@ var render = function() {
                       class: { "downvote-arrow-active": _vm.userVote === -1 }
                     })
                   ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col p-0 m-0 mt-3 text-danger",
+                    attrs: { id: "doodle-points" }
+                  },
+                  [_vm._v(_vm._s(_vm.doodle.numberOfDownvotes))]
                 )
               ])
             ]),
@@ -48429,7 +48439,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 y: 0
             },
             colors: ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
-            currentColor: 'black'
+            currentColor: 'black',
+            strokeStyle: ''
         };
     },
     mounted: function mounted() {
@@ -48448,6 +48459,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         draw: function draw(event) {
             if (this.mouseDown) {
                 this.context.lineWidth = this.radius * 2;
+                if (this.strokeStyle == "marker") {
+                    this.context.shadowBlur = this.radius;
+                    this.context.shadowColor = this.currentColor;
+                }
                 this.context.lineTo(this.current.x, this.current.y);
                 this.context.strokeStyle = this.currentColor;
                 this.context.stroke();

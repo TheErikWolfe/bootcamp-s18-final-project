@@ -58,7 +58,8 @@ import axios from 'axios';
                     y: 0 
                 },
                 colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
-                currentColor : 'black'
+                currentColor : 'black',
+                strokeStyle: '',
             }
         },
         mounted () 
@@ -80,6 +81,11 @@ import axios from 'axios';
                 if(this.mouseDown)
                 {
                     this.context.lineWidth = this.radius * 2;
+                    if(this.strokeStyle == "marker")
+                    {
+                        this.context.shadowBlur = this.radius;
+                        this.context.shadowColor = this.currentColor;
+                    }
                     this.context.lineTo(this.current.x, this.current.y);
                     this.context.strokeStyle = this.currentColor;
                     this.context.stroke();
