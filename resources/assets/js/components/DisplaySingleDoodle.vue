@@ -85,6 +85,17 @@
             this.comments = this.doodle.comments;
         },
         methods: {
+            changeVote: function (newVote, adder)
+            {
+                if(newVote == 1)
+                {
+                    this.doodle.numberOfUpvotes +=  adder;
+                }
+                else if(newVote == -1)
+                {
+                    this.doodle.numberOfDownvotes += adder;
+                }
+            },
             /*
              * This function should:
              * - take the new user vote and either:
@@ -93,9 +104,11 @@
              * -- unset the old vote
              */
             onVote: function (newVote) {
+                this.changeVote(this.userVote, -1);
                 if(this.userVote == null) {
                     this.createVote(newVote);
                     this.userVote = newVote;
+                    this.changeVote(newVote, 1);
                 }
                 else if(this.userVote == newVote) {
                     this.saveVote(this.noVote);
@@ -105,6 +118,7 @@
                 else {
                     this.saveVote(newVote);
                     this.userVote = newVote;
+                    this.changeVote(newVote, 1);
                 }
             },
             /*

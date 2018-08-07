@@ -48004,6 +48004,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        changeVote: function changeVote(newVote, adder) {
+            if (newVote == 1) {
+                this.doodle.numberOfUpvotes += adder;
+            } else if (newVote == -1) {
+                this.doodle.numberOfDownvotes += adder;
+            }
+        },
         /*
          * This function should:
          * - take the new user vote and either:
@@ -48012,9 +48019,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          * -- unset the old vote
          */
         onVote: function onVote(newVote) {
+            this.changeVote(this.userVote, -1);
             if (this.userVote == null) {
                 this.createVote(newVote);
                 this.userVote = newVote;
+                this.changeVote(newVote, 1);
             } else if (this.userVote == newVote) {
                 this.saveVote(this.noVote);
                 // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
@@ -48022,6 +48031,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 this.saveVote(newVote);
                 this.userVote = newVote;
+                this.changeVote(newVote, 1);
             }
         },
         /*
@@ -48377,7 +48387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: 0,
                 y: 0
             },
-            colors: ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
+            colors: ['black', 'grey', 'darkgrey', 'lightgrey', 'white', '#8B4513', '#A0522D', '#A52A2A', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#009900', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ffccff', '#ff00bf', '#ff0080', '#ff0040'],
             currentColor: 'black',
             strokeStyle: 'pencil',
             timeout: null,
