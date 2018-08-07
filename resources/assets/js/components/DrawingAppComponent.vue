@@ -11,7 +11,8 @@
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'pencil'"><i class="fas fa-pencil-alt"></i></button>
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'marker'"><i class="fas fa-marker"></i></button>
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'spray'"><i class="fas fa-spray-can"></i></button>
-                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fab fa-connectdevelop"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fas fa-barcode"></i></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'all connecting'"><i class="fab fa-connectdevelop"></i></button>
                 <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white', strokeStyle='pencil'"><i class="fas fa-eraser"></i></button>
             </div>
             <div class="text-light bg-dark border rounded border-dark row justify-content-center text-center pl-2 m-3">
@@ -101,9 +102,26 @@ import axios from 'axios';
              * This function should:
              * - set the current color to whatever color was chosen from the swatches
              */
-            changeColor: function (color)
-            {
+            changeColor: function (color) {
                 this.currentColor = color; 
+            },
+            drawAllConnecting: function(event) {
+                if (!this.mouseDown) {
+                    return;
+                }
+                // this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+                this.points.push({ x: this.current.x, y: this.current.y });
+                this.context.beginPath();
+                this.context.moveTo(this.points[0].x, this.points[0].y);
+                for (var i = 1; i < this.points.length; i++) {
+                    this.context.lineTo(this.points[i].x, this.points[i].y);
+                    var nearPoint = this.points[i-5];
+                    if (nearPoint) {
+                        this.context.moveTo(nearPoint.x, nearPoint.y);
+                        this.context.lineTo(this.points[i].x, this.points[i].y);
+                    }
+                }
+                this.context.stroke();
             },
             /*
              * This function should:
@@ -112,10 +130,8 @@ import axios from 'axios';
              * - compare the distance between the points in the array to the current one
              * - draw a line between them 
              */
-            drawConnecting: function(event)
-            {
-                if (!this.mouseDown) 
-                {
+            drawConnecting: function(event) {
+                if (!this.mouseDown) {
                     return;
                 }
                 this.points.push({ x: this.current.x, y: this.current.y });
@@ -154,7 +170,6 @@ import axios from 'axios';
             {
                 if(this.mouseDown)
                 {
-                    this.context.lineWidth = this.radius * 2;
                     if(this.strokeStyle == "marker")
                     {
                         this.context.shadowBlur = this.radius;
@@ -200,6 +215,10 @@ import axios from 'axios';
                 if(this.strokeStyle == 'connecting')
                 {
                     this.drawConnecting(event);
+                }
+                else if(this.strokeStyle == 'all connecting')
+                {
+                    this.drawAllConnecting(event);
                 }
                 else if(this.strokeStyle != 'spray')
                 {
@@ -263,7 +282,7 @@ import axios from 'axios';
                         self.timeout = setTimeout(spray, 50);
                     }, 50);
                 }
-                else if(this.strokeStyle == 'connecting')
+                else if(this.strokeStyle == 'connecting' || this.strokeStyle == 'all connecting')
                 {
                     this.context.lineWidth = this.radius;
                     this.context.lineJoin = this.context.lineCap = 'round';

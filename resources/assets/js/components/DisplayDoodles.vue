@@ -22,9 +22,9 @@
                 </div>               
             </div>
         </div>
-        <div class="row mt-4 justify-content-center">
+        <div class="row mt-4 justify-content-center align-items-center">
             <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
-                <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
+                <div class="img-frame" v-bind:style="changeDoodleSize(doodle), frameColor(doodle)">
                     <div class="img-props">
                         <a :href="'/doodles/' + doodle.id">
                             <img :src=doodle.source v-bind:style="changeDoodleSize(doodle)">
@@ -190,6 +190,31 @@
                     this.saveVote(doodle.id, userVote);
                     doodle.userVote = userVote;
                 }
+            },
+            /*
+             * This function should:
+             * - change the color of the border around the image based on:
+             * -- If the users doodle vote is an upvote or a downvote. If there is no vote then it will automatially go back to white.
+             */
+            frameColor: function(doodle) {
+                let result = {};
+                if(doodle.userVote == -1)
+                {
+                    result = {
+                    'border-bottom-color' : '#ffb4b4',
+                    'border-left-color' : '#ff9a9a',
+                    'border-right-color' : '#ff9a9a',
+                    'border-top-color' : '#ff8181'}
+                }
+                else if(doodle.userVote == 1)
+                {
+                    result = {
+                    'border-bottom-color' : '#e8fbe8',
+                    'border-left-color' : '#d2f8d2',
+                    'border-right-color' : '#d2f8d2',
+                    'border-top-color' : '#bcf5bc'}
+                }
+                return result;
             },
             /*
              * This function should:

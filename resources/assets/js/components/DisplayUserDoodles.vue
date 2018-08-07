@@ -24,26 +24,15 @@
 <script>
     export default {
         props: ['doodlesData'],
-
         data () {
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 dData: null,
-                upvote: 1,
-                downvote: -1,
-                novote: 0
             }
         },
-
         mounted() {
-            console.log(this.doodlesData);
             this.dData = this.doodlesData;
         },
-
-        computed: {
-            
-        },
-
         methods: {
             /*
              * This function should:

@@ -7224,7 +7224,8 @@ button.bg-dark:focus {
   border-color: #fff !important;
 }
 
-.rounded {
+.rounded,
+.logo-container:hover {
   border-radius: 0.25rem !important;
 }
 
@@ -10753,6 +10754,12 @@ label {
   top: 0;
 }
 
+.logo-container:hover {
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  opacity: .7;
+}
+
 .settings-menu-navbar {
   background-color: #6485C9;
   border: none;
@@ -10768,7 +10775,6 @@ label {
   background: -webkit-gradient(linear, left top, left bottom, from(darkgrey), color-stop(90%, black));
   background: linear-gradient(to bottom, darkgrey, black 90%);
   position: relative;
-  background-color: #ddc;
   border: solid 5vmin #eee;
   border-bottom-color: #fff;
   border-left-color: #eee;
