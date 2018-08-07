@@ -10651,7 +10651,7 @@ a.text-dark:focus {
 }
 
 a {
-  color: blue !important;
+  color: blue;
 }
 
 body {
@@ -10824,10 +10824,8 @@ label {
 .signature-props {
   position: absolute;
   width: 33%;
-  bottom: 7%;
-  right: 7%;
-  -webkit-transform: rotate(-20deg);
-          transform: rotate(-20deg);
+  bottom: 0px;
+  left: 0px;
 }
 
 .img-frame:hover .img-props {
@@ -10955,10 +10953,8 @@ label {
 .single-doodle-signature-props {
   position: absolute;
   width: 33%;
-  bottom: 16%;
-  right: 15%;
-  -webkit-transform: rotate(-20deg);
-          transform: rotate(-20deg);
+  bottom: 7.5%;
+  left: 9%;
 }
 
 .comment-form {
