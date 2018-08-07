@@ -47522,6 +47522,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         /*
          * This function should:
+         * - change the color of the border around the image based on:
+         * -- If the users doodle vote is an upvote or a downvote. If there is no vote then it will automatially go back to white.
+         */
+        frameColor: function frameColor(doodle) {
+            var result = {};
+            if (doodle.userVote == -1) {
+                result = {
+                    'border-bottom-color': '#ff3333',
+                    'border-left-color': '#ff0000',
+                    'border-right-color': '#ff0000',
+                    'border-top-color': '#ee0000' };
+            } else if (doodle.userVote == 1) {
+                result = {
+                    'border-bottom-color': '#009a00',
+                    'border-left-color': '#008000',
+                    'border-right-color': '#008000',
+                    'border-top-color': '#006700' };
+            }
+            return result;
+        },
+        /*
+         * This function should:
          * - create a new vote in the database using axios
          */
         createVote: function createVote(doodleId, userVote) {
@@ -47670,7 +47692,10 @@ var render = function() {
         return _c("div", { class: { "hide-doodle": doodle.show === false } }, [
           _c(
             "div",
-            { staticClass: "img-frame", style: _vm.changeDoodleSize(doodle) },
+            {
+              staticClass: "img-frame",
+              style: (_vm.changeDoodleSize(doodle), _vm.frameColor(doodle))
+            },
             [
               _c("div", { staticClass: "img-props" }, [
                 _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
@@ -47987,7 +48012,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             downVotes: 0,
             noVote: 0,
             whichColor: '',
-            commentString: ''
+            commentString: '',
+            currentFrameColor: {}
         };
     },
     created: function created() {
@@ -47998,6 +48024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.downVotes = this.doodle.numberOfDownvotes;
         this.userVote = this.doodle.userVote;
         this.comments = this.doodle.comments;
+        this.frameColor();
     },
 
     methods: {
@@ -48030,6 +48057,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.userVote = newVote;
                 this.changeVote(newVote, 1);
             }
+            this.frameColor();
         },
         /*
          * This function should:
@@ -48049,6 +48077,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('/votes/' + this.doodle.id.toString(), {
                 vote: userVote
             });
+        },
+        /*
+         * This function should:
+         * - change the color of the border around the image based on:
+         * -- If the users doodle vote is an upvote or a downvote. If there is no vote then it will automatially go back to white.
+         */
+        frameColor: function frameColor() {
+            var result = {};
+            if (this.userVote == -1) {
+                result = {
+                    'border-bottom-color': '#ff3333',
+                    'border-left-color': '#ff0000',
+                    'border-right-color': '#ff0000',
+                    'border-top-color': '#ee0000' };
+            } else if (this.userVote == 1) {
+                result = {
+                    'border-bottom-color': '#009a00',
+                    'border-left-color': '#008000',
+                    'border-right-color': '#008000',
+                    'border-top-color': '#006700' };
+            } else {
+                result = {
+                    'border-bottom-color': '#fff',
+                    'border-left-color': '#eee',
+                    'border-right-color': '#eee',
+                    'border-top-color': '#ddd' };
+            }
+            this.currentFrameColor = result;
         },
         /*
          * This function should:
@@ -48165,16 +48221,23 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "single-doodle-img-frame m-3" }, [
-      _c("div", { staticClass: "single-doodle-img-props m-2" }, [
-        _c("img", { attrs: { src: _vm.imgSource } }),
-        _vm._v(" "),
-        _c("img", {
-          staticClass: "single-doodle-signature-props",
-          attrs: { src: _vm.doodle.signature.source }
-        })
-      ])
-    ]),
+    _c(
+      "div",
+      {
+        staticClass: "single-doodle-img-frame m-3",
+        style: _vm.currentFrameColor
+      },
+      [
+        _c("div", { staticClass: "single-doodle-img-props m-2" }, [
+          _c("img", { attrs: { src: _vm.imgSource } }),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "single-doodle-signature-props",
+            attrs: { src: _vm.doodle.signature.source }
+          })
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",

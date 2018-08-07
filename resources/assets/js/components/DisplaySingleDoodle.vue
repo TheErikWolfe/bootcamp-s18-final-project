@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="single-doodle-img-frame m-3">
+        <div class="single-doodle-img-frame m-3" v-bind:style="currentFrameColor">
                         <div class="single-doodle-img-props m-2">
                             <img :src=imgSource>
                             <img class="single-doodle-signature-props" :src="doodle.signature.source">
@@ -72,7 +72,8 @@
                 downVotes: 0,
                 noVote: 0,
                 whichColor: '',
-                commentString: ''
+                commentString: '',
+                currentFrameColor: {}
             }
         },
         created() {
@@ -83,6 +84,7 @@
             this.downVotes = this.doodle.numberOfDownvotes;
             this.userVote = this.doodle.userVote;
             this.comments = this.doodle.comments;
+            this.frameColor();
         },
         methods: {
             changeVote: function (newVote, adder)
@@ -120,6 +122,7 @@
                     this.userVote = newVote;
                     this.changeVote(newVote, 1);
                 }
+                this.frameColor();
             },
             /*
              * This function should:
@@ -139,6 +142,36 @@
                 axios.patch('/votes/' + this.doodle.id.toString(), {
                     vote: userVote
                 });
+            },
+            /*
+             * This function should:
+             * - change the color of the border around the image based on:
+             * -- If the users doodle vote is an upvote or a downvote. If there is no vote then it will automatially go back to white.
+             */
+            frameColor: function() {
+                let result = {};
+                if(this.userVote == -1) {
+                    result = {
+                    'border-bottom-color' : '#ff3333',
+                    'border-left-color' : '#ff0000',
+                    'border-right-color' : '#ff0000',
+                    'border-top-color' : '#ee0000'}
+                }
+                else if(this.userVote == 1) {
+                    result = {
+                    'border-bottom-color' : '#009a00',
+                    'border-left-color' : '#008000',
+                    'border-right-color' : '#008000',
+                    'border-top-color' : '#006700'}
+                }
+                else {
+                    result = {
+                    'border-bottom-color' : '#fff',
+                    'border-left-color' : '#eee',
+                    'border-right-color' : '#eee',
+                    'border-top-color' : '#ddd'}
+                }
+                this.currentFrameColor = result;
             },
             /*
              * This function should:
