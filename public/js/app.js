@@ -47472,10 +47472,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          */
         changeDoodleSize: function changeDoodleSize(doodle) {
             var result = {};
+            var sizeMultiplier = 2 / 3;
 
             if (this.doodleSize == false) {
                 var dHeight = 0;
-                var sizeMultiplier = 2 / 3;
 
                 var downVotes = -doodle.numberOfDownvotes;
                 var upVotes = doodle.numberOfUpvotes;
@@ -47491,7 +47491,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 result = { 'width': 'auto', 'height': dHeight + 'vh' };
             } else {
-                result = { 'width': 'auto', 'height': this.startHeight + 'vh' };
+                result = { 'width': 'auto', 'height': sizeMultiplier * this.startHeight + 'vh' };
             }
 
             return result;
@@ -48689,7 +48689,7 @@ var render = function() {
                 staticClass: "btn border-dark btn-secondary",
                 on: {
                   click: function($event) {
-                    _vm.currentColor = "white"
+                    ;(_vm.currentColor = "white"), (_vm.strokeStyle = "pencil")
                   }
                 }
               },

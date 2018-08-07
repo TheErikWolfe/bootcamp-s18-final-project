@@ -136,10 +136,10 @@
              */
             changeDoodleSize: function(doodle) {
                 let result = {};
+                let sizeMultiplier = 2/3;
 
                 if(this.doodleSize == false) {
                     let dHeight = 0;
-                    let sizeMultiplier = 2/3;
 
                     let downVotes = -(doodle.numberOfDownvotes);
                     let upVotes = doodle.numberOfUpvotes;
@@ -157,7 +157,7 @@
                     result = {'width': 'auto', 'height': dHeight + 'vh'};
                 }
                 else {
-                    result = {'width': 'auto', 'height': this.startHeight + 'vh'};
+                    result = {'width': 'auto', 'height': sizeMultiplier * this.startHeight + 'vh'};
                 }
 
                 return result;

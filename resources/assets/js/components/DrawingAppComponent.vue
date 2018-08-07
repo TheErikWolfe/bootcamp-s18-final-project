@@ -12,7 +12,7 @@
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'marker'"><i class="fas fa-marker"></i></button>
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'spray'"><i class="fas fa-spray-can"></i></button>
                 <button class="btn border-dark btn-secondary" v-on:click="strokeStyle = 'connecting'"><i class="fab fa-connectdevelop"></i></button>
-                <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white'"><i class="fas fa-eraser"></i></button>
+                <button class="btn border-dark btn-secondary" v-on:click="currentColor = 'white', strokeStyle='pencil'"><i class="fas fa-eraser"></i></button>
             </div>
             <div class="text-light bg-dark border rounded border-dark row justify-content-center text-center pl-2 m-3">
                 <p><strong>Brush Size: </strong><br/>{{ (radius - 1) / radIncrement + 1 }}</p>
