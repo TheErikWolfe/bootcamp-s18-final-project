@@ -45,41 +45,11 @@
         },
 
         methods: {
-            onVote:function (doodle, userVote) 
-            {
-                console.log(doodle.userVote, userVote);
-                if(doodle.userVote == null)
-                {
-                    this.createVote(doodle.id, userVote);
-                    doodle.userVote = userVote;
-                }
-                else if(doodle.userVote == userVote)
-                {
-                    this.saveVote(doodle.id, this.novote);
-                    // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
-                    doodle.userVote = 0;
-                }
-                else {
-                    this.saveVote(doodle.id, userVote);
-                    doodle.userVote = userVote;
-                }
-                console.log(doodle.userVote);
-            },
-            createVote: function (doodleId, userVote)
-            {
-                console.log("Made it to createVote");
-                axios.post('/votes', {
-                    doodle_id: doodleId,
-                    vote: userVote
-                });
-            },
-            saveVote: function (id, userVote)
-            {
-                console.log("Made it to saveVote");
-                axios.patch('/votes/' + id.toString(), {
-                    vote: userVote
-                });
-            },
+            /*
+             * This function should:
+             * - call the database to get the individual image
+             * - redirect to that individual image page.
+             */
             doodleOnClick: function () {
                 console.log("Made it to onClick");
                 axios.get('/doodles/' + id.toString(), {

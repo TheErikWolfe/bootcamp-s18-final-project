@@ -13987,9 +13987,8 @@ module.exports = __webpack_require__(58);
 
 /***/ }),
 /* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -14007,7 +14006,6 @@ window.Vue = __webpack_require__(37);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(40));
 Vue.component('display-doodles', __webpack_require__(43));
 Vue.component('display-single-doodle', __webpack_require__(46));
 Vue.component('drawing-pad', __webpack_require__(49));
@@ -47281,125 +47279,9 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
 
 /***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(41)
-/* template */
-var __vue_template__ = __webpack_require__(42)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/ExampleComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7168fb6a", Component.options)
-  } else {
-    hotAPI.reload("data-v-7168fb6a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7168fb6a", module.exports)
-  }
-}
-
-/***/ }),
+/* 40 */,
+/* 41 */,
+/* 42 */,
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47534,7 +47416,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             upvote: 1,
             downvote: -1,
             novote: 0,
-            startHeight: 60,
+            startHeight: 75,
             startWidth: 90,
             reportString: '',
             currentDoodle: null,
@@ -47543,12 +47425,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        console.log(this.doodlesData);
         this.dData = this.doodlesData;
     },
 
 
     methods: {
+        /*
+         * This function should:
+         * - sort images by popularity or newest by
+         * -- comparing dates or
+         * -- comparing upvotes less downvotes
+         * - return the doodle data to make the changes take effect
+         */
         sortDoodles: function sortDoodles(sortBy) {
             if (sortBy == 'Newest First') {
                 this.dData = this.dData.sort(function (a, b) {
@@ -47562,6 +47450,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.sortBy = sortBy;
             return this.dData;
         },
+        /*
+         * This function should:
+         * - change the doodleSize boolean variable based on popularity or the set size 'standard'
+         * - Return the doodle data so it can update accordingly
+         */
         setDoodleSize: function setDoodleSize(changeBy) {
             if (changeBy == "standard") {
                 this.doodleSize = true;
@@ -47570,41 +47463,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             return this.dData;
         },
+        /*
+         * This function should:
+         * - Use the doodleSize boolean variable to either:
+         * -- Change the size of the images based on number of upvotes/downvotes
+         * -- change the size of the images to the standard size
+         * - return a style that changes the doodles size.
+         */
         changeDoodleSize: function changeDoodleSize(doodle) {
             var result = {};
 
             if (this.doodleSize == false) {
-                var dWidth = 0;
                 var dHeight = 0;
+                var sizeMultiplier = 2 / 3;
 
                 var downVotes = -doodle.numberOfDownvotes;
                 var upVotes = doodle.numberOfUpvotes;
                 var overallVote = downVotes + upVotes;
 
-                dWidth = 2 / 3 * (this.startHeight + overallVote);
-                dHeight = 2 / 3 * (this.startWidth + overallVote);
-                console.log(dHeight);
+                dHeight = sizeMultiplier * (this.startHeight + overallVote);
 
                 if (dHeight > 80) {
                     dHeight = 80;
-                    dWidth = 2 / 3 * dHeight;
                 } else if (dHeight < 30) {
                     dHeight = 30;
-                    dWidth = 2 / 3 * dHeight;
                 }
-
-                console.log(dHeight);
 
                 result = { 'width': 'auto', 'height': dHeight + 'vh' };
             } else {
-                result = { width: 'auto', height: this.startHeight + 'vh' };
+                result = { 'width': 'auto', 'height': this.startHeight + 'vh' };
             }
 
             return result;
         },
+        /*
+         * This function should:
+         * - Set the currentDoodle variable to the current doodle. May not be needed.
+         */
         setCurrentDoodle: function setCurrentDoodle(doodle) {
             this.currentDoodle = doodle;
         },
+        /*
+         * This function should:
+         * - take the new user vote and either:
+         * -- replace the old
+         * -- create a new one
+         * -- unset the old vote
+         */
         onVote: function onVote(doodle, userVote) {
             if (doodle.userVote == null) {
                 this.createVote(doodle.id, userVote);
@@ -47617,21 +47522,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.saveVote(doodle.id, userVote);
                 doodle.userVote = userVote;
             }
-            console.log(doodle.userVote);
         },
+        /*
+         * This function should:
+         * - create a new vote in the database using axios
+         */
         createVote: function createVote(doodleId, userVote) {
-            console.log("Made it to createVote");
             axios.post('/votes', {
                 doodle_id: doodleId,
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - save a new vote variable to the existing table in the database using axios
+         */
         saveVote: function saveVote(id, userVote) {
-            console.log("Made it to saveVote");
             axios.patch('/votes/' + id.toString(), {
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - create a new report table with the string that the user wrote for the 'report'
+         *   and make the show variable false so that the image will have display: none
+         * - return the current doodle in order to make it display: hidden
+         */
         createReport: function createReport() {
             this.currentDoodle.show = false;
             axios.post('/reports', {
@@ -47641,8 +47557,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.reportString = '';
             return this.currentDoodle;
         },
+        /*
+         * This function should:
+         * - call the database to get the individual image
+         * - redirect to that individual image page.
+         */
         doodleOnClick: function doodleOnClick() {
-            console.log("Made it to onClick");
             axios.get('/doodles/' + id.toString(), {}).then(function (response) {
                 window.location = response.data.redirect;
             });
@@ -48074,7 +47994,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        console.log(this.doodleData);
         this.doodle = this.doodleData;
         this.userVote = this.doodle.userVote;
         this.imgSource = this.doodle.source;
@@ -48085,6 +48004,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /*
+         * This function should:
+         * - take the new user vote and either:
+         * -- replace the old
+         * -- create a new one
+         * -- unset the old vote
+         */
         onVote: function onVote(newVote) {
             if (this.userVote == null) {
                 this.createVote(newVote);
@@ -48097,22 +48023,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.saveVote(newVote);
                 this.userVote = newVote;
             }
-
-            console.log(this.userVote);
         },
+        /*
+         * This function should:
+         * - create a new vote in the database using axios
+         */
         createVote: function createVote(userVote) {
-            console.log("Made it to createVote");
             axios.post('/votes', {
                 doodle_id: this.doodle.id,
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - save a new vote variable to the existing table in the database using axios
+         */
         saveVote: function saveVote(userVote) {
-            console.log("Made it to saveVote");
             axios.patch('/votes/' + this.doodle.id.toString(), {
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - save a new comment string to the database using axios and then post a javascript instance of that comment.
+         */
         postComment: function postComment() {
             axios.post('/comments', {
                 comment: this.commentString,
@@ -48443,7 +48377,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 x: 0,
                 y: 0
             },
-            // colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
             colors: ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
             currentColor: 'black',
             strokeStyle: 'pencil',
@@ -48452,6 +48385,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             points: []
         };
     },
+
+    /*
+     * On mounting this should:
+     * - get the context of the canvas
+     * - set the background to white so it doesn't make it a transparent background
+     */
     mounted: function mounted() {
         this.canvas = document.getElementById('drawing-app-canvas');
         this.context = this.canvas.getContext('2d');
@@ -48462,9 +48401,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /*
+         * This function should:
+         * - Take the current bounding client
+         * - set the current x and y coords 
+         */
+        setCurrentCoords: function setCurrentCoords(event) {
+            // Have to use getBoundingClient on the canvas otherwise the coordinates are off by about half.
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        },
+        /*
+         * This function should:
+         * - set the current color to whatever color was chosen from the swatches
+         */
         changeColor: function changeColor(color) {
             this.currentColor = color;
         },
+        /*
+         * This function should:
+         * - push the new set of x and y coordinates into the points array
+         * - make a new line between the two circles
+         * - compare the distance between the points in the array to the current one
+         * - draw a line between them 
+         */
         drawConnecting: function drawConnecting(event) {
             if (!this.mouseDown) {
                 return;
@@ -48472,7 +48435,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.points.push({ x: this.current.x, y: this.current.y });
 
             this.context.beginPath();
-            console.log(this.points[this.points.length - 2]);
             this.context.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
             this.context.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
             this.context.stroke();
@@ -48485,13 +48447,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 d = dx * dx + dy * dy;
                 if (d < 1000) {
                     this.context.beginPath();
-                    this.context.strokeStyle = 'rgba(0,0,0,0.3)';
+                    this.context.strokeStyle = this.currentColor;
                     this.context.moveTo(this.points[this.points.length - 1].x + dx * 0.2, this.points[this.points.length - 1].y + dy * 0.2);
                     this.context.lineTo(this.points[i].x - dx * 0.2, this.points[i].y - dy * 0.2);
                     this.context.stroke();
                 }
             }
         },
+        /*
+         * This function should:
+         * - Make a circle on the previous mouse position
+         * - Start a line
+         * - Make a circle on the current mouse position
+         * - End the line
+         * So when you are looking at it, it draws a circle and another circle, then connects the two with a line.
+         */
         draw: function draw(event) {
             if (this.mouseDown) {
                 this.context.lineWidth = this.radius * 2;
@@ -48510,6 +48480,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.context.moveTo(this.current.x, this.current.y);
             }
         },
+        /*
+         * This function should:
+         * - take the current radius and add on the radius increment
+         * - set the radius to the max if it is over it
+         * - set the radius to the min if it is under it
+         */
         setRadius: function setRadius(radDir) {
             this.radius = this.radius + radDir * this.radIncrement;
             if (this.radius < this.minRadius) {
@@ -48518,36 +48494,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.radius = this.maxRadius;
             }
         },
+        /*
+         * This function should:
+         * - get the call corresponding functions based on if it is the 'pencil'/'marker' 'stroke style' or if it is the 'connecting'
+         */
         handleMouseMove: function handleMouseMove(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.setCurrentCoords(event);
             if (this.strokeStyle == 'connecting') {
                 this.drawConnecting(event);
             } else if (this.strokeStyle != 'spray') {
                 this.draw(event);
             }
         },
+        /*
+         * This function should:
+         * - set the mouseDown boolean variable to false so the canvas doesn't keep drawing
+         * - clear the timeout interval (for spray)
+         * - set the shadowBlur back to 0 (for the marker)
+         */
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
             clearTimeout(this.timeout);
             this.context.shadowBlur = 0;
         },
+        /*
+         * This function should:
+         * - get a random float with the maximum and miniimum variables that were passed in
+         * just a helper function
+         */
         getRandomFloat: function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
         },
+        /*
+         * This function should:
+         * - set the mouseDown Boolean variable to true so th canvas knows when to draw
+         * - check to see if the 'stroke style' is set
+         * -- if it is, it sets a timeout function where it will get random points in a circle and fill it with randomly placed small squares
+         * - Else if it should check to see if it is the 'connecting' 'stroke style' and if it is it should push the start coordinates into the points array
+         * - Otherwise it should:
+         * -- Start the initial path
+         * -- Draw the initial circle (It won't draw a circle on click if I don't do it here)
+         * -- Begin the line path  
+         */
         handleMouseDown: function handleMouseDown(event) {
-            // console.log("made it into mouseDown");
-
-            var rect = this.canvas.getBoundingClientRect();
-
             this.mouseDown = true;
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.setCurrentCoords(event);
 
             if (this.strokeStyle == 'spray') {
                 this.context.lineJoin = this.context.lineCap = 'round';
@@ -48566,9 +48557,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     self.timeout = setTimeout(spray, 50);
                 }, 50);
             } else if (this.strokeStyle == 'connecting') {
-                console.log('made it to draw connecting in mouseDown');
                 this.context.lineWidth = this.radius;
                 this.context.lineJoin = this.context.lineCap = 'round';
+                // resets the points so it only connects lines between the new set of points
                 this.points = [];
                 this.points.push({ x: this.current.x, y: this.current.y });
             } else {
@@ -48580,7 +48571,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.context.lineJoin = this.context.lineCap = 'round';
             }
         },
-        clearCanvas: function clearCanvas() {},
+        /*
+         * This function should:
+         * - make the canvas into base64
+         * - save it to the database with axios
+         */
         saveDoodle: function saveDoodle(event) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
                 doodle: this.canvas.toDataURL()
@@ -48910,34 +48905,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {},
 
     methods: {
-        onVote: function onVote(doodle, userVote) {
-            console.log(doodle.userVote, userVote);
-            if (doodle.userVote == null) {
-                this.createVote(doodle.id, userVote);
-                doodle.userVote = userVote;
-            } else if (doodle.userVote == userVote) {
-                this.saveVote(doodle.id, this.novote);
-                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
-                doodle.userVote = 0;
-            } else {
-                this.saveVote(doodle.id, userVote);
-                doodle.userVote = userVote;
-            }
-            console.log(doodle.userVote);
-        },
-        createVote: function createVote(doodleId, userVote) {
-            console.log("Made it to createVote");
-            axios.post('/votes', {
-                doodle_id: doodleId,
-                vote: userVote
-            });
-        },
-        saveVote: function saveVote(id, userVote) {
-            console.log("Made it to saveVote");
-            axios.patch('/votes/' + id.toString(), {
-                vote: userVote
-            });
-        },
+        /*
+         * This function should:
+         * - call the database to get the individual image
+         * - redirect to that individual image page.
+         */
         doodleOnClick: function doodleOnClick() {
             console.log("Made it to onClick");
             axios.get('/doodles/' + id.toString(), {}).then(function (response) {
@@ -49134,12 +49106,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.canvas = document.getElementById('drawing-app-canvas');
         this.context = this.canvas.getContext('2d');
-
         this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-        console.log(this.signatureData.id);
     },
 
     methods: {
+        /*
+         * This function should:
+         * - Take the current bounding client
+         * - set the current x and y coords 
+         */
+        setCurrentCoords: function setCurrentCoords(event) {
+            // Have to use getBoundingClient on the canvas otherwise the coordinates are off by about half.
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        },
+        /*
+         * This function should:
+         * - Make a circle on the previous mouse position
+         * - Start a line
+         * - Make a circle on the current mouse position
+         * - End the line
+         * So when you are looking at it, it draws a circle and another circle, then connects the two with a line.
+         */
         draw: function draw(event) {
             if (this.mouseDown) {
                 this.context.lineWidth = this.radius * 2;
@@ -49154,35 +49145,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.context.moveTo(this.current.x, this.current.y);
             }
         },
+        /*
+         * This funcion should:
+         * - Set the current mouse position
+         * - call the draw function
+         */
         handleMouseMove: function handleMouseMove(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.setCurrentCoords(event);
 
             this.draw(event);
         },
+        /*
+         * This function should:
+         * - Just change mouseDown state to false so the canvas knows to stop drawing
+         */
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
         },
+        /*
+         * This function should:
+         * - Set mouseDown state to true
+         * - Start the initial path
+         * - Draw the initial circle (It won't draw a circle on click if I don't do it here)
+         * - Begin the line path   
+         */
         handleMouseDown: function handleMouseDown(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.context.beginPath();
             this.mouseDown = true;
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.context.beginPath();
+            this.setCurrentCoords(event);
             this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
             this.context.fillStyle = this.currentColor;
             this.context.fill();
             this.context.beginPath();
         },
+        /*
+         * This function should:
+         * - set the initial height and width of the canvas to 400 x 100
+         */
         clearCanvas: function clearCanvas() {
+            // set to 400 because that is a standard screen size for cellphones
             this.canvas.width = 400;
+            // set to 100 because a 4 to 1 ratio works extremely well for placing signature in 
+            // bottom right hand of doodle on home page and single doodle page
             this.canvas.height = 100;
         },
+        /*
+         * This function should:
+         * - Convert canvas to base64
+         * - Save the 'signature' in the database with axios
+         * - Redirect to home
+         */
         saveSignature: function saveSignature(event) {
             if (this.signatureData == undefined) {
                 axios.post('/signature', {
@@ -49226,6 +49238,7 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "mt-3" }, [
+      _vm._v('ment in comments">\n        '),
       _c("input", {
         attrs: { type: "hidden", name: "_token" },
         domProps: { value: _vm.csrf }

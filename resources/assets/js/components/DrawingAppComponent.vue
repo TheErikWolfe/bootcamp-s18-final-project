@@ -61,7 +61,6 @@ import axios from 'axios';
                     x: 0,
                     y: 0 
                 },
-                // colors : ['black', 'grey', 'white', 'brown', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet', 'blue', 'lightblue'],
                 colors : ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
                 currentColor : 'black',
                 strokeStyle: 'pencil',
@@ -70,6 +69,11 @@ import axios from 'axios';
                 points: []
             }
         },
+        /*
+         * On mounting this should:
+         * - get the context of the canvas
+         * - set the background to white so it doesn't make it a transparent background
+         */
         mounted () 
         {
             this.canvas = document.getElementById('drawing-app-canvas');
@@ -80,10 +84,34 @@ import axios from 'axios';
             this.context.fill();
         },
         methods: {
+            /*
+             * This function should:
+             * - Take the current bounding client
+             * - set the current x and y coords 
+             */
+            setCurrentCoords: function(event) {
+                // Have to use getBoundingClient on the canvas otherwise the coordinates are off by about half.
+                var rect = this.canvas.getBoundingClientRect();
+                this.current = {
+                    x: event.clientX - rect.left,
+                    y: event.clientY - rect.top
+                };
+            },
+            /*
+             * This function should:
+             * - set the current color to whatever color was chosen from the swatches
+             */
             changeColor: function (color)
             {
                 this.currentColor = color; 
             },
+            /*
+             * This function should:
+             * - push the new set of x and y coordinates into the points array
+             * - make a new line between the two circles
+             * - compare the distance between the points in the array to the current one
+             * - draw a line between them 
+             */
             drawConnecting: function(event)
             {
                 if (!this.mouseDown) 
@@ -93,7 +121,6 @@ import axios from 'axios';
                 this.points.push({ x: this.current.x, y: this.current.y });
 
                 this.context.beginPath();
-                console.log(this.points[this.points.length - 2]);
                 this.context.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
                 this.context.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
                 this.context.stroke();
@@ -108,13 +135,21 @@ import axios from 'axios';
                     if (d < 1000) 
                     {
                         this.context.beginPath();
-                        this.context.strokeStyle = 'rgba(0,0,0,0.3)';
+                        this.context.strokeStyle = this.currentColor;
                         this.context.moveTo( this.points[this.points.length-1].x + (dx * 0.2), this.points[this.points.length-1].y + (dy * 0.2));
                         this.context.lineTo( this.points[i].x - (dx * 0.2), this.points[i].y - (dy * 0.2));
                         this.context.stroke();
                     }
                 }
             },
+            /*
+             * This function should:
+             * - Make a circle on the previous mouse position
+             * - Start a line
+             * - Make a circle on the current mouse position
+             * - End the line
+             * So when you are looking at it, it draws a circle and another circle, then connects the two with a line.
+             */
             draw: function (event) 
             {
                 if(this.mouseDown)
@@ -137,6 +172,12 @@ import axios from 'axios';
                     
                 }
             },
+            /*
+             * This function should:
+             * - take the current radius and add on the radius increment
+             * - set the radius to the max if it is over it
+             * - set the radius to the min if it is under it
+             */
             setRadius: function (radDir) 
             {
                 this.radius = this.radius + radDir * this.radIncrement;
@@ -149,13 +190,13 @@ import axios from 'axios';
                     this.radius = this.maxRadius;
                 }
             },
+            /*
+             * This function should:
+             * - get the call corresponding functions based on if it is the 'pencil'/'marker' 'stroke style' or if it is the 'connecting'
+             */
             handleMouseMove: function (event) 
             {
-                var rect = this.canvas.getBoundingClientRect();
-                this.current = {
-                    x: event.clientX - rect.left,
-                    y: event.clientY - rect.top
-                }
+                this.setCurrentCoords(event);
                 if(this.strokeStyle == 'connecting')
                 {
                     this.drawConnecting(event);
@@ -165,27 +206,41 @@ import axios from 'axios';
                     this.draw(event);
                 }
             }, 
+            /*
+             * This function should:
+             * - set the mouseDown boolean variable to false so the canvas doesn't keep drawing
+             * - clear the timeout interval (for spray)
+             * - set the shadowBlur back to 0 (for the marker)
+             */
             handleMouseUp: function () 
             {
                 this.mouseDown = false;
                 clearTimeout(this.timeout);
                 this.context.shadowBlur = 0;
-                
             },
+            /*
+             * This function should:
+             * - get a random float with the maximum and miniimum variables that were passed in
+             * just a helper function
+             */
             getRandomFloat: function (min, max) {
                 return Math.random() * (max - min) + min;
             },
+            /*
+             * This function should:
+             * - set the mouseDown Boolean variable to true so th canvas knows when to draw
+             * - check to see if the 'stroke style' is set
+             * -- if it is, it sets a timeout function where it will get random points in a circle and fill it with randomly placed small squares
+             * - Else if it should check to see if it is the 'connecting' 'stroke style' and if it is it should push the start coordinates into the points array
+             * - Otherwise it should:
+             * -- Start the initial path
+             * -- Draw the initial circle (It won't draw a circle on click if I don't do it here)
+             * -- Begin the line path  
+             */
             handleMouseDown: function (event)
             {
-                // console.log("made it into mouseDown");
-                
-                var rect = this.canvas.getBoundingClientRect();
-                
                 this.mouseDown = true;
-                this.current = {
-                    x: event.clientX - rect.left,
-                    y: event.clientY - rect.top
-                };
+                this.setCurrentCoords(event);
                 
                 if(this.strokeStyle == 'spray')
                 {
@@ -210,9 +265,9 @@ import axios from 'axios';
                 }
                 else if(this.strokeStyle == 'connecting')
                 {
-                    console.log('made it to draw connecting in mouseDown');
                     this.context.lineWidth = this.radius;
                     this.context.lineJoin = this.context.lineCap = 'round';
+                    // resets the points so it only connects lines between the new set of points
                     this.points = [ ];
                     this.points.push({ x: this.current.x, y: this.current.y });
                 }
@@ -226,10 +281,11 @@ import axios from 'axios';
                     this.context.lineJoin = this.context.lineCap = 'round';
                 }
             },
-            clearCanvas: function ()
-            {
-
-            },
+            /*
+             * This function should:
+             * - make the canvas into base64
+             * - save it to the database with axios
+             */
             saveDoodle: function (event) {
                 axios.post('/doodles', {
                     doodle: this.canvas.toDataURL()
