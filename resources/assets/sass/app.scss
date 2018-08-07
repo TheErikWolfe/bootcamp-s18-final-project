@@ -127,6 +127,12 @@ body {
   top:0;
 }
 
+.logo-container:hover {
+  transition: .3s ease;
+  opacity: .7;
+  @extend .rounded;
+}
+
 
 
 // Settings pages styling

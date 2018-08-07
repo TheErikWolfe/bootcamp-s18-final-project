@@ -27,9 +27,8 @@
     <div id="app">
         <nav class="navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="logo-container navbar-brand" href="{{ url('/home') }}">
                     <img class="logo mx-auto" src="/img/doodleonlogo.png"/>
-                    <!-- <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/> -->
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -45,17 +44,6 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link mr-2" 
-
-                            @guest
-                                href="{{ route('login') }}">
-                            @else
-                                href="/doodles/create">
-                            @endguest
-
-                            New Doodle</a>
-                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -64,6 +52,11 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link mr-2" href="/doodles/create">
+                                    New Doodle
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbar-dropdown"  class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -92,7 +85,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-5">
             @yield('content')
         </main>
     </div>

@@ -7224,7 +7224,8 @@ button.bg-dark:focus {
   border-color: #fff !important;
 }
 
-.rounded {
+.rounded,
+.logo-container:hover {
   border-radius: 0.25rem !important;
 }
 
@@ -10751,6 +10752,12 @@ label {
   left: 0;
   right: 0;
   top: 0;
+}
+
+.logo-container:hover {
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  opacity: .7;
 }
 
 .settings-menu-navbar {
