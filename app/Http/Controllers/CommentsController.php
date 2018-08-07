@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Votes;
 use Illuminate\Http\Request;
 
-class VotesController extends Controller
+class CommentsController extends Controller
 {
     public function __construct()
     {
@@ -38,21 +37,21 @@ class VotesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $userVote = new \App\Votes;
-        $userVote->voter_id = \Auth::user()->id;        
-        $userVote->doodle_id = $request->input('doodle_id');        
-        $userVote->vote = $request->input('vote');        
-        $userVote->save();
+    {
+        $comment = new \App\Comment;
+        $comment->commenter_id = \Auth::user()->id;
+        $comment->doodle_id = $request->input('doodle_id');
+        $comment->comment_string = $request->input('comment');
+        $comment->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Votes  $votes
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Votes $votes)
+    public function show($id)
     {
         //
     }
@@ -60,10 +59,10 @@ class VotesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Votes  $votes
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Votes $votes)
+    public function edit($id)
     {
         //
     }
@@ -72,26 +71,22 @@ class VotesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Votes  $votes
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // dd($request->input('vote'));
-        $userVote = \App\Votes::where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $id)->get()[0];
-        $userVote->vote = $request->input('vote');
-        // dd($userVote);
-        $userVote->save();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Votes  $votes
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        \App\Votes::destroy($id);
+        //
     }
 }

@@ -21,7 +21,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $doodles = \App\Doodle::orderBy('created_at', 'desc')->get();
         foreach ($doodles as $doodle)
@@ -44,8 +44,7 @@ class HomeController extends Controller
             {
                 $doodle->show = true;
             }
-            
-            // dd($doodle->userVote);
+            $doodle->signature = \App\Signature::where('creator_id', '=', $doodle->creator_id)->first();
         }
         
         return view('main.home', compact('doodles'));

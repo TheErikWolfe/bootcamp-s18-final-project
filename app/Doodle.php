@@ -18,4 +18,12 @@ class Doodle extends Model
     {
         return $this->hasMany('App\Reports');
     }
+    public function comments ()
+    {
+        return $this->hasMany('App\Comment');
+    }
+    public function signature ()
+    {
+        return $this->belongsTo('App\Signature');
+    }
 }

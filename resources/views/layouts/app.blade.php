@@ -27,7 +27,8 @@
         <nav class="navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/>
+                    <img class="logo mx-auto" src="/img/doodleonlogo.png"/>
+                    <!-- <img class="logo mx-auto" src="{{ asset('img/temp_logo.png') }}"/> -->
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

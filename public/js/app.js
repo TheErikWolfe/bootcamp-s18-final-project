@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3140,7 +3140,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -13982,7 +13982,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(58);
 
 
 /***/ }),
@@ -14006,11 +14006,11 @@ window.Vue = __webpack_require__(37);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(40));
 Vue.component('display-doodles', __webpack_require__(43));
 Vue.component('display-single-doodle', __webpack_require__(46));
 Vue.component('drawing-pad', __webpack_require__(49));
 Vue.component('display-user-doodles', __webpack_require__(52));
+Vue.component('signature-app', __webpack_require__(55));
 var app = new Vue({
   el: '#app'
 });
@@ -31187,7 +31187,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(17)(module)))
 
 /***/ }),
 /* 17 */
@@ -47013,7 +47013,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(38).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(38).setImmediate))
 
 /***/ }),
 /* 38 */
@@ -47083,7 +47083,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 39 */
@@ -47276,133 +47276,17 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
 
 /***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(41)
-/* template */
-var __vue_template__ = __webpack_require__(42)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/ExampleComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7168fb6a", Component.options)
-  } else {
-    hotAPI.reload("data-v-7168fb6a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7168fb6a", module.exports)
-  }
-}
-
-/***/ }),
+/* 40 */,
+/* 41 */,
+/* 42 */,
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(44)
 /* template */
@@ -47500,6 +47384,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodlesData'],
@@ -47511,47 +47416,100 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             upvote: 1,
             downvote: -1,
             novote: 0,
-            startHeight: 60,
+            startHeight: 75,
             startWidth: 90,
-            dWidth: 0,
-            dHeight: 0,
             reportString: '',
-            currentDoodle: null
+            currentDoodle: null,
+            doodleSize: false, // false changes size by popularite and true changes to standard size
+            sortBy: 'Newest First'
         };
     },
     mounted: function mounted() {
-        console.log(this.doodlesData);
         this.dData = this.doodlesData;
     },
 
 
-    computed: {},
-
     methods: {
+        /*
+         * This function should:
+         * - sort images by popularity or newest by
+         * -- comparing dates or
+         * -- comparing upvotes less downvotes
+         * - return the doodle data to make the changes take effect
+         */
+        sortDoodles: function sortDoodles(sortBy) {
+            if (sortBy == 'Newest First') {
+                this.dData = this.dData.sort(function (a, b) {
+                    return +new Date(b.created_at) - +new Date(a.created_at);
+                });
+            } else {
+                this.dData = this.dData.sort(function (a, b) {
+                    return b.numberOfUpvotes - b.numberOfDownvotes - (a.numberOfUpvotes - a.numberOfDownvotes);
+                });
+            }
+            this.sortBy = sortBy;
+            return this.dData;
+        },
+        /*
+         * This function should:
+         * - change the doodleSize boolean variable based on popularity or the set size 'standard'
+         * - Return the doodle data so it can update accordingly
+         */
+        setDoodleSize: function setDoodleSize(changeBy) {
+            if (changeBy == "standard") {
+                this.doodleSize = true;
+            } else if (changeBy == "popularity") {
+                this.doodleSize = false;
+            }
+            return this.dData;
+        },
+        /*
+         * This function should:
+         * - Use the doodleSize boolean variable to either:
+         * -- Change the size of the images based on number of upvotes/downvotes
+         * -- change the size of the images to the standard size
+         * - return a style that changes the doodles size.
+         */
+        changeDoodleSize: function changeDoodleSize(doodle) {
+            var result = {};
+            var sizeMultiplier = 2 / 3;
+
+            if (this.doodleSize == false) {
+                var dHeight = 0;
+
+                var downVotes = -doodle.numberOfDownvotes;
+                var upVotes = doodle.numberOfUpvotes;
+                var overallVote = downVotes + upVotes;
+
+                dHeight = sizeMultiplier * (this.startHeight + overallVote);
+
+                if (dHeight > 80) {
+                    dHeight = 80;
+                } else if (dHeight < 30) {
+                    dHeight = 30;
+                }
+
+                result = { 'width': 'auto', 'height': dHeight + 'vh' };
+            } else {
+                result = { 'width': 'auto', 'height': sizeMultiplier * this.startHeight + 'vh' };
+            }
+
+            return result;
+        },
+        /*
+         * This function should:
+         * - Set the currentDoodle variable to the current doodle. May not be needed.
+         */
         setCurrentDoodle: function setCurrentDoodle(doodle) {
             this.currentDoodle = doodle;
         },
-        changeDoodleSize: function changeDoodleSize(doodle) {
-            var downVotes = -doodle.numberOfDownvotes;
-            var upVotes = doodle.numberOfUpvotes;
-            var overallVote = downVotes + upVotes;
-
-            this.dWidth = 2 / 3 * (this.startHeight + overallVote);
-            this.dHeight = 2 / 3 * (this.startWidth + overallVote);
-
-            if (this.dHeight > 80) {
-                this.dHeight = 80;
-                this.dWidth = 2 / 3 * dHeight;
-            } else if (this.dHeight < 30) {
-                this.dHeight = 30;
-                this.dWidth = 2 / 3 * dHeight;
-            }
-
-            // console.log(this.dWidth + ', ' + this.dHeight);
-
-            return { width: 'auto', height: this.dHeight + 'vh' };
-        },
-
+        /*
+         * This function should:
+         * - take the new user vote and either:
+         * -- replace the old
+         * -- create a new one
+         * -- unset the old vote
+         */
         onVote: function onVote(doodle, userVote) {
             if (doodle.userVote == null) {
                 this.createVote(doodle.id, userVote);
@@ -47564,21 +47522,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.saveVote(doodle.id, userVote);
                 doodle.userVote = userVote;
             }
-            console.log(doodle.userVote);
         },
+        /*
+         * This function should:
+         * - create a new vote in the database using axios
+         */
         createVote: function createVote(doodleId, userVote) {
-            console.log("Made it to createVote");
             axios.post('/votes', {
                 doodle_id: doodleId,
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - save a new vote variable to the existing table in the database using axios
+         */
         saveVote: function saveVote(id, userVote) {
-            console.log("Made it to saveVote");
             axios.patch('/votes/' + id.toString(), {
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - create a new report table with the string that the user wrote for the 'report'
+         *   and make the show variable false so that the image will have display: none
+         * - return the current doodle in order to make it display: hidden
+         */
         createReport: function createReport() {
             this.currentDoodle.show = false;
             axios.post('/reports', {
@@ -47588,8 +47557,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.reportString = '';
             return this.currentDoodle;
         },
+        /*
+         * This function should:
+         * - call the database to get the individual image
+         * - redirect to that individual image page.
+         */
         doodleOnClick: function doodleOnClick() {
-            console.log("Made it to onClick");
             axios.get('/doodles/' + id.toString(), {}).then(function (response) {
                 window.location = response.data.redirect;
             });
@@ -47605,197 +47578,256 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "p-1" }, [
-    _c(
-      "div",
-      { staticClass: "row justify-content-center" },
-      [
-        _vm._l(_vm.dData, function(doodle) {
-          return _c(
-            "div",
-            _vm._b(
-              { class: { "hide-doodle": doodle.show === false } },
-              "div",
-              _vm.setCurrentDoodle(doodle),
-              false
-            ),
+  return _c("div", { staticClass: "p-2" }, [
+    _c("div", { staticClass: "p-2 container rounded bg-dark" }, [
+      _c("div", { staticClass: "row align-items-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary dropdown-toggle",
+              attrs: {
+                type: "button",
+                "data-toggle": "dropdown",
+                "aria-haspopup": "true",
+                "aria-expanded": "false"
+              }
+            },
             [
-              _c(
-                "div",
-                {
-                  staticClass: "img-frame",
-                  style: _vm.changeDoodleSize(doodle)
-                },
-                [
-                  _c("div", { staticClass: "img-props" }, [
-                    _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
-                      _c("img", {
-                        style: _vm.changeDoodleSize(doodle),
-                        attrs: { src: doodle.source }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "arrow-container" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, 1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-up upvote-arrow",
-                          class: {
-                            "upvote-arrow-active": doodle.userVote === 1
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "arrow bg-transparent",
-                        on: {
-                          click: function($event) {
-                            _vm.onVote(doodle, -1)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-arrow-down downvote-arrow",
-                          class: {
-                            "downvote-arrow-active": doodle.userVote === -1
-                          }
-                        })
-                      ]
-                    )
-                  ])
-                ]
+              _vm._v(
+                "\n                    " +
+                  _vm._s("Sort By: " + _vm.sortBy) +
+                  "\n                "
               )
             ]
-          )
-        }),
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "dropdown-menu" }, [
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item",
+                on: {
+                  click: function($event) {
+                    _vm.sortDoodles("Newest First")
+                  }
+                }
+              },
+              [_vm._v("Newest First")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item",
+                on: {
+                  click: function($event) {
+                    _vm.sortDoodles("Popularity")
+                  }
+                }
+              },
+              [_vm._v("Popularity")]
+            )
+          ])
+        ]),
         _vm._v(" "),
+        _c("div", { staticClass: "col pr-4" }, [
+          _c("div", { staticClass: "float-right text-light" }, [
+            _vm._v(
+              "\n                    Change Doodle Sizes:\n                    "
+            ),
+            _c(
+              "button",
+              {
+                staticClass: "btn-secondary border-0 mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.setDoodleSize("standard")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fab fa-microsoft" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn-secondary border-0 mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.setDoodleSize("popularity")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-align-center" })]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row mt-4 justify-content-center" },
+      _vm._l(_vm.dData, function(doodle) {
+        return _c("div", { class: { "hide-doodle": doodle.show === false } }, [
+          _c(
+            "div",
+            { staticClass: "img-frame", style: _vm.changeDoodleSize(doodle) },
+            [
+              _c("div", { staticClass: "img-props" }, [
+                _c("a", { attrs: { href: "/doodles/" + doodle.id } }, [
+                  _c("img", {
+                    style: _vm.changeDoodleSize(doodle),
+                    attrs: { src: doodle.source }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticClass: "signature-props",
+                    attrs: { src: doodle.signature.source }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "report-container" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: "",
+                      "data-toggle": "modal",
+                      "data-target": "#reportModal"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.setCurrentDoodle(doodle)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Report\n                    "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "arrow bg-transparent fa fa-arrow-up upvote-arrow",
+                class: { "upvote-arrow-active": doodle.userVote === 1 },
+                on: {
+                  click: function($event) {
+                    _vm.onVote(doodle, 1)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "arrow bg-transparent fa fa-arrow-down downvote-arrow",
+                class: { "downvote-arrow-active": doodle.userVote === -1 },
+                on: {
+                  click: function($event) {
+                    _vm.onVote(doodle, -1)
+                  }
+                }
+              })
+            ]
+          )
+        ])
+      })
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "reportModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "reportModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
         _c(
           "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "reportModal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "reportModalLabel",
-              "aria-hidden": "true"
-            }
-          },
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("form", [
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportString,
-                              expression: "reportString"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "reportInput",
-                            placeholder: ""
-                          },
-                          domProps: { value: _vm.reportString },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.reportString = $event.target.value
-                            }
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("form", [
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.reportString,
+                          expression: "reportString"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "reportInput",
+                        placeholder: ""
+                      },
+                      domProps: { value: _vm.reportString },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("small", [
-                          _vm._v(
-                            "After reporting, you won't see this doodle anymore."
-                          )
-                        ])
-                      ])
-                    ]),
+                          _vm.reportString = $event.target.value
+                        }
+                      }
+                    }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button", "data-dismiss": "modal" }
-                        },
-                        [_vm._v("Close")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: {
-                            click: function($event) {
-                              _vm.createReport()
-                            }
-                          }
-                        },
-                        [_vm._v("Save changes")]
+                    _c("small", [
+                      _vm._v(
+                        "After reporting, you won't see this doodle anymore."
                       )
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button", "data-dismiss": "modal" },
+                      on: {
+                        click: function($event) {
+                          _vm.createReport()
+                        }
+                      }
+                    },
+                    [_vm._v("Save changes")]
+                  )
                 ])
-              ]
-            )
+              ])
+            ])
           ]
         )
-      ],
-      2
+      ]
     )
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "report-container" }, [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "",
-            "data-toggle": "modal",
-            "data-target": "#reportModal"
-          }
-        },
-        [_vm._v("\n                    Report\n                ")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47836,7 +47868,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(47)
 /* template */
@@ -47916,6 +47948,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['doodleData'],
@@ -47926,32 +47985,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             doodle: null,
             imgSource: '',
             userVote: 0,
+            comments: [],
             upVotes: 0,
             downVotes: 0,
             noVote: 0,
-            whichColor: ''
+            whichColor: '',
+            commentString: ''
         };
     },
     mounted: function mounted() {
-        console.log(this.doodleData);
         this.doodle = this.doodleData;
         this.userVote = this.doodle.userVote;
         this.imgSource = this.doodle.source;
         this.upVotes = this.doodle.numberOfUpvotes;
         this.downVotes = this.doodle.numberOfDownvotes;
         this.userVote = this.doodle.userVote;
+        this.comments = this.doodle.comments;
     },
 
-    computed: {
-        votesColor: function votesColor() {
-            if (this.upVotes - this.downVotes > 0) {
-                this.whichColor = 'text-success';
-            } else {
-                this.whichColor = 'text-danger';
-            }
-        }
-    },
     methods: {
+        /*
+         * This function should:
+         * - take the new user vote and either:
+         * -- replace the old
+         * -- create a new one
+         * -- unset the old vote
+         */
         onVote: function onVote(newVote) {
             if (this.userVote == null) {
                 this.createVote(newVote);
@@ -47964,20 +48023,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.saveVote(newVote);
                 this.userVote = newVote;
             }
-            console.log(this.userVote);
         },
+        /*
+         * This function should:
+         * - create a new vote in the database using axios
+         */
         createVote: function createVote(userVote) {
-            console.log("Made it to createVote");
             axios.post('/votes', {
                 doodle_id: this.doodle.id,
                 vote: userVote
             });
         },
+        /*
+         * This function should:
+         * - save a new vote variable to the existing table in the database using axios
+         */
         saveVote: function saveVote(userVote) {
-            console.log("Made it to saveVote");
             axios.patch('/votes/' + this.doodle.id.toString(), {
                 vote: userVote
             });
+        },
+        /*
+         * This function should:
+         * - save a new comment string to the database using axios and then post a javascript instance of that comment.
+         */
+        postComment: function postComment() {
+            axios.post('/comments', {
+                comment: this.commentString,
+                doodle_id: this.doodleData.id
+            });
+            this.comments.unshift({ comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now' });
+            this.commentString = '';
         }
     }
 
@@ -47991,28 +48067,86 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "d-flex justify-content-center" }, [
-      _c("div", { staticClass: "single-doodle-bkgd text-center mt-4" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col" }),
+  return _c("div", { staticClass: "container text-center p-2" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "single-doodle-bkgd text-center" }, [
+        _c("div", { staticClass: "card bg-dark p-0" }, [
+          _c("div", { staticClass: "row p-0" }, [
+            _c("div", { staticClass: "col pl-5" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-up upvote-arrow",
+                      class: { "upvote-arrow-active": _vm.userVote === 1 }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col p-0 m-0 mt-3 text-success",
+                    attrs: { id: "doodle-points" }
+                  },
+                  [_vm._v(_vm._s(_vm.doodle.numberOfUpvotes))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-1 m-0 p-0 single-doodle-arrow bg-transparent",
+                    on: {
+                      click: function($event) {
+                        _vm.onVote(-1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-arrow-down downvote-arrow",
+                      class: { "downvote-arrow-active": _vm.userVote === -1 }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col p-0 m-0 mt-3 text-danger",
+                    attrs: { id: "doodle-points" }
+                  },
+                  [_vm._v(_vm._s(_vm.doodle.numberOfDownvotes))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col" }, [
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-dark",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.previous === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.previous }
                 },
-                [_vm._v("<")]
+                [_vm._v("< Back")]
               ),
               _vm._v(" "),
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-secondary shadow",
+                  staticClass: "btn my-3 btn-secondary shadow",
                   class: { hidden: _vm.doodleData.next === null },
                   attrs: { href: "/doodles/" + _vm.doodleData.next }
                 },
@@ -48020,72 +48154,101 @@ var render = function() {
               )
             ])
           ])
-        ]),
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "single-doodle-img-frame m-3" }, [
+      _c("div", { staticClass: "single-doodle-img-props m-2" }, [
+        _c("img", { attrs: { src: _vm.imgSource } }),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body p-0" }, [
-          _c("div", { staticClass: "img-props m-0" }, [
-            _c("img", { attrs: { src: _vm.imgSource } })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer d-flex bg-info text-left" }, [
-          _c("div", [
+        _c("img", {
+          staticClass: "single-doodle-signature-props",
+          attrs: { src: _vm.doodle.signature.source }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row justify-content-center mt-3" },
+      [
+        _c("div", { staticClass: "comment-form" }, [
+          _c("div", { staticClass: "card-body p-0 m-0 rounded-0" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.commentString,
+                  expression: "commentString"
+                }
+              ],
+              staticClass: "form-control text-dark w-100 h-100",
+              attrs: {
+                name: "user-comment",
+                placeholder: "Write a comment",
+                row: "3",
+                id: ""
+              },
+              domProps: { value: _vm.commentString },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.commentString = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer rounded-0 p-0 m-0" }, [
             _c(
-              "div",
+              "button",
               {
-                staticClass: "arrow bg-transparent",
+                staticClass: "m-0 float-right btn btn-dark",
                 on: {
                   click: function($event) {
-                    _vm.onVote(1)
+                    _vm.postComment()
                   }
                 }
               },
-              [
-                _c("i", {
-                  staticClass: "fa fa-arrow-up upvote-arrow",
-                  class: { "upvote-arrow-active": _vm.userVote === 1 }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "ml-3 text-success",
-                class: _vm.whichColor,
-                attrs: { id: "doodle-points" }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm.doodleData.numberOfUpvotes -
-                      _vm.doodleData.numberOfDownvotes
-                  )
-                )
-              ]
+              [_vm._v("Post")]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "arrow bg-transparent",
-              on: {
-                click: function($event) {
-                  _vm.onVote(-1)
-                }
-              }
-            },
-            [
-              _c("i", {
-                staticClass: "fa fa-arrow-down downvote-arrow",
-                class: { "downvote-arrow-active": _vm.userVote === -1 }
-              })
-            ]
-          )
-        ])
-      ])
-    ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { staticClass: "mt-3 d-flex" }, [
+            _c("div", { staticClass: "comment-form" }, [
+              _c("div", { staticClass: "card-header text-light bg-dark" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _vm._v(
+                      "\n                            Anonymous\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col text-align-right" }, [
+                    _vm._v(
+                      "\n                            commented at: " +
+                        _vm._s(comment.created_at) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body text-light bg-secondary" }, [
+                _c("strong", [_vm._v(_vm._s(comment.comment_string))])
+              ])
+            ])
+          ])
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
@@ -48103,7 +48266,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(50)
 /* template */
@@ -48184,6 +48347,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48193,24 +48369,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             context: null,
             canvas: null,
             mouseDown: false,
-            radIncrement: 5,
+            radIncrement: 3,
             radius: 10,
+            maxRadius: 28,
+            minRadius: 1,
             current: {
                 x: 0,
                 y: 0
             },
-            previous: {
-                x: 0,
-                y: 0
-            },
-            colors: ['black', 'grey', 'white', 'red', 'orange', 'yellow', 'green', 'indigo', 'violet'],
-            currentColor: 'black'
+            colors: ['black', 'grey', 'darkgrey', 'lightgrey', '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'],
+            currentColor: 'black',
+            strokeStyle: 'pencil',
+            timeout: null,
+            density: 50,
+            points: []
         };
     },
 
-
-    computed: {},
-
+    /*
+     * On mounting this should:
+     * - get the context of the canvas
+     * - set the background to white so it doesn't make it a transparent background
+     */
     mounted: function mounted() {
         this.canvas = document.getElementById('drawing-app-canvas');
         this.context = this.canvas.getContext('2d');
@@ -48221,12 +48401,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        /*
+         * This function should:
+         * - Take the current bounding client
+         * - set the current x and y coords 
+         */
+        setCurrentCoords: function setCurrentCoords(event) {
+            // Have to use getBoundingClient on the canvas otherwise the coordinates are off by about half.
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        },
+        /*
+         * This function should:
+         * - set the current color to whatever color was chosen from the swatches
+         */
         changeColor: function changeColor(color) {
             this.currentColor = color;
         },
+        /*
+         * This function should:
+         * - push the new set of x and y coordinates into the points array
+         * - make a new line between the two circles
+         * - compare the distance between the points in the array to the current one
+         * - draw a line between them 
+         */
+        drawConnecting: function drawConnecting(event) {
+            if (!this.mouseDown) {
+                return;
+            }
+            this.points.push({ x: this.current.x, y: this.current.y });
+
+            this.context.beginPath();
+            this.context.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
+            this.context.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
+            this.context.stroke();
+            var dx = 0;
+            var dy = 0;
+            var d = 0;
+            for (var i = 0, len = this.points.length; i < len; i++) {
+                dx = this.points[i].x - this.points[this.points.length - 1].x;
+                dy = this.points[i].y - this.points[this.points.length - 1].y;
+                d = dx * dx + dy * dy;
+                if (d < 1000) {
+                    this.context.beginPath();
+                    this.context.strokeStyle = this.currentColor;
+                    this.context.moveTo(this.points[this.points.length - 1].x + dx * 0.2, this.points[this.points.length - 1].y + dy * 0.2);
+                    this.context.lineTo(this.points[i].x - dx * 0.2, this.points[i].y - dy * 0.2);
+                    this.context.stroke();
+                }
+            }
+        },
+        /*
+         * This function should:
+         * - Make a circle on the previous mouse position
+         * - Start a line
+         * - Make a circle on the current mouse position
+         * - End the line
+         * So when you are looking at it, it draws a circle and another circle, then connects the two with a line.
+         */
         draw: function draw(event) {
             if (this.mouseDown) {
                 this.context.lineWidth = this.radius * 2;
+                if (this.strokeStyle == "marker") {
+                    this.context.shadowBlur = this.radius;
+                    this.context.shadowColor = this.currentColor;
+                }
                 this.context.lineTo(this.current.x, this.current.y);
                 this.context.strokeStyle = this.currentColor;
                 this.context.stroke();
@@ -48238,37 +48480,102 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.context.moveTo(this.current.x, this.current.y);
             }
         },
+        /*
+         * This function should:
+         * - take the current radius and add on the radius increment
+         * - set the radius to the max if it is over it
+         * - set the radius to the min if it is under it
+         */
         setRadius: function setRadius(radDir) {
             this.radius = this.radius + radDir * this.radIncrement;
-            if (this.radius <= 0) {
-                this.radius = 5;
-            }
-            if (this.radius >= 55) {
-                this.radius = 50;
+            if (this.radius < this.minRadius) {
+                this.radius = this.minRadius;
+            } else if (this.radius > this.maxRadius) {
+                this.radius = this.maxRadius;
             }
         },
+        /*
+         * This function should:
+         * - get the call corresponding functions based on if it is the 'pencil'/'marker' 'stroke style' or if it is the 'connecting'
+         */
         handleMouseMove: function handleMouseMove(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
-
-            this.draw(event);
+            this.setCurrentCoords(event);
+            if (this.strokeStyle == 'connecting') {
+                this.drawConnecting(event);
+            } else if (this.strokeStyle != 'spray') {
+                this.draw(event);
+            }
         },
+        /*
+         * This function should:
+         * - set the mouseDown boolean variable to false so the canvas doesn't keep drawing
+         * - clear the timeout interval (for spray)
+         * - set the shadowBlur back to 0 (for the marker)
+         */
         handleMouseUp: function handleMouseUp() {
             this.mouseDown = false;
+            clearTimeout(this.timeout);
+            this.context.shadowBlur = 0;
         },
+        /*
+         * This function should:
+         * - get a random float with the maximum and miniimum variables that were passed in
+         * just a helper function
+         */
+        getRandomFloat: function getRandomFloat(min, max) {
+            return Math.random() * (max - min) + min;
+        },
+        /*
+         * This function should:
+         * - set the mouseDown Boolean variable to true so th canvas knows when to draw
+         * - check to see if the 'stroke style' is set
+         * -- if it is, it sets a timeout function where it will get random points in a circle and fill it with randomly placed small squares
+         * - Else if it should check to see if it is the 'connecting' 'stroke style' and if it is it should push the start coordinates into the points array
+         * - Otherwise it should:
+         * -- Start the initial path
+         * -- Draw the initial circle (It won't draw a circle on click if I don't do it here)
+         * -- Begin the line path  
+         */
         handleMouseDown: function handleMouseDown(event) {
-            var rect = this.canvas.getBoundingClientRect();
-            this.context.beginPath();
             this.mouseDown = true;
-            this.current = {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
-            };
+            this.setCurrentCoords(event);
+
+            if (this.strokeStyle == 'spray') {
+                this.context.lineJoin = this.context.lineCap = 'round';
+                self = this;
+                this.timeout = setTimeout(function spray() {
+                    var sprayRadMultiplier = 3;
+                    for (var i = self.density; i--;) {
+                        var angle = self.getRandomFloat(0, Math.PI * 2);
+                        var radius = self.getRandomFloat(0, self.radius * sprayRadMultiplier);
+                        self.context.fillStyle = self.currentColor;
+                        var addedx = self.current.x + radius * Math.cos(angle);
+                        var addedy = self.current.y + radius * Math.sin(angle);
+                        self.context.fillRect(self.current.x + radius * Math.cos(angle), self.current.y + radius * Math.sin(angle), 1, 1);
+                    }
+                    if (!self.timeout) return;
+                    self.timeout = setTimeout(spray, 50);
+                }, 50);
+            } else if (this.strokeStyle == 'connecting') {
+                this.context.lineWidth = this.radius;
+                this.context.lineJoin = this.context.lineCap = 'round';
+                // resets the points so it only connects lines between the new set of points
+                this.points = [];
+                this.points.push({ x: this.current.x, y: this.current.y });
+            } else {
+                this.context.beginPath();
+                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+                this.context.fillStyle = this.currentColor;
+                this.context.fill();
+                this.context.beginPath();
+                this.context.lineJoin = this.context.lineCap = 'round';
+            }
         },
-        clearCanvas: function clearCanvas() {},
+        /*
+         * This function should:
+         * - make the canvas into base64
+         * - save it to the database with axios
+         */
         saveDoodle: function saveDoodle(event) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
                 doodle: this.canvas.toDataURL()
@@ -48287,16 +48594,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "justify-content-center row" }, [
-      _c("div", { staticClass: "text-center drawing-app-width" }, [
+  return _c("div", { staticClass: "p-3 row justify-content-center" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "col-lg-2 pr-2 mt-2 pt-1 border rounded shadow-lg bg-secondary border-dark text-center"
+      },
+      [
         _c(
           "div",
-          { staticClass: "row justify-content-center" },
+          {
+            staticClass:
+              "row mt-2 bg-dark border rounded border-dark justify-content-center p-1 m-3"
+          },
           _vm._l(_vm.colors, function(color) {
             return _c("div", [
               _c("div", {
                 staticClass: "swatch",
+                class: { active: _vm.currentColor === color },
                 style: { background: color },
                 on: {
                   click: function($event) {
@@ -48308,71 +48624,177 @@ var render = function() {
           })
         ),
         _vm._v(" "),
-        _c("canvas", {
-          attrs: { id: "drawing-app-canvas", width: "400px", height: "600px" },
-          on: {
-            mousedown: _vm.handleMouseDown,
-            mouseup: _vm.handleMouseUp,
-            mousemove: _vm.handleMouseMove
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-left" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              on: {
-                click: function($event) {
-                  _vm.setRadius(-1)
-                }
-              }
-            },
-            [_vm._v("-")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              on: {
-                click: function($event) {
-                  _vm.setRadius(1)
-                }
-              }
-            },
-            [_vm._v("+")]
-          ),
-          _vm._v(" "),
-          _c("div", [_vm._v(_vm._s(_vm.radius / 5))])
-        ]),
-        _vm._v(" "),
         _c(
-          "form",
+          "div",
           {
-            staticClass: "float-right",
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.saveDoodle($event)
-              }
-            }
+            staticClass:
+              "row bg-dark border rounded border-dark justify-content-center m-3 p-1"
           },
           [
-            _c("input", {
-              attrs: { type: "hidden", name: "_token" },
-              domProps: { value: _vm.csrf }
-            }),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "pencil"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-pencil-alt" })]
+            ),
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
-              [_vm._v("Save")]
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "marker"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-marker" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "spray"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-spray-can" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "connecting"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fab fa-connectdevelop" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    ;(_vm.currentColor = "white"), (_vm.strokeStyle = "pencil")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-eraser" })]
             )
           ]
-        )
-      ])
-    ])
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "text-light bg-dark border rounded border-dark row justify-content-center text-center pl-2 m-3"
+          },
+          [
+            _c("p", [
+              _c("strong", [_vm._v("Brush Size: ")]),
+              _c("br"),
+              _vm._v(_vm._s((_vm.radius - 1) / _vm.radIncrement + 1))
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "ml-3 my-2 btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.setRadius(-1)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-minus" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "my-2 btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.setRadius(1)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-plus" })]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "row my-3 justify-content-center" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.saveDoodle($event)
+                }
+              }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn border-dark btn-secondary",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Save")]
+              )
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border-dark mt-2 rounded shadow-lg col-lg-5 bg-secondary border p-0"
+      },
+      [
+        _c("div", { staticClass: "p-1 row justify-content-center" }, [
+          _c("canvas", {
+            staticClass: "m-0",
+            attrs: {
+              id: "drawing-app-canvas",
+              width: "400px",
+              height: "600px"
+            },
+            on: {
+              mousedown: _vm.handleMouseDown,
+              mouseup: _vm.handleMouseUp,
+              mousemove: _vm.handleMouseMove,
+              mouseleave: _vm.handleMouseUp
+            }
+          })
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -48390,7 +48812,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(53)
 /* template */
@@ -48483,34 +48905,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {},
 
     methods: {
-        onVote: function onVote(doodle, userVote) {
-            console.log(doodle.userVote, userVote);
-            if (doodle.userVote == null) {
-                this.createVote(doodle.id, userVote);
-                doodle.userVote = userVote;
-            } else if (doodle.userVote == userVote) {
-                this.saveVote(doodle.id, this.novote);
-                // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
-                doodle.userVote = 0;
-            } else {
-                this.saveVote(doodle.id, userVote);
-                doodle.userVote = userVote;
-            }
-            console.log(doodle.userVote);
-        },
-        createVote: function createVote(doodleId, userVote) {
-            console.log("Made it to createVote");
-            axios.post('/votes', {
-                doodle_id: doodleId,
-                vote: userVote
-            });
-        },
-        saveVote: function saveVote(id, userVote) {
-            console.log("Made it to saveVote");
-            axios.patch('/votes/' + id.toString(), {
-                vote: userVote
-            });
-        },
+        /*
+         * This function should:
+         * - call the database to get the individual image
+         * - redirect to that individual image page.
+         */
         doodleOnClick: function doodleOnClick() {
             console.log("Made it to onClick");
             axios.get('/doodles/' + id.toString(), {}).then(function (response) {
@@ -48612,6 +49011,292 @@ if (false) {
 
 /***/ }),
 /* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(56)
+/* template */
+var __vue_template__ = __webpack_require__(57)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SignatureComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0f27d71c", Component.options)
+  } else {
+    hotAPI.reload("data-v-0f27d71c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['signatureData'],
+    data: function data() {
+        return {
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            context: null,
+            canvas: null,
+            mouseDown: false,
+            radius: 2,
+            current: {
+                x: 0,
+                y: 0
+            },
+            currentColor: 'black'
+        };
+    },
+    mounted: function mounted() {
+        this.canvas = document.getElementById('drawing-app-canvas');
+        this.context = this.canvas.getContext('2d');
+        this.context.rect(0, 0, this.canvas.width, this.canvas.height);
+    },
+
+    methods: {
+        /*
+         * This function should:
+         * - Take the current bounding client
+         * - set the current x and y coords 
+         */
+        setCurrentCoords: function setCurrentCoords(event) {
+            // Have to use getBoundingClient on the canvas otherwise the coordinates are off by about half.
+            var rect = this.canvas.getBoundingClientRect();
+            this.current = {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        },
+        /*
+         * This function should:
+         * - Make a circle on the previous mouse position
+         * - Start a line
+         * - Make a circle on the current mouse position
+         * - End the line
+         * So when you are looking at it, it draws a circle and another circle, then connects the two with a line.
+         */
+        draw: function draw(event) {
+            if (this.mouseDown) {
+                this.context.lineWidth = this.radius * 2;
+                this.context.lineTo(this.current.x, this.current.y);
+                this.context.strokeStyle = this.currentColor;
+                this.context.stroke();
+                this.context.beginPath();
+                this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+                this.context.fillStyle = this.currentColor;
+                this.context.fill();
+                this.context.beginPath();
+                this.context.moveTo(this.current.x, this.current.y);
+            }
+        },
+        /*
+         * This funcion should:
+         * - Set the current mouse position
+         * - call the draw function
+         */
+        handleMouseMove: function handleMouseMove(event) {
+            this.setCurrentCoords(event);
+
+            this.draw(event);
+        },
+        /*
+         * This function should:
+         * - Just change mouseDown state to false so the canvas knows to stop drawing
+         */
+        handleMouseUp: function handleMouseUp() {
+            this.mouseDown = false;
+        },
+        /*
+         * This function should:
+         * - Set mouseDown state to true
+         * - Start the initial path
+         * - Draw the initial circle (It won't draw a circle on click if I don't do it here)
+         * - Begin the line path   
+         */
+        handleMouseDown: function handleMouseDown(event) {
+            this.mouseDown = true;
+            this.context.beginPath();
+            this.setCurrentCoords(event);
+            this.context.arc(this.current.x, this.current.y, this.radius, 0, 2 * Math.PI * 2);
+            this.context.fillStyle = this.currentColor;
+            this.context.fill();
+            this.context.beginPath();
+        },
+        /*
+         * This function should:
+         * - set the initial height and width of the canvas to 400 x 100
+         */
+        clearCanvas: function clearCanvas() {
+            // set to 400 because that is a standard screen size for cellphones
+            this.canvas.width = 400;
+            // set to 100 because a 4 to 1 ratio works extremely well for placing signature in 
+            // bottom right hand of doodle on home page and single doodle page
+            this.canvas.height = 100;
+        },
+        /*
+         * This function should:
+         * - Convert canvas to base64
+         * - Save the 'signature' in the database with axios
+         * - Redirect to home
+         */
+        saveSignature: function saveSignature(event) {
+            if (this.signatureData == undefined) {
+                axios.post('/signature', {
+                    signature: this.canvas.toDataURL()
+                }).then(function (response) {
+                    window.location = response.data.redirect;
+                });
+            } else {
+                axios.put('/signature/' + this.signatureData.id, {
+                    signature: this.canvas.toDataURL()
+                }).then(function (response) {
+                    window.location = response.data.redirect;
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "text-center" }, [
+    _c("div", { staticClass: "row mx-auto signature-canvas bg-light" }, [
+      _c("canvas", {
+        staticClass: "m-0",
+        attrs: { id: "drawing-app-canvas", width: "400px", height: "100px" },
+        on: {
+          mousedown: _vm.handleMouseDown,
+          mouseup: _vm.handleMouseUp,
+          mousemove: _vm.handleMouseMove,
+          mouseleave: _vm.handleMouseUp
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-3" }, [
+      _vm._v('ment in comments">\n        '),
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrf }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "ml-5 float-left btn btn-dark",
+          on: {
+            click: function($event) {
+              _vm.clearCanvas()
+            }
+          }
+        },
+        [_vm._v("Clear")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "mr-5 float-right btn btn-dark",
+          on: {
+            click: function($event) {
+              _vm.saveSignature()
+            }
+          }
+        },
+        [_vm._v("Save")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2" }, [
+      _c("p", [
+        _vm._v(
+          "Your signature will show up at the bottom of every doodle you make, so make it good"
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0f27d71c", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

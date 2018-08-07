@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class DoodlesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -57,6 +61,7 @@ class DoodlesController extends Controller
         $doodle->previous = \App\Doodle::where('id', '>', $doodle->id)->min('id');
         $doodle->numberOfUpvotes = $doodle->votes()->where('vote', '=', 1)->count();
         $doodle->numberOfDownvotes = $doodle->votes()->where('vote', '=', -1)->count();
+        $doodle->comments = $doodle->comments()->where('doodle_id', '=', $doodle->id)->get();
 
         if($doodle->votes()->where('voter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists())
         {
@@ -66,7 +71,7 @@ class DoodlesController extends Controller
         {
             $doodle->userVote = null;
         }
-        
+        $doodle->signature = \App\Signature::where('creator_id', '=', $doodle->creator_id)->first();
         return view('main.show', compact('doodle'));
     }
 
@@ -104,6 +109,7 @@ class DoodlesController extends Controller
         $doodle = \App\Doodle::find($id);
         $doodle->reports()->delete();
         $doodle->votes()->delete();
+        $doodle->comments()->delete();
         $doodle->delete();
 
         return redirect()->route('doodles.index');

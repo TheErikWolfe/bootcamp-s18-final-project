@@ -1,29 +1,56 @@
 <template>
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="single-doodle-bkgd text-center mt-4">
-                <div class="card-header">
-                    <div class="row">
+    <div class="container text-center p-2">
+        <div class="row justify-content-center">
+            <div class="single-doodle-bkgd text-center">
+                <div class="card bg-dark p-0">
+                    <div class="row p-0">
+                        <div class="col pl-5">
+                            <div class="row">
+                                <div v-on:click="onVote(1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
+                                <div id="doodle-points" class="col p-0 m-0 mt-3 text-success">{{ doodle.numberOfUpvotes }}</div>
+                                <div v-on:click="onVote(-1)" class="col-1 m-0 p-0 single-doodle-arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
+                                <div id="doodle-points" class="col p-0 m-0 mt-3 text-danger">{{ doodle.numberOfDownvotes }}</div>
+                            </div>    
+                        </div>                      
                         <div class="col">
+                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn my-3 btn-secondary shadow">< Back</a>
+                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn my-3 btn-secondary shadow">Next ></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-doodle-img-frame m-3">
+                        <div class="single-doodle-img-props m-2">
+                            <img :src=imgSource>
+                            <img class="single-doodle-signature-props" :src="doodle.signature.source">
+                        </div>
+                    </div>
+        <div class="row justify-content-center mt-3">
+            <div class="comment-form">
+                <div class="card-body p-0 m-0 rounded-0">
+                    <textarea name="user-comment" v-model="commentString" placeholder="Write a comment" row="3" class="form-control text-dark w-100 h-100" id=""></textarea>
+                </div>
+                <div class="card-footer rounded-0 p-0 m-0">
+                    <button v-on:click="postComment()" class="m-0 float-right btn btn-dark">Post</button>
+                </div>
+            </div>
 
-                        </div>
-                        <div class="col">
-                            <a v-bind:class="{ 'hidden' : doodleData.previous === null }" :href="'/doodles/' + doodleData.previous" class="btn btn-dark"><</a>
-                            <a v-bind:class="{ 'hidden' : doodleData.next === null }" :href="'/doodles/' + doodleData.next" class="btn btn-secondary shadow">Next ></a>
+            <div class="mt-3 d-flex" v-for="comment in comments">
+                <div class="comment-form">
+                    <div class="card-header text-light bg-dark">
+                        <div class="row">
+                            <div class="col">
+                                Anonymous
+                            </div>
+                            <div class="col text-align-right">
+                                commented at: {{ comment.created_at }}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body p-0">
-                    <div class="img-props m-0">
-                        <img :src=imgSource>
+                    <div class="card-body text-light bg-secondary">
+                        <strong>{{ comment.comment_string }}</strong>
                     </div>
-                </div>
-                <div class="card-footer d-flex bg-info text-left">
-                    <div>
-                        <div v-on:click="onVote(1)" class="arrow bg-transparent"><i class="fa fa-arrow-up upvote-arrow" v-bind:class="{ 'upvote-arrow-active' : userVote === 1 }"></i></div>
-                        <div id="doodle-points" class="ml-3 text-success" v-bind:class="whichColor">{{ doodleData.numberOfUpvotes - doodleData.numberOfDownvotes }}</div>
-                    </div>    
-                    <div v-on:click="onVote(-1)" class="arrow bg-transparent"><i class="fa fa-arrow-down downvote-arrow" v-bind:class="{ 'downvote-arrow-active' : userVote === -1 }"></i></div>
                 </div>
             </div>
         </div>
@@ -40,44 +67,37 @@
                 doodle: null,
                 imgSource: '',
                 userVote: 0,
+                comments: [],
                 upVotes: 0,
                 downVotes: 0,
                 noVote: 0,
-                whichColor: ''
+                whichColor: '',
+                commentString: ''
             }
         },
         mounted() {
-            console.log(this.doodleData);
             this.doodle = this.doodleData;
             this.userVote = this.doodle.userVote;
             this.imgSource = this.doodle.source;
             this.upVotes = this.doodle.numberOfUpvotes;
             this.downVotes = this.doodle.numberOfDownvotes;
             this.userVote = this.doodle.userVote;
-        },
-        computed: {
-            votesColor: function () {
-                if(this.upVotes - this.downVotes > 0)
-                {
-                    this.whichColor = 'text-success';
-                }
-                else
-                {
-                    this.whichColor = 'text-danger';
-                }
-                
-            },
+            this.comments = this.doodle.comments;
         },
         methods: {
-            onVote: function (newVote) 
-            {
-                if(this.userVote == null)
-                {
+            /*
+             * This function should:
+             * - take the new user vote and either:
+             * -- replace the old
+             * -- create a new one
+             * -- unset the old vote
+             */
+            onVote: function (newVote) {
+                if(this.userVote == null) {
                     this.createVote(newVote);
                     this.userVote = newVote;
                 }
-                else if(this.userVote == newVote)
-                {
+                else if(this.userVote == newVote) {
                     this.saveVote(this.noVote);
                     // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
                     this.userVote = 0;
@@ -86,22 +106,37 @@
                     this.saveVote(newVote);
                     this.userVote = newVote;
                 }
-                console.log(this.userVote);
             },
-            createVote: function (userVote)
-            {
-                console.log("Made it to createVote");
+            /*
+             * This function should:
+             * - create a new vote in the database using axios
+             */
+            createVote: function (userVote) {
                 axios.post('/votes', {
                     doodle_id: this.doodle.id,
                     vote: userVote
                 });
             },
-            saveVote: function (userVote)
-            {
-                console.log("Made it to saveVote");
+            /*
+             * This function should:
+             * - save a new vote variable to the existing table in the database using axios
+             */
+            saveVote: function (userVote) {
                 axios.patch('/votes/' + this.doodle.id.toString(), {
                     vote: userVote
                 });
+            },
+            /*
+             * This function should:
+             * - save a new comment string to the database using axios and then post a javascript instance of that comment.
+             */
+            postComment: function () {
+                axios.post('/comments', {
+                    comment: this.commentString,
+                    doodle_id: this.doodleData.id
+                });
+                this.comments.unshift({comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now'})
+                this.commentString = '';
             },
         }
 
