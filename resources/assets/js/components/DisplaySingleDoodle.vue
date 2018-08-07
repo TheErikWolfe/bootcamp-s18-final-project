@@ -75,7 +75,7 @@
                 commentString: ''
             }
         },
-        mounted() {
+        created() {
             this.doodle = this.doodleData;
             this.userVote = this.doodle.userVote;
             this.imgSource = this.doodle.source;

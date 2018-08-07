@@ -22,7 +22,7 @@
                 </div>               
             </div>
         </div>
-        <div class="row mt-4 justify-content-center">
+        <div class="row mt-4 justify-content-center align-items-center">
             <div v-for="doodle in dData" v-bind:class="{ 'hide-doodle' : doodle.show === false }">
                 <div class="img-frame" v-bind:style="changeDoodleSize(doodle)">
                     <div class="img-props">
