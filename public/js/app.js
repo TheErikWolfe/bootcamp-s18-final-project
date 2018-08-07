@@ -48430,6 +48430,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48491,6 +48492,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         changeColor: function changeColor(color) {
             this.currentColor = color;
         },
+        drawAllConnecting: function drawAllConnecting(event) {
+            if (!this.mouseDown) {
+                return;
+            }
+            // this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+            this.points.push({ x: this.current.x, y: this.current.y });
+            this.context.beginPath();
+            this.context.moveTo(this.points[0].x, this.points[0].y);
+            for (var i = 1; i < this.points.length; i++) {
+                this.context.lineTo(this.points[i].x, this.points[i].y);
+                var nearPoint = this.points[i - 5];
+                if (nearPoint) {
+                    this.context.moveTo(nearPoint.x, nearPoint.y);
+                    this.context.lineTo(this.points[i].x, this.points[i].y);
+                }
+            }
+            this.context.stroke();
+        },
         /*
          * This function should:
          * - push the new set of x and y coordinates into the points array
@@ -48534,7 +48553,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          */
         draw: function draw(event) {
             if (this.mouseDown) {
-                this.context.lineWidth = this.radius * 2;
                 if (this.strokeStyle == "marker") {
                     this.context.shadowBlur = this.radius;
                     this.context.shadowColor = this.currentColor;
@@ -48572,6 +48590,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.setCurrentCoords(event);
             if (this.strokeStyle == 'connecting') {
                 this.drawConnecting(event);
+            } else if (this.strokeStyle == 'all connecting') {
+                this.drawAllConnecting(event);
             } else if (this.strokeStyle != 'spray') {
                 this.draw(event);
             }
@@ -48626,7 +48646,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (!self.timeout) return;
                     self.timeout = setTimeout(spray, 50);
                 }, 50);
-            } else if (this.strokeStyle == 'connecting') {
+            } else if (this.strokeStyle == 'connecting' || this.strokeStyle == 'all connecting') {
                 this.context.lineWidth = this.radius;
                 this.context.lineJoin = this.context.lineCap = 'round';
                 // resets the points so it only connects lines between the new set of points
@@ -48747,6 +48767,19 @@ var render = function() {
                 on: {
                   click: function($event) {
                     _vm.strokeStyle = "connecting"
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-barcode" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn border-dark btn-secondary",
+                on: {
+                  click: function($event) {
+                    _vm.strokeStyle = "all connecting"
                   }
                 }
               },
