@@ -201,18 +201,18 @@
                 if(doodle.userVote == -1)
                 {
                     result = {
-                    'border-bottom-color' : '#ff3333',
-                    'border-left-color' : '#ff0000',
-                    'border-right-color' : '#ff0000',
-                    'border-top-color' : '#ee0000'}
+                    'border-bottom-color' : '#ffb4b4',
+                    'border-left-color' : '#ff9a9a',
+                    'border-right-color' : '#ff9a9a',
+                    'border-top-color' : '#ff8181'}
                 }
                 else if(doodle.userVote == 1)
                 {
                     result = {
-                    'border-bottom-color' : '#009a00',
-                    'border-left-color' : '#008000',
-                    'border-right-color' : '#008000',
-                    'border-top-color' : '#006700'}
+                    'border-bottom-color' : '#e8fbe8',
+                    'border-left-color' : '#d2f8d2',
+                    'border-right-color' : '#d2f8d2',
+                    'border-top-color' : '#bcf5bc'}
                 }
                 return result;
             },
