@@ -80,7 +80,7 @@
                 upvote: 1,
                 downvote: -1,
                 novote: 0,
-                startHeight: 60,
+                startHeight: 75,
                 startWidth: 90,
                 reportString: '',
                 currentDoodle: null,
@@ -90,26 +90,33 @@
         },
 
         mounted() {
-            console.log(this.doodlesData);
             this.dData = this.doodlesData;
         },
 
         methods: {
-            sortDoodles: function(sortBy)
-            {   
-                if(sortBy == 'Newest First')
-                {
+            /*
+             * This function should:
+             * - sort images by popularity or newest by
+             * -- comparing dates or
+             * -- comparing upvotes less downvotes
+             * - return the doodle data to make the changes take effect
+             */
+            sortDoodles: function(sortBy) {   
+                if(sortBy == 'Newest First') {
                     this.dData = this.dData.sort((a,b)=> +new Date(b.created_at) - +new Date(a.created_at));
                 }
-                else
-                {
+                else {
                     this.dData = this.dData.sort((a,b) => (b.numberOfUpvotes - b.numberOfDownvotes) - (a.numberOfUpvotes - a.numberOfDownvotes));
                 }
                 this.sortBy = sortBy;
                 return this.dData;
             },
-            setDoodleSize: function(changeBy)
-            {
+            /*
+             * This function should:
+             * - change the doodleSize boolean variable based on popularity or the set size 'standard'
+             * - Return the doodle data so it can update accordingly
+             */
+            setDoodleSize: function(changeBy) {
                 if(changeBy == "standard")
                 {
                     this.doodleSize = true;
@@ -120,57 +127,61 @@
                 }
                 return this.dData;
             },
-            changeDoodleSize: function(doodle)
-            {
+            /*
+             * This function should:
+             * - Use the doodleSize boolean variable to either:
+             * -- Change the size of the images based on number of upvotes/downvotes
+             * -- change the size of the images to the standard size
+             * - return a style that changes the doodles size.
+             */
+            changeDoodleSize: function(doodle) {
                 let result = {};
+                let sizeMultiplier = 2/3;
 
-                if(this.doodleSize == false)
-                {
-                    let dWidth = 0;
+                if(this.doodleSize == false) {
                     let dHeight = 0;
 
                     let downVotes = -(doodle.numberOfDownvotes);
                     let upVotes = doodle.numberOfUpvotes;
                     let overallVote = downVotes + upVotes;
 
-                    dWidth = 2/3 * (this.startHeight + overallVote);
-                    dHeight = 2/3 * (this.startWidth + overallVote);
-                    console.log(dHeight);
+                    dHeight = sizeMultiplier * (this.startHeight + overallVote);
 
-                    if(dHeight > 80)
-                    {
+                    if(dHeight > 80) {
                         dHeight = 80;
-                        dWidth = 2 / 3 * dHeight;
                     }
-                    else if(dHeight < 30)
-                    {
+                    else if(dHeight < 30) {
                         dHeight = 30;
-                        dWidth = 2 / 3 * dHeight;
                     }
-
-                    console.log(dHeight);
 
                     result = {'width': 'auto', 'height': dHeight + 'vh'};
                 }
-                else
-                {
-                    result = {width: 'auto', height: this.startHeight + 'vh'};
+                else {
+                    result = {'width': 'auto', 'height': sizeMultiplier * this.startHeight + 'vh'};
                 }
 
                 return result;
             },
+            /*
+             * This function should:
+             * - Set the currentDoodle variable to the current doodle. May not be needed.
+             */
             setCurrentDoodle: function(doodle) {
                 this.currentDoodle = doodle;
             },
-            onVote:function (doodle, userVote) 
-            {
-                if(doodle.userVote == null)
-                {
+            /*
+             * This function should:
+             * - take the new user vote and either:
+             * -- replace the old
+             * -- create a new one
+             * -- unset the old vote
+             */
+            onVote:function (doodle, userVote) {
+                if(doodle.userVote == null) {
                     this.createVote(doodle.id, userVote);
                     doodle.userVote = userVote;
                 }
-                else if(doodle.userVote == userVote)
-                {
+                else if(doodle.userVote == userVote) {
                     this.saveVote(doodle.id, this.novote);
                     // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
                     doodle.userVote = 0;
@@ -179,25 +190,33 @@
                     this.saveVote(doodle.id, userVote);
                     doodle.userVote = userVote;
                 }
-                console.log(doodle.userVote);
             },
-            createVote: function (doodleId, userVote)
-            {
-                console.log("Made it to createVote");
+            /*
+             * This function should:
+             * - create a new vote in the database using axios
+             */
+            createVote: function (doodleId, userVote) {
                 axios.post('/votes', {
                     doodle_id: doodleId,
                     vote: userVote
                 });
             },
-            saveVote: function (id, userVote)
-            {
-                console.log("Made it to saveVote");
+            /*
+             * This function should:
+             * - save a new vote variable to the existing table in the database using axios
+             */
+            saveVote: function (id, userVote) {
                 axios.patch('/votes/' + id.toString(), {
                     vote: userVote
                 });
             },
-            createReport: function ()
-            {
+            /*
+             * This function should:
+             * - create a new report table with the string that the user wrote for the 'report'
+             *   and make the show variable false so that the image will have display: none
+             * - return the current doodle in order to make it display: hidden
+             */
+            createReport: function () {
                 this.currentDoodle.show = false;
                 axios.post('/reports', {
                     doodle_id: this.currentDoodle.id,
@@ -206,8 +225,12 @@
                 this.reportString = '';
                 return this.currentDoodle;
             },
+            /*
+             * This function should:
+             * - call the database to get the individual image
+             * - redirect to that individual image page.
+             */
             doodleOnClick: function () {
-                console.log("Made it to onClick");
                 axios.get('/doodles/' + id.toString(), {
                     
                 }).then(function (response) {

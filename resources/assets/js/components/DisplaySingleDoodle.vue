@@ -76,7 +76,6 @@
             }
         },
         mounted() {
-            console.log(this.doodleData);
             this.doodle = this.doodleData;
             this.userVote = this.doodle.userVote;
             this.imgSource = this.doodle.source;
@@ -86,15 +85,19 @@
             this.comments = this.doodle.comments;
         },
         methods: {
-            onVote: function (newVote) 
-            {
-                if(this.userVote == null)
-                {
+            /*
+             * This function should:
+             * - take the new user vote and either:
+             * -- replace the old
+             * -- create a new one
+             * -- unset the old vote
+             */
+            onVote: function (newVote) {
+                if(this.userVote == null) {
                     this.createVote(newVote);
                     this.userVote = newVote;
                 }
-                else if(this.userVote == newVote)
-                {
+                else if(this.userVote == newVote) {
                     this.saveVote(this.noVote);
                     // set it to a number that isn't 1, -1, or 0 so it doesn't create another vote table.
                     this.userVote = 0;
@@ -103,33 +106,37 @@
                     this.saveVote(newVote);
                     this.userVote = newVote;
                 }
-                
-                console.log(this.userVote);
             },
-            createVote: function (userVote)
-            {
-                console.log("Made it to createVote");
+            /*
+             * This function should:
+             * - create a new vote in the database using axios
+             */
+            createVote: function (userVote) {
                 axios.post('/votes', {
                     doodle_id: this.doodle.id,
                     vote: userVote
                 });
             },
-            saveVote: function (userVote)
-            {
-                console.log("Made it to saveVote");
+            /*
+             * This function should:
+             * - save a new vote variable to the existing table in the database using axios
+             */
+            saveVote: function (userVote) {
                 axios.patch('/votes/' + this.doodle.id.toString(), {
                     vote: userVote
                 });
             },
-            postComment: function ()
-            {
+            /*
+             * This function should:
+             * - save a new comment string to the database using axios and then post a javascript instance of that comment.
+             */
+            postComment: function () {
                 axios.post('/comments', {
                     comment: this.commentString,
                     doodle_id: this.doodleData.id
                 });
                 this.comments.unshift({comment_string: this.commentString, commenter_id: this.doodle.id, created_at: 'Now'})
                 this.commentString = '';
-                
             },
         }
 
