@@ -36,7 +36,7 @@ class HomeController extends Controller
             {
                 $doodle->userVote = null;
             }
-            if($doodle->reports()->where('reporter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists() || $doodle->reports()->where('doodle_id', '=', $doodle->id)->count() > 3) //Made it greater than 3 as a placeholder for now. Eventually I could make it so that it would compare it to number of users logged in at a current moment.
+            if($doodle->reports()->where('reporter_id', '=', \Auth::user()->id)->where('doodle_id', '=', $doodle->id)->exists() || $doodle->reports()->where('doodle_id', '=', $doodle->id)->count() > 3 || $doodle->reports()->where('reporter_id', '=', 1)->where('doodle_id', '=', $doodle->id)->exists()) //Made it greater than 3 as a placeholder for now. Eventually I could make it so that it would compare it to number of users logged in at a current moment.
             {
                 $doodle->show = false;
             }
