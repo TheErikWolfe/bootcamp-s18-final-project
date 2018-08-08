@@ -14,7 +14,7 @@
         <div class="mt-2">
             <p>Your signature will show up at the bottom of every doodle you make, so make it good</p>
         </div>
-        <div class="mt-3">ment in comments">
+        <div class="mt-3">
             <input type="hidden" name="_token" :value="csrf">
             <div v-on:click="clearCanvas()" class="ml-5 float-left btn btn-dark">Clear</div>
             <div v-on:click="saveSignature()" class="mr-5 float-right btn btn-dark">Save</div>
@@ -87,7 +87,6 @@
              */
             handleMouseMove: function (event) {
                 this.setCurrentCoords(event);
-
                 this.draw(event);
             },
             /*

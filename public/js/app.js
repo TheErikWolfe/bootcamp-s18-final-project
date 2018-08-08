@@ -48254,7 +48254,7 @@ var render = function() {
                   expression: "commentString"
                 }
               ],
-              staticClass: "form-control text-dark w-100 h-100",
+              staticClass: "form-control rounded-0 text-dark w-100 h-100",
               attrs: {
                 name: "user-comment",
                 placeholder: "Write a comment",
@@ -48277,7 +48277,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "m-0 float-right btn btn-dark",
+                staticClass: "m-0 w-100 btn btn-dark",
                 on: {
                   click: function($event) {
                     _vm.postComment()
@@ -48431,6 +48431,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48453,7 +48456,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             strokeStyle: 'pencil',
             timeout: null,
             density: 50,
-            points: []
+            points: [],
+            savingImage: false
         };
     },
 
@@ -48496,7 +48500,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.mouseDown) {
                 return;
             }
-            // this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
             this.points.push({ x: this.current.x, y: this.current.y });
             this.context.beginPath();
             this.context.moveTo(this.points[0].x, this.points[0].y);
@@ -48504,6 +48507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.context.lineTo(this.points[i].x, this.points[i].y);
                 var nearPoint = this.points[i - 5];
                 if (nearPoint) {
+                    this.context.strokeStyle = this.currentColor;
                     this.context.moveTo(nearPoint.x, nearPoint.y);
                     this.context.lineTo(this.points[i].x, this.points[i].y);
                 }
@@ -48553,10 +48557,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          */
         draw: function draw(event) {
             if (this.mouseDown) {
+                this.context.lineWidth = this.radius * 2;
                 if (this.strokeStyle == "marker") {
                     this.context.shadowBlur = this.radius;
                     this.context.shadowColor = this.currentColor;
                 }
+
                 this.context.lineTo(this.current.x, this.current.y);
                 this.context.strokeStyle = this.currentColor;
                 this.context.stroke();
@@ -48667,6 +48673,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          * - save it to the database with axios
          */
         saveDoodle: function saveDoodle(event) {
+            this.savingImage = true;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/doodles', {
                 doodle: this.canvas.toDataURL()
             }).then(function (response) {
@@ -48863,7 +48870,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn border-dark btn-secondary",
-                  attrs: { type: "submit" }
+                  attrs: { disabled: _vm.savingImage, type: "submit" }
                 },
                 [_vm._v("Save")]
               )
@@ -48882,6 +48889,14 @@ var render = function() {
       [
         _c("div", { staticClass: "p-1 row justify-content-center" }, [
           _c("canvas", {
+            directives: [
+              {
+                name: "ontouchmove",
+                rawName: "v-ontouchmove",
+                value: _vm.handleMouseMove,
+                expression: "handleMouseMove"
+              }
+            ],
             staticClass: "m-0",
             attrs: {
               id: "drawing-app-canvas",
@@ -48890,7 +48905,9 @@ var render = function() {
             },
             on: {
               mousedown: _vm.handleMouseDown,
+              touchstart: _vm.handleMouseDown,
               mouseup: _vm.handleMouseUp,
+              touchend: _vm.handleMouseUp,
               mousemove: _vm.handleMouseMove,
               mouseleave: _vm.handleMouseUp
             }
@@ -49247,7 +49264,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
          */
         handleMouseMove: function handleMouseMove(event) {
             this.setCurrentCoords(event);
-
             this.draw(event);
         },
         /*
@@ -49333,7 +49349,6 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "mt-3" }, [
-      _vm._v('ment in comments">\n        '),
       _c("input", {
         attrs: { type: "hidden", name: "_token" },
         domProps: { value: _vm.csrf }

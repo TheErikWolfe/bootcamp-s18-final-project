@@ -23,7 +23,7 @@
             <div class="row my-3 justify-content-center">
                 <form v-on:submit.prevent="saveDoodle">
                     <input type="hidden" name="_token" :value="csrf">
-                    <button class="btn border-dark btn-secondary"  type="submit">Save</button>
+                    <button class="btn border-dark btn-secondary" :disabled="savingImage"  type="submit">Save</button>
                 </form>
             </div>
         </div>
@@ -31,8 +31,11 @@
             <div class="p-1 row justify-content-center">
                 <canvas id="drawing-app-canvas"
                     v-on:mousedown="handleMouseDown" 
-                    v-on:mouseup="handleMouseUp" 
+                    v-on:touchstart="handleMouseDown"
+                    v-on:mouseup="handleMouseUp"
+                    v-on:touchend="handleMouseUp" 
                     v-on:mousemove="handleMouseMove"
+                    v-ontouchmove="handleMouseMove"
                     v-on:mouseleave="handleMouseUp"
                     width="400px"
                     height="600px"
@@ -67,7 +70,8 @@ import axios from 'axios';
                 strokeStyle: 'pencil',
                 timeout: null,
                 density: 50,
-                points: []
+                points: [],
+                savingImage: false
             }
         },
         /*
@@ -109,7 +113,6 @@ import axios from 'axios';
                 if (!this.mouseDown) {
                     return;
                 }
-                // this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
                 this.points.push({ x: this.current.x, y: this.current.y });
                 this.context.beginPath();
                 this.context.moveTo(this.points[0].x, this.points[0].y);
@@ -117,6 +120,7 @@ import axios from 'axios';
                     this.context.lineTo(this.points[i].x, this.points[i].y);
                     var nearPoint = this.points[i-5];
                     if (nearPoint) {
+                        this.context.strokeStyle = this.currentColor;
                         this.context.moveTo(nearPoint.x, nearPoint.y);
                         this.context.lineTo(this.points[i].x, this.points[i].y);
                     }
@@ -170,11 +174,13 @@ import axios from 'axios';
             {
                 if(this.mouseDown)
                 {
+                    this.context.lineWidth = this.radius * 2;
                     if(this.strokeStyle == "marker")
                     {
                         this.context.shadowBlur = this.radius;
                         this.context.shadowColor = this.currentColor;
                     }
+                    
                     this.context.lineTo(this.current.x, this.current.y);
                     this.context.strokeStyle = this.currentColor;
                     this.context.stroke();
@@ -306,6 +312,7 @@ import axios from 'axios';
              * - save it to the database with axios
              */
             saveDoodle: function (event) {
+                this.savingImage = true;
                 axios.post('/doodles', {
                     doodle: this.canvas.toDataURL()
                 })
