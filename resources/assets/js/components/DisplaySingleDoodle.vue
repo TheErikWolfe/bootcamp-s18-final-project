@@ -29,10 +29,10 @@
         <div class="row justify-content-center mt-3">
             <div class="comment-form">
                 <div class="card-body p-0 m-0 rounded-0">
-                    <textarea name="user-comment" v-model="commentString" placeholder="Write a comment" row="3" class="form-control text-dark w-100 h-100" id=""></textarea>
+                    <textarea name="user-comment" v-model="commentString" placeholder="Write a comment" row="3" class="form-control rounded-0 text-dark w-100 h-100" id=""></textarea>
                 </div>
                 <div class="card-footer rounded-0 p-0 m-0">
-                    <button v-on:click="postComment()" class="m-0 float-right btn btn-dark">Post</button>
+                    <button v-on:click="postComment()" class="m-0 w-100 btn btn-dark">Post</button>
                 </div>
             </div>
 
